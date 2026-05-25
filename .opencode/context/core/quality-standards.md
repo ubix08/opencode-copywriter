@@ -1,4 +1,5 @@
 # Technical Writing Quality Standards
+**Version: 1.0 | Last Updated: 2026-05-25**
 
 ## Scoring Framework (100 points)
 

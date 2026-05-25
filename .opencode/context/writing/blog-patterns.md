@@ -60,6 +60,31 @@ H2: FAQ
 - Each item: name, what it does, when to use it, link
 - Avoid generic "top 10" — be specific and opinionated
 
+### Changelog / Release Notes Pattern
+- Focus: what changed, why it matters, how to upgrade
+- Structure: Summary → Breaking Changes → New Features → Bug Fixes → Upgrade Guide
+- Each change: what, why, impact, migration steps if breaking
+- Include version number, release date, and link to full changelog
+- Tone: factual, direct, no marketing language
+- Word count: 500-1500 words (shorter than standard articles)
+
+### Case Study Pattern
+- Focus: real-world problem → approach → results → lessons
+- Structure: Context (who, what, constraints) → Problem → Approach → Results (with metrics) → Lessons Learned → Replicable Steps
+- Must include real data: before/after metrics, timelines, costs, team size
+- Show the messy middle — what didn't work and why
+- Word count: 1500-2500 words
+- E-E-A-T emphasis: first-hand experience, specific project context, transparent methodology
+
+### Opinion / Position Pattern
+- Focus: take a clear stance on a debated topic
+- Structure: The Claim → Why It Matters → Evidence → Counterarguments (addressed honestly) → Recommendation → When You'd Disagree
+- State the opinion clearly in the first 200 words
+- Back every claim with data, experience, or logical reasoning
+- Acknowledge valid counterarguments — don't strawman
+- Word count: 1200-2500 words
+- Voice: confident, opinionated but fair, willing to be proven wrong
+
 ## SEO Elements
 
 ### Title Formulas
