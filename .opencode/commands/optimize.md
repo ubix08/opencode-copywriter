@@ -1,6 +1,7 @@
 ---
 name: optimize
 agent: copywriter-orchestrator
+description: Optimize an existing article for SEO and AI citations
 ---
 
 @.opencode/context/core/quality-standards.md
@@ -22,7 +23,7 @@ Optimize this existing article for both Google rankings and AI citations. Follow
    - Verify heading hierarchy
    - Assess E-E-A-T signals
    - Check for FAQ section
-3. Research current data to replace any unsourced or outdated statistics
+3. Research current data to replace any unsourced or outdated statistics (delegate to tech-researcher if needed)
 4. Rewrite the article applying all optimization rules:
    - Answer-first formatting in every H2
    - Key Takeaways box near the top

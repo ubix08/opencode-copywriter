@@ -1,6 +1,7 @@
 ---
 name: brief
 agent: copywriter-orchestrator
+description: Create a content brief with research and SEO outline
 ---
 
 @.opencode/context/core/quality-standards.md

@@ -1,6 +1,7 @@
 ---
 name: audit
 agent: copywriter-orchestrator
+description: Audit an article against the quality scoring framework
 ---
 
 @.opencode/context/core/quality-standards.md

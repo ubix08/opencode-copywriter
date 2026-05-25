@@ -1,6 +1,7 @@
 ---
 name: article
 agent: copywriter-orchestrator
+description: Write a complete technical article from scratch
 ---
 
 @.opencode/context/core/quality-standards.md
@@ -27,6 +28,6 @@ Write a complete technical article on this topic. Follow this workflow:
    - E-E-A-T signals throughout
    - Proper frontmatter (title, description, date, tags, author)
 5. Score the article against the quality-standards framework (target: 75+/100)
-6. Save to content/articles/YYYY-MM-DD-slug.md
+6. Create the content/articles/ directory if it doesn't exist, then save to content/articles/YYYY-MM-DD-slug.md
 
 Deliver the complete article and provide a quality score summary.
