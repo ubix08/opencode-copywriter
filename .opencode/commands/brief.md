@@ -1,12 +1,13 @@
 ---
 name: brief
 agent: copywriter-orchestrator
-description: Create a content brief with research and SEO outline
+description: Create a content brief with competitive research and killer blueprint
 ---
 
 @.opencode/context/core/quality-standards.md
 @.opencode/context/writing/blog-patterns.md
 @.opencode/context/writing/seo-and-geo.md
+@.opencode/context/writing/competitive-analysis.md
 
 You are the Copywriter Orchestrator.
 
@@ -14,57 +15,62 @@ You are the Copywriter Orchestrator.
 
 Create a comprehensive content brief for this topic. Follow this workflow:
 
-1. Research the topic using web search to understand:
-   - Current search intent and top-ranking content
-   - Key competitors covering this topic
-   - Common questions and pain points
-   - Recent statistics and developments
-2. Analyze the competitive landscape:
-   - What are the top 5 results covering?
-   - What gaps exist (information gain opportunities)?
-   - What angle would differentiate our article?
-3. Create the content brief with these sections:
+### Phase 1: Competitive Discovery
+1. Search for the topic and identify top 5-8 ranking articles
+2. Read each competitor and capture: URL, title, date, word count, content type
+3. Score each against the 6-dimension framework from competitive-analysis.md
+
+### Phase 2: Gap Analysis
+4. Identify gaps across all competitors:
+   - Content gaps (topics no one covers)
+   - Depth gaps (topics covered superficially)
+   - Angle gaps (perspectives no one considers)
+   - Format gaps (missing examples, tables, diagrams)
+   - Freshness gaps (outdated information)
+
+### Phase 3: Killer Blueprint
+5. Build the content brief with these sections:
 
 ## Content Brief: [Topic]
 
-### Target Keyword
-- Primary: [keyword]
-- Secondary: [related terms]
+### Search Landscape
+- Primary keyword, search intent, top content types
 
-### Search Intent
-[What the searcher is looking for, informational/transactional/navigational]
+### Competitor Scores
+| Article | Depth | Accuracy | SEO | AI | E-E-A-T | Unique | Total |
+|---------|-------|----------|-----|----|---------|--------|-------|
+| [1] | X/10 | X/10 | X/10 | X/10 | X/10 | X/10 | X/60 |
+| [2] | X/10 | X/10 | X/10 | X/10 | X/10 | X/10 | X/60 |
 
-### Competitive Analysis
-- [Competitor 1]: Coverage, strengths, weaknesses
-- [Competitor 2]: Coverage, strengths, weaknesses
-- [Competitor 3]: Coverage, strengths, weaknesses
+### Gap Summary
+- Content gaps, depth gaps, angle gaps, freshness gaps
 
-### Recommended Angle
-[Unique perspective, information gain, differentiation strategy]
+### Killer Article Strategy
+#### Must-Have Elements (table stakes)
+[What top 3 competitors do well — we must match]
 
-### Target Audience
-[Skill level, role, pain points]
+#### Differentiation Opportunities (win factors)
+[What no competitor does well — we lead here]
 
-### SEO Outline
+#### Information Gain
+[Unique value we'll add that no one else provides]
+
+### Recommended SEO Outline
 ```
 H1: [Proposed title]
-H2: [Section 1]
-  H3: [Subsection]
-H2: [Section 2]
-H2: [Section 3]
+H2: [Section 1 — based on gap analysis]
+H2: [Section 2 — differentiation area]
+H2: [Section 3 — depth gap we fill]
 H2: FAQ
 ```
 
-### Key Statistics to Source
-[List 3-5 specific statistics to research and include]
+### Sourcing Plan
+[3-5 specific statistics and sources competitors miss]
 
-### Internal Linking Targets
-[Suggest 3-5 existing articles to link to]
+### Target Audience & Angle
+[Skill level, role, pain points, unique perspective]
 
 ### Estimated Word Count
-[1500-3000 range based on topic complexity]
+[Based on competitor analysis + gap coverage]
 
-### E-E-A-T Requirements
-[Specific experience, expertise, authority, and trust signals needed]
-
-Save the brief and be ready to execute the article when requested.
+Save the brief to content/research/YYYY-MM-DD-topic-brief.md.

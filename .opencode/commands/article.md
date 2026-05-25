@@ -1,7 +1,7 @@
 ---
 name: article
 agent: copywriter-orchestrator
-description: Write a complete technical article from scratch
+description: Write a complete technical article with competitive research
 ---
 
 @.opencode/context/core/quality-standards.md
@@ -9,6 +9,7 @@ description: Write a complete technical article from scratch
 @.opencode/context/writing/blog-patterns.md
 @.opencode/context/writing/seo-and-geo.md
 @.opencode/context/writing/eeat-signals.md
+@.opencode/context/writing/competitive-analysis.md
 
 You are the Copywriter Orchestrator.
 
@@ -16,10 +17,20 @@ You are the Copywriter Orchestrator.
 
 Write a complete technical article on this topic. Follow this workflow:
 
-1. Research the topic using web search to gather current statistics, competitive landscape, and credible sources
-2. Develop an SEO-optimized outline following the blog-patterns structure
-3. Write the full article following the technical voice guidelines
-4. Include all required elements:
+### Phase 1: Competitive Research
+1. Search for the topic and identify top 5-8 ranking articles
+2. Read each competitor article and score them using the competitive-analysis.md framework
+3. Identify gaps: content, depth, angle, format, freshness, trust
+4. Build a killer article blueprint: what must-haves + differentiation opportunities + information gain
+
+### Phase 2: Topic Research
+5. Research the topic for current statistics, credible sources, and technical details
+6. Gather specific data points that competitors miss or get wrong
+
+### Phase 3: Writing
+7. Develop an SEO-optimized outline based on the competitive blueprint
+8. Write the full article following the technical voice guidelines
+9. Include all required elements:
    - Key Takeaways box (3-5 bullets)
    - Answer-first formatting in every H2
    - At least 3 sourced statistics with links
@@ -27,7 +38,11 @@ Write a complete technical article on this topic. Follow this workflow:
    - FAQ section (3-5 questions, direct answers)
    - E-E-A-T signals throughout
    - Proper frontmatter (title, description, date, tags, author)
-5. Score the article against the quality-standards framework (target: 75+/100)
-6. Create the content/articles/ directory if it doesn't exist, then save to content/articles/YYYY-MM-DD-slug.md
 
-Deliver the complete article and provide a quality score summary.
+### Phase 4: Quality & Delivery
+10. Score the article against quality-standards.md (target: 75+/100)
+11. Create content/ directories if they don't exist
+12. Save research to content/research/YYYY-MM-DD-topic-research.md
+13. Save article to content/articles/YYYY-MM-DD-slug.md
+
+Deliver: the complete article, a competitive summary (what we beat and why), and a quality score.
