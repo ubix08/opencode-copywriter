@@ -38,6 +38,7 @@
 - Definition blocks for technical terms (bold term, colon, concise definition)
 - Structured data ready: tables, lists, numbered steps
 - Citation tier: primary sources > official docs > reputable blogs > forums
+- JSON-LD schema: Article schema required. FAQPage schema required if FAQ section exists.
 
 ## Pass Criteria
 - Minimum 75/100 to publish
@@ -45,12 +46,19 @@
 - All code blocks have language tags
 - Answer-first formatting in every major section
 - At least 3 sourced statistics
-- FAQ schema included
+- FAQ schema included (JSON-LD FAQPage if FAQ section exists)
+- Article schema included (JSON-LD Article)
+- Named author — no generic placeholders ("Technical Writing Team", "AI Team", "Staff")
+- Word count: 1500-3000 for technical articles
+- External links: 3-5 unique domains, deduplicated
 
 ## Anti-Patterns (automatic deductions)
 - Paragraphs over 150 words: -2 each
 - Unsubstantiated claims: -5 each
 - Skipped heading levels: -3 each
 - Keyword stuffing (>3% density): -10
-- No images or diagrams in 2000+ word article: -5
+- No real images in 2000+ word article: -5. Placeholder comments (`<!-- image: ... -->`) do NOT count. Only markdown image tags (`![alt](path)`) count as real images.
 - No last-updated date: -3
+- Duplicate external links (same URL appearing multiple times): -2 per duplicate
+- Missing JSON-LD Article schema: -5
+- Missing JSON-LD FAQPage schema (when FAQ exists): -3

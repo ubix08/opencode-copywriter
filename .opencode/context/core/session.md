@@ -22,6 +22,11 @@ Status: [in-progress / complete / failed]
 - **Topic**: [topic description]
 - **Target file**: [path if applicable]
 
+## Phase 0: Pre-Flight Check
+Status: [pending / in-progress / complete / skipped]
+- Structural issues found: [count]
+- Critical failures: [list if any]
+
 ## Phase 1: Competitive Research (competitive-analyst)
 Status: [pending / in-progress / complete / skipped]
 - Primary keyword: [keyword]
@@ -47,17 +52,22 @@ Status: [pending / in-progress / complete / skipped]
 Status: [pending / in-progress / complete / skipped]
 - Article: content/articles/YYYY-MM-DD-slug.md
 - Word count: [count]
-- Self-assessed score: [X/100]
+- External links: [count unique domains]
+- Internal links: [count]
+- Image references: [count]
 
 ## Phase 4: Review (reviewer)
 Status: [pending / in-progress / complete / skipped]
 - Overall score: [X/100]
 - Verdict: [PASS / FAIL]
 - Critical fixes: [list if any]
+- Fix iterations: [0/1/2]
 
 ## Phase 5: Delivery (orchestrator)
 Status: [pending / in-progress / complete]
 - Final deliverables: [list files]
+- Final reviewer score: [X/100]
+- Final verdict: [PASS / FAIL]
 - Notes: [any issues, limitations, or follow-up recommendations]
 ```
 
@@ -68,3 +78,4 @@ Status: [pending / in-progress / complete]
 - If a phase fails, set status to "failed" and add a note explaining why
 - The orchestrator is responsible for creating and cleaning up this file
 - Archive completed sessions to content/research/sessions/ if needed for reference
+- **Self-assessed scores are invalid** — only reviewer scores count. Do not record self-assessments in the session.

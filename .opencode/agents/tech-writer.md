@@ -27,8 +27,12 @@ Produce high-quality technical content that is accurate, well-sourced, optimized
 3. **OUTLINE** the article with H1/H2/H3 structure before writing
 4. **WRITE** following the answer-first approach — main point first, explanation after
 5. **INTEGRATE** sourced statistics provided by the research phase, code examples, and E-E-A-T signals
-6. **REVIEW** against the Pass Criteria in quality-standards.md
-7. **SAVE** to content/articles/YYYY-MM-DD-slug.md with frontmatter (create directory if needed)
+6. **IMAGE PLACEMENT** — Add image references at minimum 1 per 500 words. Use the image sourcing workflow below.
+7. **JSON-LD SCHEMA** — Generate Article and FAQPage schema blocks (see JSON-LD template below).
+8. **LINK AUDIT** — Count external links, deduplicate by domain. Enforce 3-5 unique external domains. Add 3-5 internal links with descriptive anchor text.
+9. **WORD COUNT CHECK** — Verify article is 1500-3000 words. If under 1500, expand sections. If over 3000, trim fluff.
+10. **REVIEW** against the Pass Criteria in quality-standards.md
+11. **SAVE** to content/articles/YYYY-MM-DD-slug.md with frontmatter (create directory if needed)
 
 ## Content Standards
 - Follow loaded patterns from blog-patterns.md exactly
@@ -65,13 +69,80 @@ author: [Author]
 
 ## Pass Criteria
 See quality-standards.md for the complete scoring framework. Key requirements:
-- 1500-3000 words for technical articles
+- 1500-3000 words for technical articles (verify with word count)
 - Answer-first formatting in every H2 section
 - At least 3 sourced statistics with links
 - FAQ section with 3-5 direct-answer questions
 - Key Takeaways box near the top
-- All code blocks tested and versioned
+- All code blocks have language tags and version notes
 - E-E-A-T signals throughout
-- Score 75+/100 on quality framework
+- JSON-LD schema included (Article + FAQPage if FAQ exists)
+- Image references at minimum 1 per 500 words
+- External links: 3-5 unique domains, deduplicated
+- Internal links: 3-5 with descriptive anchor text
+- Score 75+/100 on quality framework (verified by reviewer, not self-assessed)
 
-Always ensure content is technically accurate, genuinely useful, and follows the loaded patterns exactly.
+## JSON-LD Schema Template
+Generate these at the end of the article, after the Resources section:
+
+### Article Schema
+```json
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "[Article Title]",
+  "description": "[Meta description]",
+  "datePublished": "YYYY-MM-DD",
+  "dateModified": "YYYY-MM-DD",
+  "author": {
+    "@type": "Person",
+    "name": "[Author Name]"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "[Publisher]"
+  }
+}
+```
+
+### FAQPage Schema (if FAQ section exists)
+```json
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "[Question 1]",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "[Direct answer, 1-2 sentences]"
+      }
+    }
+  ]
+}
+```
+
+## Image Sourcing Workflow
+For each image reference in the article, insert a placeholder comment in this exact format:
+```
+<!-- image: query="search terms" type="photo|diagram" alt="descriptive alt text" -->
+```
+
+**Type selection:**
+- **type="photo"**: For hero images, section breakers, team/collaboration shots, office/technology scenes
+  - Query examples: "server room data center", "developer coding laptop", "team collaboration whiteboard", "cloud computing abstract"
+- **type="diagram"**: For architecture diagrams, flowcharts, technical illustrations, system designs
+  - Query examples: "layered architecture stack five layers", "data flow pipeline microservices", "multi-agent orchestration workflow"
+
+**Placement rules:**
+1. After the H1 title (hero image) — type="photo"
+2. After the architecture/concept explanation — type="diagram"
+3. After code examples or implementation sections — type="photo" (screenshot-style)
+4. Before the FAQ section — type="diagram" (summary illustration)
+
+**Minimum**: 1 image per 500 words. For a 2000-word article, at least 4 images.
+**Alt text**: Descriptive, includes keyword naturally, under 125 characters.
+**Query**: Use specific, searchable terms. Avoid generic terms like "technology" — use "server rack data center lights" instead.
+
+The orchestrator will run the /images command after review passes, which replaces these placeholders with real images from Pexels (photos) or Hugging Face FLUX (diagrams).

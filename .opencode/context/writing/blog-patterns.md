@@ -85,6 +85,18 @@ H2: FAQ
 - Word count: 1200-2500 words
 - Voice: confident, opinionated but fair, willing to be proven wrong
 
+### Feedback Loop Pattern (for memory/learning systems)
+- Focus: how a system captures, evaluates, and applies learnings over time
+- Structure: Input → Evaluation (accepted/revised/rejected) → Pattern Extraction → Application
+- Include a concrete feedback table:
+  ```
+  | Output ID | Status | Revision Reason | Pattern Learned |
+  |-----------|--------|-----------------|-----------------|
+  | draft-042 | revised | Too formal for client X | Use casual tone for startup clients |
+  ```
+- Show the loop closing: how the learned pattern changes future outputs
+- Word count: 300-600 words (usually a subsection, not a full article)
+
 ## SEO Elements
 
 ### Title Formulas

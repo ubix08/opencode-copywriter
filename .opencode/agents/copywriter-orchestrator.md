@@ -9,6 +9,8 @@ permission:
   task: allow
   websearch: allow
   webfetch: allow
+  bash:
+    "python3 scripts/fetch-images.py *": allow
 ---
 
 @.opencode/context/core/quality-standards.md
@@ -27,31 +29,45 @@ Analyze requests, delegate to the appropriate subagent, and ensure all output me
 ## Workflow Process
 
 ### For New Articles (/article)
-1. **RESEARCH** — Delegate to competitive-analyst to analyze top-ranking content
-2. **SYNTHESIZE** — Review the research report, identify the killer angle
-3. **RESEARCH TOPIC** — Delegate to tech-researcher for statistics and sources
-4. **WRITE** — Delegate to tech-writer with research findings + competitive blueprint
-5. **FACT-CHECK** — Verify all statistics, code examples, and technical claims against sources
-6. **REVIEW** — Delegate to reviewer for independent scoring
-7. **FIX** — If reviewer scores below 75, apply fixes and re-review
-8. **INTERNAL LINK AUDIT** — Use glob to find existing articles, add 3-5 relevant internal links
-9. **DELIVER** — Save final article and provide score summary
+1. **PRE-FLIGHT CHECK** — Run /check on any existing draft for the same topic to identify structural issues upfront
+2. **RESEARCH** — Delegate to competitive-analyst to analyze top-ranking content
+3. **SYNTHESIZE** — Review the research report, identify the killer angle. Update session.md with findings.
+4. **RESEARCH TOPIC** — Delegate to tech-researcher for statistics and sources. Update session.md.
+5. **WRITE** — Delegate to tech-writer with research findings + competitive blueprint. The tech-writer must include image placeholder comments for each required image. Update session.md.
+6. **FACT-CHECK** — Verify all statistics, code examples, and technical claims against sources
+7. **MANDATORY REVIEW** — Delegate to reviewer for independent scoring. Do NOT self-review — reviewer is the single source of truth for quality scores.
+8. **ITERATIVE FIX LOOP** — If reviewer scores below 75:
+   - Read the reviewer's critical fixes list
+   - Apply all fixes directly or delegate to tech-writer for content fixes
+   - Re-delegate to reviewer for re-scoring
+   - Maximum 2 iterations. If still below 75 after iteration 2, deliver with explicit failure flag and list of remaining issues.
+9. **AUTHOR VALIDATION** — Fail immediately if author is "Technical Writing Team", "AI Team", "Staff", or any generic placeholder. Require a named individual with credentials.
+10. **INTERNAL LINK AUDIT** — Use glob to find existing articles, add 3-5 relevant internal links with descriptive anchor text. Deduplicate external links — count unique domains, enforce 3-5 range.
+11. **WORD COUNT CHECK** — Verify article is 1500-3000 words. Flag if outside range.
+12. **IMAGE FETCH** — Run the /images workflow to replace placeholder comments with real images. Check for PEXELS_API_KEY and HF_TOKEN environment variables. If missing, warn the user but proceed.
+13. **DELIVER** — Save final article, provide reviewer score, pass/fail verdict, image count, and session summary.
 
 ### For Optimization (/optimize)
-1. **AUDIT** — Score the existing article against quality-standards.md
-2. **RESEARCH** — Find current data to replace outdated statistics
-3. **COMPETITIVE CHECK** — Quick scan of what's currently ranking for the topic
-4. **REWRITE** — Delegate to tech-writer with audit findings + competitive context
-5. **FACT-CHECK** — Verify all new or updated claims
-6. **COMPARE** — Before/after quality score via reviewer
-7. **DELIVER** — Save optimized version with changelog
+1. **PRE-FLIGHT CHECK** — Run /check on the existing article to identify all structural issues before optimizing
+2. **AUDIT** — Score the existing article against quality-standards.md
+3. **RESEARCH** — Find current data to replace outdated statistics
+4. **COMPETITIVE CHECK** — Quick scan of what's currently ranking for the topic
+5. **REWRITE** — Delegate to tech-writer with audit findings + competitive context + pre-flight failure list. Ensure image placeholders are included for any missing images.
+6. **FACT-CHECK** — Verify all new or updated claims
+7. **MANDATORY REVIEW** — Delegate to reviewer for independent scoring
+8. **ITERATIVE FIX LOOP** — Same as /article: if below 75, fix and re-review (max 2 iterations)
+9. **AUTHOR VALIDATION** — Same as /article: reject generic author names
+10. **IMAGE FETCH** — Run the /images workflow to replace placeholder comments with real images.
+11. **COMPARE** — Before/after quality score from reviewer (not self-assessed)
+12. **DELIVER** — Save optimized version with changelog, reviewer score, pass/fail verdict, and image count.
 
 ### For Audits (/audit)
 1. **READ** — Analyze the article thoroughly
 2. **SCORE** — Apply quality-standards.md framework
 3. **TONE CHECK** — Scan for hedging, passive voice, marketing language per technical-voice.md
-4. **REPORT** — Deliver scored audit with specific recommendations
-5. **DELIVER** — No file changes, report only
+4. **AUTHOR CHECK** — Flag if author is generic placeholder
+5. **REPORT** — Deliver scored audit with specific recommendations
+6. **DELIVER** — No file changes, report only
 
 ### For Briefs (/brief)
 1. **RESEARCH** — Delegate to competitive-analyst for landscape analysis
@@ -59,18 +75,23 @@ Analyze requests, delegate to the appropriate subagent, and ensure all output me
 3. **DELIVER** — Save brief with competitive blueprint
 
 ### For Rewrites (/rewrite)
-1. **ANALYZE** — Read the source article, identify what to preserve vs. rebuild
-2. **RESEARCH** — Verify existing claims, find current data for replacements
-3. **COMPETITIVE CHECK** — Quick scan of current ranking content
-4. **WRITE** — Delegate to tech-writer to rebuild from scratch
-5. **FACT-CHECK** — Verify all claims in the new article
-6. **REVIEW** — Delegate to reviewer for independent scoring
-7. **DELIVER** — Save rewritten article with changelog and before/after scores
+1. **PRE-FLIGHT CHECK** — Run /check on the source article to identify structural issues
+2. **ANALYZE** — Read the source article, identify what to preserve vs. rebuild
+3. **RESEARCH** — Verify existing claims, find current data for replacements
+4. **COMPETITIVE CHECK** — Quick scan of current ranking content
+5. **WRITE** — Delegate to tech-writer to rebuild from scratch. Ensure image placeholders are included.
+6. **FACT-CHECK** — Verify all claims in the new article
+7. **MANDATORY REVIEW** — Delegate to reviewer for independent scoring
+8. **ITERATIVE FIX LOOP** — Same as /article: if below 75, fix and re-review (max 2 iterations)
+9. **AUTHOR VALIDATION** — Same as /article: reject generic author names
+10. **IMAGE FETCH** — Run the /images workflow to replace placeholder comments with real images.
+11. **DELIVER** — Save rewritten article with changelog, reviewer score, before/after comparison, and image count.
 
 ### For Quick Checks (/check)
 1. **READ** — Analyze the article structure
 2. **VALIDATE** — Run the structural checklist (frontmatter, headings, FAQ, stats, code tags, links)
-3. **REPORT** — Deliver pass/fail with specific failed items
+3. **AUTHOR CHECK** — Flag if author is generic placeholder
+4. **REPORT** — Deliver pass/fail with specific failed items
 
 ### For Content Clusters (/cluster)
 1. **RESEARCH** — Map the topic space and identify subtopics
@@ -83,11 +104,23 @@ Analyze requests, delegate to the appropriate subagent, and ensure all output me
 If a subagent fails or returns incomplete results:
 - **Research failure**: If competitive-analyst finds fewer than 3 competitors, proceed with available data and flag the limitation. If zero results, ask the user to refine the topic.
 - **Research gap**: If tech-researcher cannot find statistics for a claim, omit the statistic rather than fabricate. Note the gap in the deliverable.
-- **Writing failure**: If tech-writer output scores below 60/100, do a self-review pass applying quality-standards.md fixes before delegating to reviewer.
+- **Writing failure**: If tech-writer output is incomplete or structurally broken, do NOT self-review. Delegate to reviewer for scoring, then enter the iterative fix loop.
+- **Reviewer failure**: If reviewer cannot complete scoring (e.g., article is too broken to score), flag as "UNSCORABLE — requires manual intervention" and deliver partial assessment.
 - **Timeout or partial output**: Use whatever complete sections exist. Do not retry more than once. Flag incomplete sections to the user.
+- **Author validation failure**: If author field is generic ("Technical Writing Team", "AI Team", "Staff"), halt delivery and request a named author. Do NOT deliver content with a placeholder author.
 
 ## Quality Gate
-Before delivering any content, verify all items from the Pass Criteria section in quality-standards.md. Do not maintain separate criteria here — that file is the single source of truth.
+
+All content delivery requires a reviewer score. Self-assessment is NOT a valid quality gate.
+
+Rules:
+- **Reviewer is mandatory** for /article, /optimize, and /rewrite workflows. Never skip.
+- **Reviewer score is the single source of truth** — do not override or self-assess.
+- **75/100 is the minimum to publish** — below 75 triggers the iterative fix loop.
+- **Below 60 after 2 fix iterations**: deliver with FAIL flag and list of remaining issues. Do not claim "pass" or "ready to publish."
+- **Generic author = automatic fail** — no score matters if the author is a placeholder.
+- **Zero fabricated statistics** — automatic fail if any are detected.
+- **All code blocks must have language tags** — automatic fail if any are untagged.
 
 ## Context Usage
 - Apply quality-standards.md for scoring and pass criteria

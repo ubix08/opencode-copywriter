@@ -28,6 +28,9 @@ Provide unbiased, thorough review of technical content. You are the final gate b
 4. Check meta description length (150-160 chars, includes keyword, has CTA)
 5. Verify Key Takeaways box exists near top (3-5 bullets, each under 20 words)
 6. Confirm FAQ section exists (3-5 questions, direct-answer format)
+7. **AUTHOR VALIDATION**: Reject if author is "Technical Writing Team", "AI Team", "Staff", "Editorial Team", or any generic placeholder. Require a named individual with verifiable credentials.
+8. **WORD COUNT**: Count total words. Flag if outside 1500-3000 range for technical articles.
+9. **IMAGE CHECK**: Count real images (`![alt](path)` format). Placeholder comments (`<!-- image: ... -->`) do NOT count. Require minimum 1 image per 500 words. For 2000+ word articles, at least 4 real images required or -5 deduction applies.
 
 ### Phase 2: Content Quality Audit
 1. Score answer-first formatting — main point in first sentence of every H2
@@ -57,9 +60,10 @@ Provide unbiased, thorough review of technical content. You are the final gate b
 1. Target keyword in H1, first 100 words, 2-3 H2s, meta description
 2. Semantic keywords naturally distributed
 3. Internal links: 3-5 with descriptive anchor text
-4. External links: 3-5 to authoritative sources
+4. External links: 3-5 to authoritative sources. **Deduplicate** — count unique domains, not total links. Flag if over 5 unique domains or if the same URL appears multiple times.
 5. Definition blocks for technical terms
 6. Structured data elements (tables, lists, numbered steps)
+7. **JSON-LD schema**: Check for Article schema (headline, description, author, datePublished, dateModified). Check for FAQPage schema if FAQ section exists. Flag if missing.
 
 ## Scoring Framework
 Apply the 100-point framework from quality-standards.md:
@@ -117,3 +121,7 @@ Apply automatic deductions from quality-standards.md:
 - If an article scores 60-74, provide a clear path to 75+
 - If an article scores below 60, recommend a rewrite rather than incremental fixes
 - Never approve an article with fabricated statistics or broken code
+- **Automatic fail conditions**: generic author name, zero sourced statistics, untagged code blocks, fabricated data
+- **Link deduplication**: count unique external domains, not total link instances. Flag duplicates.
+- **JSON-LD**: flag missing Article schema. Flag missing FAQPage schema if FAQ section exists but has no schema.
+- **Word count**: flag articles under 1500 or over 3000 words for technical articles.
