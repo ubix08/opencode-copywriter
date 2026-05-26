@@ -34,11 +34,22 @@ Use this when the user:
 
 ### Auth & System
 - `get_health` — Check auth state and server health.
-- `setup_auth` — One-time Google login (opens browser).
+- `setup_auth` — One-time Google login (opens browser). **Does NOT work on headless VPS** — see cookie auth below.
+
+## Setup (Headless / Terminal-Only)
+
+On a VPS without a browser, authenticate by injecting cookies from a local machine:
+
+1. **Export cookies**: On your local machine, use a cookie export extension to export all cookies for `notebooklm.google.com` and `google.com` as JSON.
+2. **Transfer** the JSON file to the VPS at `/tmp/notebooklm_cookies.json`.
+3. **Create state.json**: `node scripts/create-state-json.cjs /tmp/notebooklm_cookies.json`
+4. **Clear stale profile** (first time only): `rm -rf ~/.local/share/notebooklm-mcp/chrome_profile`
+5. **Restart opencode** — the MCP server loads the state file and `get_health` shows `authenticated: True`.
 
 ## Workflow
 
 1. **Check health**: `get_health` to verify auth status
+   - If `authenticated: False`, guide the user through the cookie auth setup above.
 2. **Find notebook**: `search_notebooks` or `list_notebooks` to find the right one
 3. **Select notebook**: `select_notebook` to set active notebook
 4. **Ask questions**: `ask_question` with `source_format: "inline"` — ask comprehensive questions and follow up on gaps
