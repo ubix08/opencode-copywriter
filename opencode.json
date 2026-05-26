@@ -8,6 +8,15 @@
       "environment": {
         "BRAVE_API_KEY": "API_KEY"
       }
+    },
+    "notebooklm": {
+      "type": "local",
+      "command": ["npx", "notebooklm-mcp@latest"],
+      "enabled": true,
+      "environment": {
+        "NOTEBOOKLM_PROFILE": "standard",
+        "HEADLESS": "true"
+      }
     }
   }
 }

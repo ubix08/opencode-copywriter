@@ -31,29 +31,30 @@ Analyze requests, delegate to the appropriate subagent, and ensure all output me
 ### For New Articles (/article)
 1. **PRE-FLIGHT CHECK** — Run /check on any existing draft for the same topic to identify structural issues upfront
 2. **RESEARCH** — Delegate to competitive-analyst to analyze top-ranking content
-3. **SYNTHESIZE** — Review the research report, identify the killer angle. Update session.md with findings.
-4. **RESEARCH TOPIC** — Delegate to tech-researcher for statistics and sources. Update session.md.
-5. **WRITE** — Delegate to tech-writer with research findings + competitive blueprint. The tech-writer must include image placeholder comments for each required image. Update session.md.
-6. **FACT-CHECK** — Verify all statistics, code examples, and technical claims against sources
-7. **MANDATORY REVIEW** — Delegate to reviewer for independent scoring. Do NOT self-review — reviewer is the single source of truth for quality scores.
-8. **ITERATIVE FIX LOOP** — If reviewer scores below 75:
+3. **NOTEBOOKLM RESEARCH** — If the topic relates to a documented product/framework the user has uploaded to NotebookLM, delegate to notebooklm agent for source-grounded answers. Update session.md.
+4. **SYNTHESIZE** — Review all research reports, identify the killer angle. Update session.md with findings.
+5. **RESEARCH TOPIC** — Delegate to tech-researcher for statistics and sources. Update session.md.
+6. **WRITE** — Delegate to tech-writer with research findings + competitive blueprint + notebooklm findings. The tech-writer must include image placeholder comments for each required image. Update session.md.
+7. **FACT-CHECK** — Verify all statistics, code examples, and technical claims against sources. Use `notebooklm` to verify claims if the topic is covered by uploaded documentation.
+8. **MANDATORY REVIEW** — Delegate to reviewer for independent scoring. Do NOT self-review — reviewer is the single source of truth for quality scores.
+9. **ITERATIVE FIX LOOP** — If reviewer scores below 75:
    - Read the reviewer's critical fixes list
    - Apply all fixes directly or delegate to tech-writer for content fixes
    - Re-delegate to reviewer for re-scoring
    - Maximum 2 iterations. If still below 75 after iteration 2, deliver with explicit failure flag and list of remaining issues.
-9. **AUTHOR VALIDATION** — Fail immediately if author is "Technical Writing Team", "AI Team", "Staff", or any generic placeholder. Require a named individual with credentials.
-10. **INTERNAL LINK AUDIT** — Use glob to find existing articles, add 3-5 relevant internal links with descriptive anchor text. Deduplicate external links — count unique domains, enforce 3-5 range.
-11. **WORD COUNT CHECK** — Verify article is 1500-3000 words. Flag if outside range.
-12. **IMAGE FETCH** — Run the /images workflow to replace placeholder comments with real images. Check for PEXELS_API_KEY and HF_TOKEN environment variables. If missing, warn the user but proceed.
-13. **DELIVER** — Save final article, provide reviewer score, pass/fail verdict, image count, and session summary.
+10. **AUTHOR VALIDATION** — Fail immediately if author is "Technical Writing Team", "AI Team", "Staff", or any generic placeholder. Require a named individual with credentials.
+11. **INTERNAL LINK AUDIT** — Use glob to find existing articles, add 3-5 relevant internal links with descriptive anchor text. Deduplicate external links — count unique domains, enforce 3-5 range.
+12. **WORD COUNT CHECK** — Verify article is 1500-3000 words. Flag if outside range.
+13. **IMAGE FETCH** — Run the /images workflow to replace placeholder comments with real images. Check for PEXELS_API_KEY and HF_TOKEN environment variables. If missing, warn the user but proceed.
+14. **DELIVER** — Save final article, provide reviewer score, pass/fail verdict, image count, and session summary.
 
 ### For Optimization (/optimize)
 1. **PRE-FLIGHT CHECK** — Run /check on the existing article to identify all structural issues before optimizing
 2. **AUDIT** — Score the existing article against quality-standards.md
-3. **RESEARCH** — Find current data to replace outdated statistics
+3. **RESEARCH** — Find current data to replace outdated statistics. Use notebooklm if the topic is covered by uploaded documentation.
 4. **COMPETITIVE CHECK** — Quick scan of what's currently ranking for the topic
 5. **REWRITE** — Delegate to tech-writer with audit findings + competitive context + pre-flight failure list. Ensure image placeholders are included for any missing images.
-6. **FACT-CHECK** — Verify all new or updated claims
+6. **FACT-CHECK** — Verify all new or updated claims. Use notebooklm to verify claims against uploaded documentation.
 7. **MANDATORY REVIEW** — Delegate to reviewer for independent scoring
 8. **ITERATIVE FIX LOOP** — Same as /article: if below 75, fix and re-review (max 2 iterations)
 9. **AUTHOR VALIDATION** — Same as /article: reject generic author names
@@ -77,10 +78,10 @@ Analyze requests, delegate to the appropriate subagent, and ensure all output me
 ### For Rewrites (/rewrite)
 1. **PRE-FLIGHT CHECK** — Run /check on the source article to identify structural issues
 2. **ANALYZE** — Read the source article, identify what to preserve vs. rebuild
-3. **RESEARCH** — Verify existing claims, find current data for replacements
+3. **RESEARCH** — Verify existing claims, find current data for replacements. Use notebooklm if the topic is covered by uploaded documentation.
 4. **COMPETITIVE CHECK** — Quick scan of current ranking content
 5. **WRITE** — Delegate to tech-writer to rebuild from scratch. Ensure image placeholders are included.
-6. **FACT-CHECK** — Verify all claims in the new article
+6. **FACT-CHECK** — Verify all claims in the new article. Use notebooklm to verify against uploaded documentation.
 7. **MANDATORY REVIEW** — Delegate to reviewer for independent scoring
 8. **ITERATIVE FIX LOOP** — Same as /article: if below 75, fix and re-review (max 2 iterations)
 9. **AUTHOR VALIDATION** — Same as /article: reject generic author names
@@ -102,6 +103,7 @@ Analyze requests, delegate to the appropriate subagent, and ensure all output me
 ## Error Handling & Fallbacks
 
 If a subagent fails or returns incomplete results:
+- **NotebookLM failure**: If notebooklm is unauthenticated, inform the user to run `setup_auth` (one-time Google login). If notebooklm is unavailable, fall back to web search.
 - **Research failure**: If competitive-analyst finds fewer than 3 competitors, proceed with available data and flag the limitation. If zero results, ask the user to refine the topic.
 - **Research gap**: If tech-researcher cannot find statistics for a claim, omit the statistic rather than fabricate. Note the gap in the deliverable.
 - **Writing failure**: If tech-writer output is incomplete or structurally broken, do NOT self-review. Delegate to reviewer for scoring, then enter the iterative fix loop.
