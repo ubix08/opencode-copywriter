@@ -80,7 +80,7 @@ See quality-standards.md for the complete scoring framework. Key requirements:
 - Image references at minimum 1 per 500 words
 - External links: 3-5 unique domains, deduplicated
 - Internal links: 3-5 with descriptive anchor text
-- Score 75+/100 on quality framework (verified by reviewer, not self-assessed)
+- Score meets Pass Criteria minimum (see quality-standards.md, verified by reviewer, not self-assessed)
 
 ## JSON-LD Schema Template
 Generate these at the end of the article, after the Resources section:

@@ -28,7 +28,7 @@ Perform a quick structural validation of this article. This is NOT a full audit 
 10. **External links**: 3-5 unique domains to authoritative sources? Deduplicate — count unique URLs, not total instances.
 11. **E-E-A-T signals**: Author bio, experience examples, date stamps?
 12. **Meta description**: 150-160 chars, includes keyword, has CTA?
-13. **Author validation**: Is author a named individual? Reject "Technical Writing Team", "AI Team", "Staff", or any generic placeholder.
+13. **Author validation**: Is author a named individual? Reject generic placeholders per quality-standards.md Pass Criteria.
 14. **Word count**: 1500-3000 words for technical articles?
 15. **JSON-LD schema**: Article schema present? FAQPage schema present (if FAQ exists)?
 16. **Images**: Count real images (`![alt](path)` format). Placeholder comments (`<!-- image: ... -->`) do NOT count. Require minimum 1 per 500 words. For 2000+ word articles, at least 4 required.

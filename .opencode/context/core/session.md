@@ -38,7 +38,12 @@ Status: [pending / in-progress / complete / skipped]
   3. [opportunity]
 - Research report: content/research/YYYY-MM-DD-topic-research.md
 
-## Phase 2: Topic Research (tech-researcher)
+## Phase 2: NotebookLM Research (notebooklm)
+Status: [pending / in-progress / complete / skipped]
+- Notebooks queried: [names]
+- Key findings: [source-grounded answers]
+
+## Phase 3: Topic Research (tech-researcher)
 Status: [pending / in-progress / complete / skipped]
 - Key findings:
   1. [finding with source]
@@ -48,7 +53,7 @@ Status: [pending / in-progress / complete / skipped]
   2. [stat] — [source URL, date]
 - Recommended angle: [unique perspective]
 
-## Phase 3: Writing (tech-writer)
+## Phase 4: Writing (tech-writer)
 Status: [pending / in-progress / complete / skipped]
 - Article: content/articles/YYYY-MM-DD-slug.md
 - Word count: [count]
@@ -56,18 +61,49 @@ Status: [pending / in-progress / complete / skipped]
 - Internal links: [count]
 - Image references: [count]
 
-## Phase 4: Review (reviewer)
+## Phase 5: Fact-Check
+Status: [pending / in-progress / complete / skipped]
+- Statistics verified: [count]
+- Code examples verified: [count]
+- Technical claims verified: [count]
+- Issues found: [count]
+
+## Phase 6: Review (reviewer)
 Status: [pending / in-progress / complete / skipped]
 - Overall score: [X/100]
 - Verdict: [PASS / FAIL]
 - Critical fixes: [list if any]
 - Fix iterations: [0/1/2]
 
-## Phase 5: Delivery (orchestrator)
+## Phase 7: Iterative Fix Loop
+Status: [pending / in-progress / complete / skipped]
+- Iteration: [1/2]
+- Pre-fix score: [X/100]
+- Post-fix score: [X/100]
+- Remaining issues: [list]
+
+## Phase 8: Author Validation
+Status: [pending / in-progress / complete / skipped]
+- Author name: [name]
+- Verdict: [valid / generic placeholder]
+- Action: [passed / rejected]
+
+## Phase 9: Link Audit
+Status: [pending / in-progress / complete / skipped]
+- Internal links: [count with descriptive anchor text]
+- External unique domains: [count]
+
+## Phase 10: Image Fetch
+Status: [pending / in-progress / complete / skipped]
+- Placeholders found: [count]
+- Images replaced: [count]
+
+## Phase 11: Delivery (orchestrator)
 Status: [pending / in-progress / complete]
 - Final deliverables: [list files]
 - Final reviewer score: [X/100]
 - Final verdict: [PASS / FAIL]
+- Word count: [count]
 - Notes: [any issues, limitations, or follow-up recommendations]
 ```
 

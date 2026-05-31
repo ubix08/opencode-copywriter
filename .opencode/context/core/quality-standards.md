@@ -1,12 +1,12 @@
 # Technical Writing Quality Standards
-**Version: 1.0 | Last Updated: 2026-05-25**
+**Version: 1.1 | Last Updated: 2026-05-31**
 
 ## Scoring Framework (100 points)
 
 ### Content Quality (30 points)
 - Answer-first: main point in first paragraph, stat in first sentence of each H2
 - Actionable: every section has specific steps, examples, or code
-- Depth: 1500-3000 words for technical articles, no fluff
+- Depth: 1500-3000 words for standard technical articles (pillar pages: 3000-5000 words, changelog/release notes: 500-1500 words, case studies: 1500-2500 words, opinion pieces: 1200-2500 words), no fluff
 - Structure: logical flow from problem → context → solution → next steps
 - Code quality: all code blocks tested, commented, with language tags
 - Originality: information gain — what does this add that top 5 results don't?
@@ -48,8 +48,8 @@
 - At least 3 sourced statistics
 - FAQ schema included (JSON-LD FAQPage if FAQ section exists)
 - Article schema included (JSON-LD Article)
-- Named author — no generic placeholders ("Technical Writing Team", "AI Team", "Staff")
-- Word count: 1500-3000 for technical articles
+- Named author — no generic placeholders ("Technical Writing Team", "AI Team", "Staff", "Editorial Team", or any anonymous placeholder)
+- Word count: 1500-3000 for standard technical articles (see Content Quality — Depth for per-type ranges)
 - External links: 3-5 unique domains, deduplicated
 
 ## Anti-Patterns (automatic deductions)
