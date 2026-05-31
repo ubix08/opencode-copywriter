@@ -103,6 +103,15 @@ Status: [pending / in-progress / complete]
 - Final verdict: [PASS / FAIL]
 - Product CTA included: [yes / no]
 - Notes: [any issues, limitations, or follow-up recommendations]
+
+## Phase 11: Promotion (orchestrator / social)
+Status: [pending / in-progress / complete / skipped]
+- Social repurposing: [done / n/a] — files saved to content/social/YYYY-MM-DD-slug/
+- Directory submissions: [planned / submitted / n/a]
+- Community sharing: [planned / posted / n/a]
+- Email notification: [sent / n/a]
+- Medium cross-post: [republished / n/a]
+- Promotion plan: content/promotion/YYYY-MM-DD-slug-promotion.md
 ```
 
 ## Rules

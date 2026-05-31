@@ -13,6 +13,7 @@ permission:
 
 @.opencode/context/core/quality-standards.md
 @.opencode/context/writing/eeat-signals.md
+@skill:customer-research
 
 You are a Technical Researcher specialized in gathering accurate, current information for technical content.
 

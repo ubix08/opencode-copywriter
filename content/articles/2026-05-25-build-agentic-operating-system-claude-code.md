@@ -4,7 +4,9 @@ description: "Build a multi-agent system with Claude Code: 5-layer architecture,
 date: 2026-05-25
 lastUpdated: 2026-05-25
 tags: [claude-code, agentic-systems, mcp, ai-agents, automation, multi-agent, agent-teams, claude]
-author: Technical Writing Team
+author: Rachid Hakim
+product: "Build & Sell Your First Claude Code Agent — Practical Guide (gumroad.com/rachidhakim)"
+leadMagnet: "Free Agentic OS Architecture Template"
 ---
 
 **Key Takeaways:**
@@ -609,13 +611,11 @@ Agentic OS adds complexity that isn't justified for simple, infrequent tasks. If
 
 ## About the Author
 
-<!-- Author bio placeholder — replace with real author information -->
+**Rachid Hakim** — I'm an ERP consultant turned AI builder. I build practical tools for developers, freelancers, and indie hackers who want to ship faster. I've been building multi-agent systems with Claude Code since the early beta and this guide is based on what actually works in production — not theory.
 
-**Technical Writing Team** — Senior engineers and AI practitioners with hands-on experience building multi-agent systems in production. This guide is based on real implementations tested with Claude Code v2.1.63+, Sonnet 4.6, and the MCP SDK 2026.1.26.
-
-- [Read more articles on agentic systems](/topics/agentic-systems)
-- [Explore our Claude Code tutorials](/topics/claude-code)
-- [Browse MCP integration guides](/topics/mcp)
+- **Products**: [Interactive HTML tools and technical guides](https://gumroad.com/rachidhakim) for devs and creators
+- **Get the free Agentic OS Architecture Template**: A ready-to-use CLAUDE.md and skill structure for your own agentic system
+- **Follow me**: [@rachidhakim](https://x.com/rachidhakim) on X for daily AI dev workflows
 
 ## Resources & Downloads
 

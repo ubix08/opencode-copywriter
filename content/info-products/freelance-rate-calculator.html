@@ -1,0 +1,1169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Freelance Rate Calculator</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;1,9..144,300&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+  :root {
+    --bg:        #0d0f0e;
+    --surface:   #141716;
+    --border:    #242824;
+    --border-hi: #2e352e;
+    --text:      #e8ede9;
+    --muted:     #6b7a6c;
+    --accent:    #a8e06a;
+    --accent-dk: #7ab84a;
+    --warn:      #e0a86a;
+    --danger:    #e06a6a;
+    --mono:      'DM Mono', monospace;
+    --serif:     'Fraunces', Georgia, serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { font-size: 16px; scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--mono);
+    font-size: 0.875rem;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* Grain overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.4;
+  }
+
+  /* ─── Layout ─── */
+  .shell {
+    position: relative;
+    z-index: 1;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 4rem;
+  }
+
+  /* ─── Header ─── */
+  header {
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 1.5rem;
+    margin-bottom: 2.5rem;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .logo-mark {
+    display: inline-block;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--accent);
+    margin-right: 0.5rem;
+    vertical-align: middle;
+    box-shadow: 0 0 12px var(--accent);
+  }
+
+  h1 {
+    font-family: var(--serif);
+    font-size: clamp(1.5rem, 4vw, 2.25rem);
+    font-weight: 300;
+    letter-spacing: -0.02em;
+    color: var(--text);
+  }
+
+  h1 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .header-sub {
+    color: var(--muted);
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  /* ─── Grid ─── */
+  .grid {
+    display: grid;
+    grid-template-columns: 380px 1fr;
+    gap: 1.5rem;
+    align-items: start;
+  }
+
+  @media (max-width: 800px) {
+    .grid { grid-template-columns: 1fr; }
+  }
+
+  /* ─── Panels ─── */
+  .panel {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+    animation: fadeUp 0.4s ease both;
+  }
+
+  .panel:nth-child(2) { animation-delay: 0.05s; }
+  .panel:nth-child(3) { animation-delay: 0.10s; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .panel-header {
+    padding: 0.75rem 1.25rem;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .panel-title {
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .panel-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    flex-shrink: 0;
+  }
+
+  .panel-body { padding: 1.25rem; }
+
+  /* ─── Form Fields ─── */
+  .field { margin-bottom: 1rem; }
+
+  label {
+    display: block;
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.35rem;
+  }
+
+  .input-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  .input-prefix {
+    position: absolute;
+    left: 0.75rem;
+    color: var(--muted);
+    font-family: var(--mono);
+    font-size: 0.875rem;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  input[type="number"], input[type="range"] {
+    width: 100%;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    color: var(--text);
+    font-family: var(--mono);
+    font-size: 0.875rem;
+    padding: 0.6rem 0.75rem 0.6rem 1.75rem;
+    outline: none;
+    transition: border-color 0.15s;
+    -moz-appearance: textfield;
+  }
+
+  input[type="number"]::-webkit-outer-spin-button,
+  input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; }
+
+  input[type="number"]:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 2px rgba(168,224,106,0.12);
+  }
+
+  input[type="range"] {
+    padding: 0;
+    height: 36px;
+    -webkit-appearance: none;
+    cursor: pointer;
+    background: transparent;
+    border: none;
+  }
+
+  input[type="range"]::-webkit-slider-runnable-track {
+    height: 3px;
+    background: var(--border-hi);
+    border-radius: 2px;
+  }
+
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 16px; height: 16px;
+    border-radius: 50%;
+    background: var(--accent);
+    margin-top: -6.5px;
+    box-shadow: 0 0 8px rgba(168,224,106,0.4);
+    transition: box-shadow 0.15s;
+  }
+
+  input[type="range"]:hover::-webkit-slider-thumb {
+    box-shadow: 0 0 16px rgba(168,224,106,0.6);
+  }
+
+  .range-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .range-val {
+    font-family: var(--mono);
+    font-size: 0.875rem;
+    color: var(--accent);
+    min-width: 2.5rem;
+    text-align: right;
+    flex-shrink: 0;
+  }
+
+  .field-hint {
+    font-size: 0.65rem;
+    color: var(--muted);
+    margin-top: 0.25rem;
+    letter-spacing: 0.04em;
+  }
+
+  /* ─── Section divider ─── */
+  .section-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    border-top: 1px solid var(--border);
+    padding-top: 1rem;
+    margin-top: 1rem;
+    margin-bottom: 0.75rem;
+  }
+
+  /* ─── Results ─── */
+  .results-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+  }
+
+  .result-card {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    padding: 1rem;
+    transition: border-color 0.2s;
+  }
+
+  .result-card.primary {
+    border-color: var(--accent);
+    background: rgba(168,224,106,0.04);
+    grid-column: 1 / -1;
+  }
+
+  .result-card.warn-card { border-color: rgba(224,168,106,0.4); }
+  .result-card.danger-card { border-color: rgba(224,106,106,0.4); }
+
+  .result-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.4rem;
+  }
+
+  .result-value {
+    font-family: var(--serif);
+    font-size: 1.75rem;
+    font-weight: 600;
+    color: var(--text);
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+
+  .result-card.primary .result-value {
+    font-size: 2.25rem;
+    color: var(--accent);
+  }
+
+  .result-sub {
+    font-size: 0.7rem;
+    color: var(--muted);
+    margin-top: 0.25rem;
+  }
+
+  /* ─── Tier table ─── */
+  .tier-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 0.5rem;
+  }
+
+  .tier-table th {
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-align: left;
+    padding: 0.5rem 0.75rem;
+    border-bottom: 1px solid var(--border);
+    font-weight: 400;
+  }
+
+  .tier-table td {
+    padding: 0.65rem 0.75rem;
+    font-size: 0.8rem;
+    border-bottom: 1px solid var(--border);
+    vertical-align: middle;
+  }
+
+  .tier-table tr:last-child td { border-bottom: none; }
+
+  .tier-table tr.active-row td { background: rgba(168,224,106,0.06); }
+
+  .tier-badge {
+    display: inline-block;
+    font-size: 0.6rem;
+    padding: 0.15rem 0.4rem;
+    border-radius: 2px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .tier-badge.low  { background: rgba(224,106,106,0.15); color: var(--danger); }
+  .tier-badge.mid  { background: rgba(224,168,106,0.15); color: var(--warn); }
+  .tier-badge.good { background: rgba(168,224,106,0.15); color: var(--accent); }
+  .tier-badge.high { background: rgba(168,224,106,0.25); color: var(--accent-dk); border: 1px solid rgba(168,224,106,0.3); }
+
+  .tier-val { color: var(--text); font-weight: 500; }
+  .tier-muted { color: var(--muted); }
+
+  /* ─── Chart area ─── */
+  .chart-wrap {
+    position: relative;
+    height: 220px;
+    margin-top: 0.5rem;
+  }
+
+  /* ─── Breakdown list ─── */
+  .breakdown {
+    margin-top: 0.75rem;
+    border-top: 1px solid var(--border);
+    padding-top: 0.75rem;
+  }
+
+  .breakdown-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.4rem 0;
+    border-bottom: 1px dashed var(--border);
+    font-size: 0.8rem;
+  }
+
+  .breakdown-row:last-child { border-bottom: none; }
+
+  .breakdown-key { color: var(--muted); }
+  .breakdown-val { color: var(--text); font-weight: 500; }
+  .breakdown-val.accent { color: var(--accent); }
+  .breakdown-val.warn   { color: var(--warn); }
+
+  /* ─── Project estimator ─── */
+  .proj-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+  }
+
+  @media (max-width: 600px) { .proj-grid { grid-template-columns: 1fr; } }
+
+  .proj-card {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    padding: 0.875rem;
+  }
+
+  .proj-name {
+    font-size: 0.7rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.5rem;
+  }
+
+  .proj-hours {
+    font-size: 0.75rem;
+    color: var(--muted);
+    margin-bottom: 0.25rem;
+  }
+
+  .proj-price {
+    font-family: var(--serif);
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--text);
+    letter-spacing: -0.02em;
+  }
+
+  .proj-day {
+    font-size: 0.7rem;
+    color: var(--muted);
+    margin-top: 0.15rem;
+  }
+
+  /* ─── Upwork section ─── */
+  .upwork-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.8rem;
+  }
+  .upwork-row:last-child { border-bottom: none; }
+  .upwork-label { color: var(--muted); }
+  .upwork-val   { color: var(--text); }
+  .upwork-val.accent { color: var(--accent); }
+  .upwork-val.warn   { color: var(--warn); }
+  .upwork-val.danger { color: var(--danger); }
+
+  /* ─── Export / Reset ─── */
+  .actions {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  button {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.6rem 1.25rem;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: all 0.15s;
+    border: none;
+    outline: none;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: #0d0f0e;
+    font-weight: 500;
+  }
+
+  .btn-primary:hover {
+    background: var(--accent-dk);
+    box-shadow: 0 0 20px rgba(168,224,106,0.25);
+  }
+
+  .btn-ghost {
+    background: transparent;
+    border: 1px solid var(--border-hi);
+    color: var(--muted);
+  }
+
+  .btn-ghost:hover {
+    border-color: var(--muted);
+    color: var(--text);
+  }
+
+  /* ─── Footer ─── */
+  .footer {
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 0.7rem;
+    letter-spacing: 0.06em;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  /* ─── Tooltips ─── */
+  [data-tip] { position: relative; cursor: help; }
+  [data-tip]::after {
+    content: attr(data-tip);
+    position: absolute;
+    bottom: calc(100% + 6px);
+    left: 50%;
+    transform: translateX(-50%);
+    background: #1e241e;
+    border: 1px solid var(--border-hi);
+    color: var(--text);
+    font-size: 0.7rem;
+    padding: 0.4rem 0.6rem;
+    border-radius: 3px;
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.15s;
+    z-index: 100;
+    max-width: 200px;
+    white-space: normal;
+    text-align: center;
+    line-height: 1.4;
+  }
+  [data-tip]:hover::after { opacity: 1; }
+
+  /* ─── Scrollbar ─── */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border-hi); border-radius: 3px; }
+
+  /* ─── Print ─── */
+  @media print {
+    body { background: white; color: black; }
+    body::before { display: none; }
+    .actions, .panel-dot { display: none; }
+    .panel { border: 1px solid #ccc; }
+    .result-value, .result-card.primary .result-value { color: #2a6a00; }
+    input { border: 1px solid #ccc; background: white; color: black; }
+  }
+</style>
+</head>
+<body>
+<div class="shell">
+
+  <!-- Header -->
+  <header>
+    <div>
+      <div class="header-sub" style="margin-bottom:0.35rem">
+        <span class="logo-mark"></span>Gumroad Factory · F1 Tool
+      </div>
+      <h1>Freelance Rate <em>&amp; Project</em> Calculator</h1>
+    </div>
+    <div style="text-align:right">
+      <div class="header-sub">v1.0 · 2026</div>
+      <div style="color:var(--muted);font-size:0.7rem;margin-top:0.2rem">All calculations run locally.<br>Nothing is sent anywhere.</div>
+    </div>
+  </header>
+
+  <div class="grid">
+
+    <!-- ═══ LEFT COL: Inputs ═══ -->
+    <div>
+
+      <!-- Income Inputs -->
+      <div class="panel">
+        <div class="panel-header">
+          <div class="panel-dot"></div>
+          <span class="panel-title">Income & Time Targets</span>
+        </div>
+        <div class="panel-body">
+
+          <div class="field">
+            <label data-tip="Your take-home goal after taxes">Target Annual Income</label>
+            <div class="input-wrap">
+              <span class="input-prefix">$</span>
+              <input type="number" id="income" value="80000" min="10000" max="1000000" step="1000">
+            </div>
+            <div class="field-hint">Net income you want to take home</div>
+          </div>
+
+          <div class="field">
+            <label data-tip="Hours per week you're willing to work on paid client projects">Billable Hours / Week</label>
+            <div class="range-row">
+              <input type="range" id="billable" min="5" max="50" value="30" step="1">
+              <span class="range-val" id="billable-val">30h</span>
+            </div>
+            <div class="field-hint">Client work only — exclude admin, sales, learning</div>
+          </div>
+
+          <div class="field">
+            <label data-tip="Paid time off, sick days, holidays">Vacation Weeks / Year</label>
+            <div class="range-row">
+              <input type="range" id="vacation" min="0" max="12" value="4" step="1">
+              <span class="range-val" id="vacation-val">4 wks</span>
+            </div>
+          </div>
+
+          <div class="section-label">Business Costs</div>
+
+          <div class="field">
+            <label data-tip="Software, hardware, coworking, professional fees">Monthly Overhead</label>
+            <div class="input-wrap">
+              <span class="input-prefix">$</span>
+              <input type="number" id="overhead" value="500" min="0" max="10000" step="50">
+            </div>
+            <div class="field-hint">Tools, subscriptions, insurance, accounting</div>
+          </div>
+
+          <div class="field">
+            <label data-tip="Approximate % of gross revenue going to income + self-employment tax">Tax Rate</label>
+            <div class="range-row">
+              <input type="range" id="tax" min="10" max="50" value="30" step="1">
+              <span class="range-val" id="tax-val">30%</span>
+            </div>
+            <div class="field-hint">Self-employment + income tax combined estimate</div>
+          </div>
+
+          <div class="field">
+            <label data-tip="What % of your proposals / outreach actually converts to paid work">Win Rate</label>
+            <div class="range-row">
+              <input type="range" id="winrate" min="5" max="90" value="30" step="5">
+              <span class="range-val" id="winrate-val">30%</span>
+            </div>
+            <div class="field-hint">Used to calculate how many proposals you need to send</div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Project Complexity -->
+      <div class="panel" style="margin-top:1.25rem">
+        <div class="panel-header">
+          <div class="panel-dot"></div>
+          <span class="panel-title">Project Size Estimator</span>
+        </div>
+        <div class="panel-body">
+          <p style="color:var(--muted);font-size:0.75rem;margin-bottom:1rem">
+            Adjust your complexity multipliers. These scale your hourly rate into project quotes.
+          </p>
+
+          <div class="field">
+            <label>Small project hours</label>
+            <div class="range-row">
+              <input type="range" id="sm-hrs" min="2" max="40" value="10" step="1">
+              <span class="range-val" id="sm-hrs-val">10h</span>
+            </div>
+          </div>
+          <div class="field">
+            <label>Medium project hours</label>
+            <div class="range-row">
+              <input type="range" id="md-hrs" min="10" max="120" value="40" step="5">
+              <span class="range-val" id="md-hrs-val">40h</span>
+            </div>
+          </div>
+          <div class="field">
+            <label>Large project hours</label>
+            <div class="range-row">
+              <input type="range" id="lg-hrs" min="40" max="500" value="120" step="10">
+              <span class="range-val" id="lg-hrs-val">120h</span>
+            </div>
+          </div>
+          <div class="field">
+            <label>Scope Buffer</label>
+            <div class="range-row">
+              <input type="range" id="buffer" min="0" max="50" value="20" step="5">
+              <span class="range-val" id="buffer-val">20%</span>
+            </div>
+            <div class="field-hint">Extra % added to all estimates for scope creep</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ═══ RIGHT COL: Results ═══ -->
+    <div style="display:flex;flex-direction:column;gap:1.25rem">
+
+      <!-- Primary Results -->
+      <div class="panel">
+        <div class="panel-header">
+          <div class="panel-dot"></div>
+          <span class="panel-title">Your Minimum Viable Rate</span>
+        </div>
+        <div class="panel-body">
+
+          <div class="results-grid">
+            <div class="result-card primary">
+              <div class="result-label">Minimum Hourly Rate</div>
+              <div class="result-value" id="res-hourly">—</div>
+              <div class="result-sub" id="res-hourly-sub">This is your floor — quote below this and you lose money</div>
+            </div>
+            <div class="result-card">
+              <div class="result-label">Day Rate</div>
+              <div class="result-value" id="res-day">—</div>
+              <div class="result-sub">8-hour day</div>
+            </div>
+            <div class="result-card">
+              <div class="result-label">Target Monthly Revenue</div>
+              <div class="result-value" id="res-monthly">—</div>
+              <div class="result-sub">Gross before tax &amp; overhead</div>
+            </div>
+          </div>
+
+          <!-- Breakdown -->
+          <div class="breakdown">
+            <div class="breakdown-row">
+              <span class="breakdown-key">Working weeks / year</span>
+              <span class="breakdown-val" id="bd-weeks">—</span>
+            </div>
+            <div class="breakdown-row">
+              <span class="breakdown-key">Billable hours / year</span>
+              <span class="breakdown-val" id="bd-hours">—</span>
+            </div>
+            <div class="breakdown-row">
+              <span class="breakdown-key">Annual overhead</span>
+              <span class="breakdown-val warn" id="bd-overhead">—</span>
+            </div>
+            <div class="breakdown-row">
+              <span class="breakdown-key">Gross needed (pre-tax)</span>
+              <span class="breakdown-val accent" id="bd-gross">—</span>
+            </div>
+            <div class="breakdown-row">
+              <span class="breakdown-key">Tax cushion</span>
+              <span class="breakdown-val warn" id="bd-tax">—</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Rate Positioning -->
+      <div class="panel">
+        <div class="panel-header">
+          <div class="panel-dot"></div>
+          <span class="panel-title">Market Rate Positioning</span>
+        </div>
+        <div class="panel-body">
+          <p style="color:var(--muted);font-size:0.75rem;margin-bottom:0.75rem">
+            How your minimum rate compares across common freelance scenarios.
+          </p>
+          <table class="tier-table" id="tier-table">
+            <thead>
+              <tr>
+                <th>Tier</th>
+                <th>Rate Range</th>
+                <th>Your Position</th>
+                <th>Signal</th>
+              </tr>
+            </thead>
+            <tbody id="tier-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Chart -->
+      <div class="panel">
+        <div class="panel-header">
+          <div class="panel-dot"></div>
+          <span class="panel-title">Revenue Breakdown</span>
+        </div>
+        <div class="panel-body">
+          <div class="chart-wrap">
+            <canvas id="chart"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <!-- Project Quotes -->
+      <div class="panel">
+        <div class="panel-header">
+          <div class="panel-dot"></div>
+          <span class="panel-title">Project Quote Generator</span>
+        </div>
+        <div class="panel-body">
+          <p style="color:var(--muted);font-size:0.75rem;margin-bottom:1rem">
+            Ready-to-use project prices based on your hourly rate + scope buffer.
+          </p>
+          <div class="proj-grid" id="proj-grid"></div>
+        </div>
+      </div>
+
+      <!-- Upwork fee calculator -->
+      <div class="panel">
+        <div class="panel-header">
+          <div class="panel-dot"></div>
+          <span class="panel-title">Platform Fee Impact</span>
+        </div>
+        <div class="panel-body">
+          <p style="color:var(--muted);font-size:0.75rem;margin-bottom:0.75rem">
+            How platform fees erode your effective rate. Quote gross, not net.
+          </p>
+          <div id="platform-rows"></div>
+        </div>
+      </div>
+
+      <!-- Proposal volume -->
+      <div class="panel">
+        <div class="panel-header">
+          <div class="panel-dot"></div>
+          <span class="panel-title">Pipeline Required</span>
+        </div>
+        <div class="panel-body">
+          <p style="color:var(--muted);font-size:0.75rem;margin-bottom:0.75rem">
+            At your <span id="wr-label" style="color:var(--accent)">30%</span> win rate,
+            here's the volume you need:
+          </p>
+          <div id="pipeline-rows"></div>
+
+          <div class="actions">
+            <button class="btn-primary" onclick="exportCSV()">Export as CSV</button>
+            <button class="btn-ghost" onclick="window.print()">Print / Save PDF</button>
+            <button class="btn-ghost" onclick="resetDefaults()">Reset</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="footer">
+    <span>Freelance Rate Calculator · Gumroad Factory</span>
+    <span>All calculations are local · Nothing stored or transmitted</span>
+  </div>
+
+</div>
+
+<script>
+// ─── State ───────────────────────────────────────────────────────────
+const STORAGE_KEY = 'frc_v1';
+
+const DEFAULTS = {
+  income: 80000,
+  billable: 30,
+  vacation: 4,
+  overhead: 500,
+  tax: 30,
+  winrate: 30,
+  smHrs: 10,
+  mdHrs: 40,
+  lgHrs: 120,
+  buffer: 20,
+};
+
+let state = loadState();
+let chart = null;
+
+// ─── Persistence ─────────────────────────────────────────────────────
+function loadState() {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    return saved ? { ...DEFAULTS, ...JSON.parse(saved) } : { ...DEFAULTS };
+  } catch { return { ...DEFAULTS }; }
+}
+
+function saveState() {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch {}
+}
+
+// ─── DOM helpers ─────────────────────────────────────────────────────
+function $(id) { return document.getElementById(id); }
+function fmt(n) { return '$' + Math.round(n).toLocaleString(); }
+function fmtR(n) { return '$' + n.toFixed(0) + '/hr'; }
+
+// ─── Wire inputs ─────────────────────────────────────────────────────
+const inputs = {
+  income:   { el: $('income'),   key: 'income',   range: false },
+  billable: { el: $('billable'), key: 'billable', range: true,  disp: $('billable-val'), suffix: 'h' },
+  vacation: { el: $('vacation'), key: 'vacation', range: true,  disp: $('vacation-val'), suffix: ' wks' },
+  overhead: { el: $('overhead'), key: 'overhead', range: false },
+  tax:      { el: $('tax'),      key: 'tax',      range: true,  disp: $('tax-val'),      suffix: '%' },
+  winrate:  { el: $('winrate'),  key: 'winrate',  range: true,  disp: $('winrate-val'),  suffix: '%' },
+  smHrs:    { el: $('sm-hrs'),   key: 'smHrs',    range: true,  disp: $('sm-hrs-val'),   suffix: 'h' },
+  mdHrs:    { el: $('md-hrs'),   key: 'mdHrs',    range: true,  disp: $('md-hrs-val'),   suffix: 'h' },
+  lgHrs:    { el: $('lg-hrs'),   key: 'lgHrs',    range: true,  disp: $('lg-hrs-val'),   suffix: 'h' },
+  buffer:   { el: $('buffer'),   key: 'buffer',   range: true,  disp: $('buffer-val'),   suffix: '%' },
+};
+
+// Set initial values
+Object.entries(inputs).forEach(([, cfg]) => {
+  cfg.el.value = state[cfg.key];
+  if (cfg.range && cfg.disp) cfg.disp.textContent = state[cfg.key] + cfg.suffix;
+});
+
+// Bind events
+let debounceTimer;
+Object.entries(inputs).forEach(([, cfg]) => {
+  cfg.el.addEventListener('input', () => {
+    state[cfg.key] = parseFloat(cfg.el.value) || 0;
+    if (cfg.range && cfg.disp) cfg.disp.textContent = state[cfg.key] + cfg.suffix;
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(() => { saveState(); recalc(); }, 80);
+  });
+});
+
+// ─── Core calculation ─────────────────────────────────────────────────
+function calc() {
+  const workingWeeks  = 52 - state.vacation;
+  const billableHours = workingWeeks * state.billable;
+  const annualOverhead = state.overhead * 12;
+  const taxMult = 1 / (1 - state.tax / 100);
+
+  // Gross revenue needed
+  const grossNeeded = (state.income + annualOverhead) * taxMult;
+  const taxCushion  = grossNeeded - state.income - annualOverhead;
+
+  // Hourly
+  const hourly = billableHours > 0 ? grossNeeded / billableHours : 0;
+  const dayRate = hourly * 8;
+  const monthly = grossNeeded / 12;
+
+  // Buffered hours for projects
+  const bufMult = 1 + state.buffer / 100;
+  const smPrice = hourly * state.smHrs * bufMult;
+  const mdPrice = hourly * state.mdHrs * bufMult;
+  const lgPrice = hourly * state.lgHrs * bufMult;
+
+  // Extra large (2× large)
+  const xlHrs   = state.lgHrs * 2;
+  const xlPrice  = hourly * xlHrs * bufMult;
+
+  return {
+    workingWeeks, billableHours, annualOverhead,
+    grossNeeded, taxCushion, hourly, dayRate, monthly,
+    smPrice, mdPrice, lgPrice, xlPrice, xlHrs,
+  };
+}
+
+// ─── Render ───────────────────────────────────────────────────────────
+function recalc() {
+  const r = calc();
+
+  // Primary results
+  $('res-hourly').textContent   = fmtR(r.hourly);
+  $('res-hourly-sub').textContent = 'Floor rate — quote above ' + fmtR(Math.ceil(r.hourly / 5) * 5) + ' to have margin';
+  $('res-day').textContent      = fmt(r.dayRate);
+  $('res-monthly').textContent  = fmt(r.monthly);
+
+  // Breakdown
+  $('bd-weeks').textContent   = r.workingWeeks + ' weeks';
+  $('bd-hours').textContent   = r.billableHours.toLocaleString() + ' hrs';
+  $('bd-overhead').textContent = fmt(r.annualOverhead) + ' /yr';
+  $('bd-gross').textContent   = fmt(r.grossNeeded) + ' /yr';
+  $('bd-tax').textContent     = fmt(r.taxCushion) + ' /yr';
+
+  // Tier table
+  renderTiers(r.hourly);
+
+  // Chart
+  renderChart(r);
+
+  // Projects
+  renderProjects(r);
+
+  // Platform fees
+  renderPlatforms(r.hourly);
+
+  // Pipeline
+  renderPipeline(r);
+  $('wr-label').textContent = state.winrate + '%';
+}
+
+function renderTiers(hourly) {
+  const tiers = [
+    { name: 'Starter',       min: 15,  max: 40,  badge: 'low',  note: 'Entry-level / commodity' },
+    { name: 'Intermediate',  min: 40,  max: 80,  badge: 'mid',  note: 'Growing reputation' },
+    { name: 'Established',   min: 80,  max: 150, badge: 'good', note: 'Proven track record' },
+    { name: 'Expert',        min: 150, max: 300, badge: 'high', note: 'Deep specialization' },
+    { name: 'Premium',       min: 300, max: 999, badge: 'high', note: 'Niche authority / consulting' },
+  ];
+
+  const tbody = $('tier-tbody');
+  tbody.innerHTML = '';
+
+  tiers.forEach(t => {
+    const inTier = hourly >= t.min && hourly < t.max;
+    const position = inTier
+      ? `<span style="color:var(--accent)">▶ Your floor</span>`
+      : hourly < t.min
+        ? `<span style="color:var(--muted)">Below</span>`
+        : `<span style="color:var(--muted)">Above</span>`;
+
+    const tr = document.createElement('tr');
+    if (inTier) tr.className = 'active-row';
+    tr.innerHTML = `
+      <td class="tier-val">${t.name}</td>
+      <td class="tier-muted">$${t.min}–${t.max === 999 ? '300+' : '$' + t.max}/hr</td>
+      <td>${position}</td>
+      <td><span class="tier-badge ${t.badge}">${t.note}</span></td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+function renderChart(r) {
+  const ctx = $('chart').getContext('2d');
+
+  const data = {
+    labels: ['Take-Home', 'Tax Cushion', 'Overhead'],
+    datasets: [{
+      data: [r.grossNeeded - r.taxCushion - r.annualOverhead, r.taxCushion, r.annualOverhead],
+      backgroundColor: ['rgba(168,224,106,0.85)', 'rgba(224,168,106,0.7)', 'rgba(100,130,100,0.5)'],
+      borderColor: ['#a8e06a', '#e0a86a', '#647864'],
+      borderWidth: 1,
+      hoverOffset: 6,
+    }]
+  };
+
+  if (chart) { chart.destroy(); }
+  chart = new Chart(ctx, {
+    type: 'doughnut',
+    data,
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      cutout: '68%',
+      plugins: {
+        legend: {
+          position: 'bottom',
+          labels: {
+            color: '#6b7a6c',
+            font: { family: "'DM Mono', monospace", size: 11 },
+            padding: 16,
+            usePointStyle: true,
+            pointStyleWidth: 8,
+          }
+        },
+        tooltip: {
+          callbacks: {
+            label: ctx => ' ' + ctx.label + ': $' + Math.round(ctx.raw).toLocaleString()
+          },
+          backgroundColor: '#1e241e',
+          borderColor: '#2e352e',
+          borderWidth: 1,
+          titleColor: '#e8ede9',
+          bodyColor: '#a8e06a',
+          titleFont: { family: "'DM Mono', monospace" },
+          bodyFont:  { family: "'DM Mono', monospace" },
+        }
+      }
+    }
+  });
+}
+
+function renderProjects(r) {
+  const projects = [
+    { name: 'Small',      hrs: state.smHrs, price: r.smPrice },
+    { name: 'Medium',     hrs: state.mdHrs, price: r.mdPrice },
+    { name: 'Large',      hrs: state.lgHrs, price: r.lgPrice },
+    { name: 'Enterprise', hrs: r.xlHrs,     price: r.xlPrice },
+  ];
+
+  $('proj-grid').innerHTML = projects.map(p => `
+    <div class="proj-card">
+      <div class="proj-name">${p.name}</div>
+      <div class="proj-hours">${p.hrs}h + ${state.buffer}% buffer = ${Math.round(p.hrs * (1 + state.buffer / 100))}h</div>
+      <div class="proj-price">${fmt(p.price)}</div>
+      <div class="proj-day">≈ ${fmt(p.price / 8 / 5)} / working day</div>
+    </div>
+  `).join('');
+}
+
+function renderPlatforms(hourly) {
+  const platforms = [
+    { name: 'Upwork (new, <$500)',   fee: 20 },
+    { name: 'Upwork ($500–$10k)',    fee: 10 },
+    { name: 'Upwork (>$10k)',        fee: 5  },
+    { name: 'Toptal',                fee: 0, note: 'Toptal takes cut from client' },
+    { name: 'Fiverr',                fee: 20 },
+    { name: 'Direct / Own clients',  fee: 0  },
+  ];
+
+  $('platform-rows').innerHTML = platforms.map(p => {
+    const gross = p.fee > 0 ? hourly / (1 - p.fee / 100) : hourly;
+    const color  = p.fee === 0 ? 'accent' : p.fee >= 20 ? 'warn' : '';
+    return `
+      <div class="upwork-row">
+        <span class="upwork-label">${p.name}</span>
+        <span class="upwork-val ${color}">
+          Quote ${fmt(gross)}/hr → net ${fmt(hourly)}/hr
+          ${p.note ? `<span style="color:var(--muted);font-size:0.65rem"> (${p.note})</span>` : ''}
+        </span>
+      </div>
+    `;
+  }).join('');
+}
+
+function renderPipeline(r) {
+  const winRate  = state.winrate / 100;
+  const daily    = r.hourly;
+  const weekly   = r.grossNeeded / (52 - state.vacation);
+
+  const items = [
+    { label: 'Proposals needed to land 1 client',   val: winRate > 0 ? Math.ceil(1 / winRate) : '∞', accent: false },
+    { label: 'Proposals / week to hit revenue goal', val: winRate > 0 ? Math.ceil((weekly / (r.mdPrice || 1)) / winRate) : '∞', accent: false },
+    { label: 'Break-even monthly project count',     val: Math.ceil(r.monthly / (r.smPrice || 1)) + '× small OR ' + Math.ceil(r.monthly / (r.mdPrice || 1)) + '× medium', accent: true },
+    { label: 'Effective hourly if win rate drops to 50% of current', val: winRate > 0 ? fmtR(r.hourly * (1 + (1 - winRate * 0.5))) : '—', accent: false },
+  ];
+
+  $('pipeline-rows').innerHTML = items.map(i => `
+    <div class="breakdown-row">
+      <span class="breakdown-key">${i.label}</span>
+      <span class="breakdown-val ${i.accent ? 'accent' : ''}">${i.val}</span>
+    </div>
+  `).join('');
+}
+
+// ─── Export ───────────────────────────────────────────────────────────
+function exportCSV() {
+  const r = calc();
+  const rows = [
+    ['Metric', 'Value'],
+    ['Minimum Hourly Rate', '$' + r.hourly.toFixed(2)],
+    ['Day Rate (8h)',        '$' + r.dayRate.toFixed(2)],
+    ['Target Monthly Revenue', '$' + r.monthly.toFixed(2)],
+    ['Target Annual Gross', '$' + r.grossNeeded.toFixed(2)],
+    ['Working Weeks/Year',  r.workingWeeks],
+    ['Billable Hours/Year', r.billableHours],
+    ['Annual Overhead',     '$' + r.annualOverhead.toFixed(2)],
+    ['Tax Cushion/Year',    '$' + r.taxCushion.toFixed(2)],
+    ['Small Project Quote', '$' + r.smPrice.toFixed(2)],
+    ['Medium Project Quote', '$' + r.mdPrice.toFixed(2)],
+    ['Large Project Quote', '$' + r.lgPrice.toFixed(2)],
+    ['Enterprise Project Quote', '$' + r.xlPrice.toFixed(2)],
+    ['--- Inputs ---', ''],
+    ['Target Income', '$' + state.income],
+    ['Billable Hours/Week', state.billable],
+    ['Vacation Weeks', state.vacation],
+    ['Monthly Overhead', '$' + state.overhead],
+    ['Tax Rate', state.tax + '%'],
+    ['Win Rate', state.winrate + '%'],
+    ['Scope Buffer', state.buffer + '%'],
+  ];
+
+  const csv = rows.map(r => r.map(c => '"' + String(c).replace(/"/g, '""') + '"').join(',')).join('\n');
+  const blob = new Blob([csv], { type: 'text/csv' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'freelance-rate-' + new Date().toISOString().slice(0,10) + '.csv';
+  a.click();
+}
+
+function resetDefaults() {
+  state = { ...DEFAULTS };
+  saveState();
+  Object.entries(inputs).forEach(([, cfg]) => {
+    cfg.el.value = state[cfg.key];
+    if (cfg.range && cfg.disp) cfg.disp.textContent = state[cfg.key] + cfg.suffix;
+  });
+  recalc();
+}
+
+// ─── Init ─────────────────────────────────────────────────────────────
+recalc();
+</script>
+</body>
+</html>

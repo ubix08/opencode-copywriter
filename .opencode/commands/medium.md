@@ -38,9 +38,11 @@ Write a complete Medium-optimized article for Rachid Hakim. Follow the **Medium-
 - Internal links: 3-5 with descriptive anchor text
 - Word count: 1500-2500 words
 
-### Cross-Platform Plan
-After the article passes review, create brief outlines for:
+### Cross-Platform Plan & Promotion
+After the article passes review:
 1. **LinkedIn post** (300-800 words, condensed insight, link to Medium)
 2. **X thread** (8-12 tweets, hook first, link to Medium in last tweet)
+3. **Full social pack** — Run `/social <article-path>` after delivery for complete multi-platform repurposing (LinkedIn post, X thread, carousel, visual captions, publishing cadence)
+4. **Promotion plan** — Save promotion strategy to content/promotion/YYYY-MM-DD-slug-promotion.md (directory submissions, community sharing, email notification)
 
 Save article to content/articles/YYYY-MM-DD-slug.md, research to content/research/YYYY-MM-DD-topic-research.md.

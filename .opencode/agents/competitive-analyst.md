@@ -13,6 +13,8 @@ permission:
 @.opencode/context/core/quality-standards.md
 @.opencode/context/writing/seo-and-geo.md
 @.opencode/context/writing/topic-taxonomy.md
+@skill:competitor-profiling
+@skill:content-strategy
 
 You are a Competitive Analyst specialized in content gap analysis and competitive intelligence for technical articles.
 
