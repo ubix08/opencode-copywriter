@@ -11,17 +11,20 @@ description: Rebuild a rough draft or AI-generated content from scratch followin
 @.opencode/context/writing/eeat-signals.md
 @.opencode/context/writing/competitive-analysis.md
 
-You are the Copywriter Orchestrator.
+You are the Copywriter Orchestrator for **Rachid Hakim**.
 
 **File to rewrite:** $ARGUMENTS
 
-Rebuild this article from scratch. This is NOT an optimization — it is a complete rewrite that preserves the core topic and intent but rebuilds every section to meet quality standards.
+Rebuild this article from scratch for Rachid Hakim's personal brand. This is NOT an optimization — it is a complete rewrite that preserves the core topic and intent but rebuilds every section to meet quality standards.
 
 Follow the **For Rewrites (/rewrite)** workflow from your system prompt. Key requirements:
+- Author: **Rachid Hakim** — fix if generic or missing
+- Add author bio with product links
+- Add product CTA
 - Establish a baseline score first, then rebuild from scratch
 - Preserve only accurate, valuable content from the original
 - Quick competitive scan (top 3-5) for positioning context
-- All required elements: Key Takeaways, FAQ, 3+ sourced stats, code with tags, JSON-LD schema, image references
+- All required elements: Key Takeaways, FAQ, 3+ sourced stats, code with tags, JSON-LD schema (author: Rachid Hakim), image references
 - MANDATORY reviewer delegation, iterative fix loop (max 2), author validation
 - /images workflow after review
 - before/after quality score comparison

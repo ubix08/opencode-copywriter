@@ -1,156 +1,117 @@
-# Competitive Research & Analysis Methodology
+# Competitive Research & Analysis for Rachid Hakim
+
+## What We're Analyzing
+We research and analyze **personal brands in the AI + productivity space** who sell info products — not generic article competitors. Our goal is positioning Rachid Hakim as a unique voice.
 
 ## Research Pipeline (4 Phases)
 
-### Phase 1: Discovery — Find What's Ranking
-Search for the target topic and identify:
-- Top 5-10 organic results (not ads, not aggregators)
-- AI Overview content sources (what AI platforms cite)
-- Forum/community threads (Reddit, Hacker News, Stack Overflow)
-- YouTube videos with high engagement
-- Official documentation pages
+### Phase 1: Discovery — Find the Competitors
+Search for personal brands and content creators in these spaces:
+- AI development tools and agent building
+- AI productivity and workflow automation
+- Info product creation (Gumroad, digital tools)
+- AI tool reviews and comparisons
 
-For each result, capture:
-- URL, title, publish date, last-updated date
-- Author/organization and their credibility
-- Word count and content type (tutorial, comparison, opinion, docs)
-- Target keyword and secondary keywords
-- Estimated traffic (if available from search data)
+For each competitor, capture:
+- Name, platforms, follower counts, engagement rate
+- What they sell (products, courses, consulting)
+- Their unique angle/positioning
+- Content frequency and format
+- What they do well (specifics)
+- Where they're weak or silent
 
 ### Phase 2: Deep Analysis — Score Every Competitor
-Score each article against these dimensions:
 
 #### Content Depth (0-10)
-- 1-3: Surface-level, definitions only, no examples
-- 4-6: Basic explanation, some examples, missing edge cases
-- 7-8: Comprehensive, real examples, covers most scenarios
-- 9-10: Definitive guide, original research, covers edge cases and alternatives
+- 1-3: Surface-level, no original data or experience
+- 4-6: Good information but generic voice
+- 7-8: Personal experience, original insights, examples
+- 9-10: Deep expertise, proprietary data, unique framework
 
-#### Technical Accuracy (0-10)
-- 1-3: Outdated, incorrect code, broken links
-- 4-6: Mostly correct but missing version info, some deprecated patterns
-- 7-8: Accurate, versioned, tested examples
-- 9-10: Benchmarked, source-referenced, includes failure modes
+#### Personal Brand Strength (0-10)
+- 1-3: Anonymous or corporate voice
+- 4-6: Named but generic, no personal story
+- 7-8: Clear personal narrative, consistent voice
+- 9-10: Recognized expert in niche, strong community
 
-#### SEO Structure (0-10)
-- 1-3: No heading hierarchy, no meta, poor URL
-- 4-6: Basic headings, some keywords, no schema
-- 7-8: Proper H1-H3, keyword placement, internal links
-- 9-10: Full optimization, schema markup, perfect technical SEO
+#### Info Product Integration (0-10)
+- 1-3: No products or completely separate from content
+- 4-6: Products exist but feel bolted on
+- 7-8: Products are natural next step from content
+- 9-10: Content IS the marketing — products sell themselves through demonstrated value
 
-#### AI Citation Readiness (0-10)
-- 1-3: No structured data, no FAQ, no definitions
-- 4-6: Some lists, basic FAQ, no direct answers
-- 7-8: Key takeaways, FAQ with answers, definition blocks
-- 9-10: Fully structured, quotable snippets, citation-ready tables
+#### Differentiation from Rachid (0-10)
+- 1-3: Same positioning, same products, same voice
+- 4-6: Some overlap but different niche focus
+- 7-8: Clearly different angle/audience/products
+- 9-10: Completely different market or approach
 
-#### E-E-A-T Signals (0-10)
-- 1-3: Anonymous author, no credentials, no sources
-- 4-6: Named author, some sources, minimal experience shown
-- 7-8: Credible author, sourced statistics, first-hand examples
-- 9-10: Recognized expert, original data, transparent methodology
-
-#### Uniqueness / Information Gain (0-10)
-- 1-3: Repackages existing content, no original insight
-- 4-6: Some original examples, mostly derivative
-- 7-8: Unique perspective, original analysis, new synthesis
-- 9-10: Breakthrough insight, original research, paradigm shift
-
-### Phase 3: Gap Analysis — Find What's Missing
+### Phase 3: Gap Analysis — Find Positioning Opportunities
 For each competitor, identify:
-- **Content gaps**: Topics they don't cover that readers need
-- **Depth gaps**: Topics they cover superficially that deserve deep treatment
-- **Angle gaps**: Perspectives they don't consider (beginner, advanced, cost, security)
-- **Format gaps**: Missing code examples, diagrams, comparison tables, videos
-- **Freshness gaps**: Outdated information, deprecated tools, old versions
-- **Trust gaps**: Unsourced claims, no author credentials, no testing dates
+- **Content gaps**: Topics they don't cover that Rachid can own
+- **Positioning gaps**: Angles they don't use (ERP consultant → AI builder is unique)
+- **Product gaps**: Tool types they don't offer that Rachid can build
+- **Audience gaps**: Segments they neglect
+- **Format gaps**: Content formats they don't use
 
-### Phase 4: Synthesis — Build the Killer Blueprint
-Combine findings into an article strategy:
+### Phase 4: Synthesis — Build the Positioning Blueprint
+
+#### Rachid's Unique Positioning
+- "I went from ERP consultant to AI product creator. Here's what I actually learned building tools that sell."
+- This is the core differentiator — not a developer-first story, but a business-systems professional who now builds AI
 
 #### Must-Have Elements (table stakes)
-Everything the top 3 results do well. Your article must match or exceed these.
+- AI development content
+- Product-focused content
+- Personal narrative
 
-#### Differentiation Opportunities (win factors)
-What no competitor does well. This is where you win.
+#### Differentiation Opportunities
+- ERP/consulting background gives a unique systems-thinking perspective
+- Focus on practical business AI (not developer-only tools)
+- Transparent revenue/product metrics (build in public)
+- Multi-platform distribution (Medium → LinkedIn → X → Substack)
 
 #### Information Gain Strategy
-What unique value your article adds that no one else provides:
-- Original benchmarks or data
-- First-hand case studies
-- New methodology or framework
-- Synthesis of multiple approaches with clear recommendations
-- Updated information where all competitors are stale
+- Real product data (revenue, build times, user counts)
+- ERP consultant perspective on AI agent architecture
+- Honest failure stories from product launches
+- Step-by-step from zero to shipped product
 
-#### Target Structure
-The optimal heading hierarchy based on what works across competitors + your gaps.
+## Research Output Format
 
-#### Sourcing Plan
-Specific statistics, studies, and sources to include that competitors miss.
-
-## Competitive Analysis Output Format
-
-Save research to `content/research/TOPIC-research.md`:
+Save research to `content/research/YYYY-MM-DD-topic-positioning.md`:
 
 ```markdown
-# Competitive Research: [Topic]
+# Competitive Positioning: [Topic]
 Date: YYYY-MM-DD
 
-## Search Landscape
-- Primary keyword: [keyword]
-- Search intent: [informational/commercial/transactional]
-- Top ranking content types: [tutorial, comparison, docs, etc.]
+## Landscape Overview
+- Primary angle: [Rachid's proposed angle]
+- Competitors in space: [count and quality]
+- Gap opportunity: [what makes this worth pursuing]
 
 ## Competitor Analysis
+### 1. [Name] — [Platform]
+- Positioning: [their angle]
+- Products: [what they sell and at what price]
+- Strengths: [specific, not generic]
+- Weaknesses: [specific gaps]
+- Differentiation from Rachid: [how we're different/better]
 
-### 1. [Title] — [URL]
-- Author/Org: [name]
-- Date: [published] / [updated]
-- Word count: [estimated]
-- Scores: Depth X/10, Accuracy X/10, SEO X/10, AI X/10, E-E-A-T X/10, Unique X/10
-- Strengths: [what they do well]
-- Weaknesses: [where they fall short]
-- Gaps: [what they're missing]
+[Repeat for each competitor — minimum 5]
 
-### 2. [Title] — [URL]
-[repeat for each competitor]
+## Positioning Recommendations
+### Angle to Take
+[Specific recommendation for Rachid's voice]
 
-## Gap Summary
-### Content Gaps
-- [Topic no one covers well]
+### Content to Create
+[3-5 article ideas that fill gaps]
 
-### Depth Gaps
-- [Topic everyone covers superficially]
+### Product Opportunities
+[What product could fill a gap in this space]
 
-### Angle Gaps
-- [Perspective no one considers]
-
-### Freshness Gaps
-- [Outdated information across competitors]
-
-## Killer Article Blueprint
-### Must-Have Elements
-- [Table stakes from top competitors]
-
-### Differentiation Opportunities
-- [Where we can win]
-
-### Information Gain
-- [Unique value we'll add]
-
-### Recommended Structure
-H1: [title]
-H2: [sections based on gap analysis]
-
-### Sourcing Plan
-- [Specific stats and sources to include]
+### Differentiation Rules
+1. [Rule about voice]
+2. [Rule about data/transparency]
+3. [Rule about product integration]
 ```
-
-## Research Quality Rules
-- Analyze minimum 5 competitors, ideally 8-10
-- Score objectively — don't inflate weaknesses to make gaps look bigger
-- Include at least one official documentation page in analysis
-- Check AI Overview sources, not just organic rankings
-- Note commercial intent (affiliate articles, product pitches) vs. genuine guides
-- Flag any competitor with fabricated statistics or inaccurate claims
-- Prioritize recent content (last 12 months) but include evergreen authorities

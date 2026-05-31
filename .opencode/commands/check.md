@@ -8,15 +8,15 @@ description: Quick validation of article structure and required elements
 @.opencode/context/writing/blog-patterns.md
 @.opencode/context/writing/seo-and-geo.md
 
-You are the Copywriter Orchestrator.
+You are the Copywriter Orchestrator for **Rachid Hakim**.
 
 **File to check:** $ARGUMENTS
 
-Perform a quick structural validation of this article. This is NOT a full audit — it is a fast check for required elements and obvious issues.
+Perform a quick structural validation of this article for Rachid Hakim's personal brand. This is NOT a full audit — it is a fast check for required elements and obvious issues.
 
 ### Checklist
 
-1. **Frontmatter**: title, description (150-160 chars), date, lastUpdated, tags, author — all present?
+1. **Frontmatter**: title, subtitle, description (150-160 chars), date, lastUpdated, tags, author — all present? Author must be Rachid Hakim.
 2. **H1**: Exactly one, keyword-rich, 50-60 chars?
 3. **Heading hierarchy**: H1 → H2 → H3, no skipped levels?
 4. **Key Takeaways**: Box near top, 3-5 bullets, each under 20 words?
@@ -26,12 +26,14 @@ Perform a quick structural validation of this article. This is NOT a full audit 
 8. **Paragraph length**: Any over 150 words? (count them)
 9. **Internal links**: 3-5 with descriptive anchor text?
 10. **External links**: 3-5 unique domains to authoritative sources? Deduplicate — count unique URLs, not total instances.
-11. **E-E-A-T signals**: Author bio, experience examples, date stamps?
+11. **E-E-A-T signals**: Author bio, experience examples (Rachid's products), date stamps?
 12. **Meta description**: 150-160 chars, includes keyword, has CTA?
-13. **Author validation**: Is author a named individual? Reject generic placeholders per quality-standards.md Pass Criteria.
-14. **Word count**: 1500-3000 words for technical articles?
-15. **JSON-LD schema**: Article schema present? FAQPage schema present (if FAQ exists)?
-16. **Images**: Count real images (`![alt](path)` format). Placeholder comments (`<!-- image: ... -->`) do NOT count. Require minimum 1 per 500 words. For 2000+ word articles, at least 4 required.
+13. **Author validation**: Author must be **Rachid Hakim**. Reject generic placeholders. Author bio with product links must be present.
+14. **Product CTA**: At least one natural product reference or CTA?
+15. **Word count**: 1500-2500 words for Medium, 1000-1500 for Substack, 300-800 for LinkedIn?
+16. **JSON-LD schema**: Article schema present (author: Rachid Hakim)? FAQPage schema present (if FAQ exists)?
+17. **Images**: Count real images (`![alt](path)` format). Placeholder comments (`<!-- image: ... -->`) do NOT count. Require minimum 1 per 500 words. For 2000+ word articles, at least 4 required.
+18. **Medium tags**: 5 tags present if Medium target?
 
 ### Output Format
 
@@ -51,10 +53,13 @@ Perform a quick structural validation of this article. This is NOT a full audit 
 | External links | ✅/❌ | [count unique domains vs required, flag duplicates] |
 | E-E-A-T signals | ✅/❌ | [missing signals if any] |
 | Meta description | ✅/❌ | [length and keyword check] |
-| Author validation | ✅/❌ | [generic placeholder detected if ❌] |
-| Word count | ✅/❌ | [actual count vs 1500-3000 range] |
+| Author validation | ✅/❌ | [must be Rachid Hakim] |
+| Author bio + links | ✅/❌ | [bio with product links present?] |
+| Product CTA | ✅/❌ | [natural product reference present?] |
+| Word count | ✅/❌ | [actual count vs 1500-2500 Medium range] |
 | JSON-LD schema | ✅/❌ | [missing Article/FAQPage schema if ❌] |
 | Images | ✅/❌ | [real images count vs required, placeholders don't count] |
+| Medium tags | ✅/❌ | [5 tags present if Medium target] |
 
 **Result: [PASS — all checks green / FAIL — X checks failed]**
 

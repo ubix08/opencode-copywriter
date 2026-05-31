@@ -18,8 +18,10 @@ Started: YYYY-MM-DD HH:MM
 Status: [in-progress / complete / failed]
 
 ## Request
-- **Command**: [/article /optimize /audit /brief /rewrite /cluster /check]
+- **Command**: [/article /medium /optimize /audit /brief /rewrite /cluster /product-content /repurpose /check]
 - **Topic**: [topic description]
+- **Target platform**: [Medium / LinkedIn / X / Substack / Threads]
+- **Target product**: [product name if applicable]
 - **Target file**: [path if applicable]
 
 ## Phase 0: Pre-Flight Check
@@ -27,23 +29,17 @@ Status: [pending / in-progress / complete / skipped]
 - Structural issues found: [count]
 - Critical failures: [list if any]
 
-## Phase 1: Competitive Research (competitive-analyst)
+## Phase 1: Competitive Positioning (competitive-analyst)
 Status: [pending / in-progress / complete / skipped]
-- Primary keyword: [keyword]
-- Search intent: [informational/commercial/transactional]
+- Primary angle: [keyword/angle]
 - Competitors analyzed: [count]
 - Top differentiation opportunities:
   1. [opportunity]
   2. [opportunity]
   3. [opportunity]
-- Research report: content/research/YYYY-MM-DD-topic-research.md
+- Positioning report: content/research/YYYY-MM-DD-topic-positioning.md
 
-## Phase 2: NotebookLM Research (notebooklm)
-Status: [pending / in-progress / complete / skipped]
-- Notebooks queried: [names]
-- Key findings: [source-grounded answers]
-
-## Phase 3: Topic Research (tech-researcher)
+## Phase 2: Topic Research (tech-researcher)
 Status: [pending / in-progress / complete / skipped]
 - Key findings:
   1. [finding with source]
@@ -51,59 +47,61 @@ Status: [pending / in-progress / complete / skipped]
 - Sourced statistics:
   1. [stat] — [source URL, date]
   2. [stat] — [source URL, date]
-- Recommended angle: [unique perspective]
+- Product angle: [how product X relates]
 
-## Phase 4: Writing (tech-writer)
+## Phase 3: Writing (tech-writer)
 Status: [pending / in-progress / complete / skipped]
+- Platform: [Medium / LinkedIn / X / Substack]
 - Article: content/articles/YYYY-MM-DD-slug.md
 - Word count: [count]
-- External links: [count unique domains]
-- Internal links: [count]
-- Image references: [count]
+- Product references: [which products, how integrated]
+- CTA type: [lead magnet / product / newsletter signup]
 
-## Phase 5: Fact-Check
+## Phase 4: Fact-Check
 Status: [pending / in-progress / complete / skipped]
 - Statistics verified: [count]
 - Code examples verified: [count]
 - Technical claims verified: [count]
-- Issues found: [count]
+- Product claims verified: [count]
 
-## Phase 6: Review (reviewer)
+## Phase 5: Review (reviewer)
 Status: [pending / in-progress / complete / skipped]
 - Overall score: [X/100]
 - Verdict: [PASS / FAIL]
 - Critical fixes: [list if any]
 - Fix iterations: [0/1/2]
 
-## Phase 7: Iterative Fix Loop
+## Phase 6: Iterative Fix Loop
 Status: [pending / in-progress / complete / skipped]
 - Iteration: [1/2]
 - Pre-fix score: [X/100]
 - Post-fix score: [X/100]
 - Remaining issues: [list]
 
-## Phase 8: Author Validation
+## Phase 7: Author Validation
 Status: [pending / in-progress / complete / skipped]
-- Author name: [name]
-- Verdict: [valid / generic placeholder]
-- Action: [passed / rejected]
+- Author name: Rachid Hakim
+- Bio included: [yes / no]
+- Product links: [present / missing]
 
-## Phase 9: Link Audit
+## Phase 8: Platform Formatting
 Status: [pending / in-progress / complete / skipped]
-- Internal links: [count with descriptive anchor text]
-- External unique domains: [count]
+- Medium tags: [5 tags listed]
+- LinkedIn formatting: [done / n/a]
+- X thread count: [N tweets / n/a]
 
-## Phase 10: Image Fetch
+## Phase 9: Repurposing (if applicable)
 Status: [pending / in-progress / complete / skipped]
-- Placeholders found: [count]
-- Images replaced: [count]
+- LinkedIn post: [done / n/a]
+- X thread: [done / n/a]
+- Substack issue: [done / n/a]
 
-## Phase 11: Delivery (orchestrator)
+## Phase 10: Delivery (orchestrator)
 Status: [pending / in-progress / complete]
 - Final deliverables: [list files]
 - Final reviewer score: [X/100]
 - Final verdict: [PASS / FAIL]
-- Word count: [count]
+- Product CTA included: [yes / no]
 - Notes: [any issues, limitations, or follow-up recommendations]
 ```
 
@@ -115,3 +113,4 @@ Status: [pending / in-progress / complete]
 - The orchestrator is responsible for creating and cleaning up this file
 - Archive completed sessions to content/research/sessions/ if needed for reference
 - **Self-assessed scores are invalid** — only reviewer scores count. Do not record self-assessments in the session.
+- **Author is always Rachid Hakim** — if any agent strips or changes this, it's an automatic fail

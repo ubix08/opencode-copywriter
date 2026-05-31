@@ -1,64 +1,66 @@
-# Technical Writing Quality Standards
-**Version: 1.1 | Last Updated: 2026-05-31**
+# Content Quality Standards for Rachid Hakim
+**Version: 2.0 | Last Updated: 2026-05-31**
 
 ## Scoring Framework (100 points)
 
 ### Content Quality (30 points)
-- Answer-first: main point in first paragraph, stat in first sentence of each H2
-- Actionable: every section has specific steps, examples, or code
-- Depth: 1500-3000 words for standard technical articles (pillar pages: 3000-5000 words, changelog/release notes: 500-1500 words, case studies: 1500-2500 words, opinion pieces: 1200-2500 words), no fluff
-- Structure: logical flow from problem → context → solution → next steps
-- Code quality: all code blocks tested, commented, with language tags
-- Originality: information gain — what does this add that top 5 results don't?
+- Answer-first: main point in first paragraph, key insight in first sentence of each H2
+- Actionable: every section has specific steps, examples, code, or product references
+- Depth: 1500-2500 words for Medium articles, 300-800 for LinkedIn, 1000-1500 for newsletters
+- Structure: logical flow from problem → context → solution → product → next steps
+- Code quality: all code blocks have language tags, tested, with realistic examples
+- Originality: personal experience-driven — what did Rachid actually do?
+- Info product integration: at least one natural product reference or CTA
 
-### SEO Structure (25 points)
-- H1 → H2 → H3 hierarchy, no skipped levels
-- Target keyword in H1, first 100 words, 2-3 H2s, meta description
-- Semantic keywords naturally distributed (no stuffing)
-- Internal linking: 3-5 relevant links with descriptive anchor text
+### SEO & Platform Optimization (25 points)
+- Medium: H1 title (50-60 chars), subtitle, 5 tags, hero image, clap-worthy ending
+- Internal links: 2-4 to related articles or products
+- External links: 2-3 to authoritative sources (docs, official sites)
 - URL slug: hyphenated, lowercase, under 60 characters
-- Meta description: 150-160 characters, includes keyword, compelling CTA
+- Meta description: 150-160 characters, includes keyword
+- Medium tags: 5 tags covering broad → specific → niche
 
 ### E-E-A-T Signals (15 points)
-- Experience: first-hand examples, case studies, screenshots
-- Expertise: author bio, credentials, links to prior work
-- Authority: citations from recognized sources, data backing claims
-- Trust: date stamps, last-updated markers, transparent methodology
+- **Experience**: First-hand product building examples, real data from shipped products
+- **Expertise**: Author bio with product links, ERP-to-AI transition story
+- **Authority**: Citations from my own products, external stats where relevant
+- **Trust**: Date stamps, transparent methodology, honest product limitations
+- Rachid Hakim named as author — not generic
 
 ### Technical Accuracy (15 points)
-- All statistics sourced with links and dates
-- Code examples versioned (e.g., "Python 3.12+", "React 19")
+- All statistics sourced with links and dates (external or my own product data)
+- Code examples versioned and tested
 - Tool/dependency versions specified
-- Claims verifiable — no fabricated benchmarks or studies
-- Warnings for deprecated features, breaking changes noted
+- Claims verifiable — no fabricated benchmarks
+- Honest about what I haven't tested
 
 ### AI Citation Readiness (15 points)
 - Key Takeaways box near top (bullet summary, 3-5 points)
-- FAQ section with direct-answer format (question as H2, answer in 1-2 sentences)
-- Definition blocks for technical terms (bold term, colon, concise definition)
-- Structured data ready: tables, lists, numbered steps
-- Citation tier: primary sources > official docs > reputable blogs > forums
-- JSON-LD schema: Article schema required. FAQPage schema required if FAQ section exists.
+- FAQ section with direct-answer format
+- Definition blocks for technical terms
+- Structured data: tables, lists, numbered steps
+- Quotable snippets that work as pull quotes
 
 ## Pass Criteria
 - Minimum 75/100 to publish
-- Zero fabricated statistics
+- Zero fabricated statistics or fake testimonials
 - All code blocks have language tags
 - Answer-first formatting in every major section
-- At least 3 sourced statistics
-- FAQ schema included (JSON-LD FAQPage if FAQ section exists)
-- Article schema included (JSON-LD Article)
-- Named author — no generic placeholders ("Technical Writing Team", "AI Team", "Staff", "Editorial Team", or any anonymous placeholder)
-- Word count: 1500-3000 for standard technical articles (see Content Quality — Depth for per-type ranges)
-- External links: 3-5 unique domains, deduplicated
+- At least 1 sourced statistic (external or my own product data)
+- Rachid Hakim named as author — no generic placeholders
+- Word count: 1500-2500 for Medium, 300-800 for LinkedIn, 1000-1500 for newsletter
+- At least 1 natural CTA to a product or free resource
+- At least 1 image per 500 words
 
 ## Anti-Patterns (automatic deductions)
 - Paragraphs over 150 words: -2 each
 - Unsubstantiated claims: -5 each
 - Skipped heading levels: -3 each
-- Keyword stuffing (>3% density): -10
-- No real images in 2000+ word article: -5. Placeholder comments (`<!-- image: ... -->`) do NOT count. Only markdown image tags (`![alt](path)`) count as real images.
+- No product/CTA reference in an article that should have one: -5
+- Generic "Technical Writing Team" author: -10 (automatic fail)
+- No real images in 1500+ word article: -5
 - No last-updated date: -3
-- Duplicate external links (same URL appearing multiple times): -2 per duplicate
-- Missing JSON-LD Article schema: -5
-- Missing JSON-LD FAQPage schema (when FAQ exists): -3
+- Missing author bio with links: -3
+- No Medium tags or wrong tag format: -3
+- No Key Takeaways box: -3
+- No FAQ section: -2

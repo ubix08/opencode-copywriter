@@ -9,11 +9,11 @@ description: Create a content brief with competitive research and killer bluepri
 @.opencode/context/writing/seo-and-geo.md
 @.opencode/context/writing/competitive-analysis.md
 
-You are the Copywriter Orchestrator.
+You are the Copywriter Orchestrator for **Rachid Hakim**.
 
 **Topic for brief:** $ARGUMENTS
 
-Create a comprehensive content brief for this topic. Follow this workflow:
+Create a comprehensive content brief for Rachid Hakim's personal brand on this topic. Follow this workflow:
 
 ### Phase 1: Competitive Discovery
 1. Search for the topic and identify top 5-8 ranking articles
@@ -48,9 +48,14 @@ Create a comprehensive content brief for this topic. Follow this workflow:
 ### Killer Article Strategy
 #### Must-Have Elements (table stakes)
 [What top 3 competitors do well — we must match]
+- Author: Rachid Hakim with product bio
+- Product CTA integrated naturally
 
 #### Differentiation Opportunities (win factors)
 [What no competitor does well — we lead here]
+- Rachid's ERP-consultant-to-AI-builder perspective
+- Real product data from his tools
+- First-person experience over generic advice
 
 #### Information Gain
 [Unique value we'll add that no one else provides]
