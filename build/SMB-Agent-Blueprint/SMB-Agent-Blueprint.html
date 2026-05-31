@@ -1,0 +1,1109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SMB Agentic Workforce Blueprint</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@300;400;700&family=Instrument+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a08;
+    --bg2: #0f0f0c;
+    --bg3: #161610;
+    --ink: #f0ede4;
+    --ink2: #a8a49a;
+    --ink3: #5c5952;
+    --acid: #c8f135;
+    --acid2: #9ec42a;
+    --amber: #f5a623;
+    --border: rgba(200,241,53,0.15);
+    --border2: rgba(240,237,228,0.08);
+    --glow: rgba(200,241,53,0.06);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Instrument Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ── NOISE OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    background-size: 200px 200px;
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.5;
+  }
+
+  /* ── GRID BACKGROUND ── */
+  .grid-bg {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(200,241,53,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(200,241,53,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 40%, transparent 100%);
+    pointer-events: none;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.2rem 3rem;
+    background: rgba(10,10,8,0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border2);
+  }
+
+  .nav-logo {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--acid);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+
+  .nav-cta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--bg);
+    background: var(--acid);
+    border: none;
+    padding: 0.6rem 1.4rem;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .nav-cta:hover { background: var(--acid2); transform: translateY(-1px); }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 8rem 3rem 6rem;
+    overflow: hidden;
+  }
+
+  .hero-glow {
+    position: absolute;
+    top: -20%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 900px;
+    height: 600px;
+    background: radial-gradient(ellipse, rgba(200,241,53,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--acid);
+    border: 1px solid var(--border);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.4rem 0.9rem;
+    margin-bottom: 2.5rem;
+    width: fit-content;
+  }
+
+  .hero-tag::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: var(--acid);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.7); }
+  }
+
+  .hero-headline {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(3rem, 7vw, 6.5rem);
+    line-height: 1.0;
+    letter-spacing: -0.02em;
+    max-width: 900px;
+    margin-bottom: 0.4rem;
+  }
+
+  .hero-headline em {
+    font-style: italic;
+    color: var(--acid);
+  }
+
+  .hero-sub {
+    font-size: 1.15rem;
+    color: var(--ink2);
+    max-width: 560px;
+    margin: 2rem 0 3.5rem;
+    line-height: 1.7;
+    font-weight: 300;
+  }
+
+  .hero-cta-group {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--bg);
+    background: var(--acid);
+    border: none;
+    padding: 1rem 2.4rem;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn-primary::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, transparent 60%);
+  }
+
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(200,241,53,0.3); }
+
+  .hero-proof {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--ink3);
+    letter-spacing: 0.08em;
+  }
+
+  .hero-proof span { color: var(--ink2); }
+
+  /* ── SCROLLING TICKER ── */
+  .ticker-wrap {
+    overflow: hidden;
+    border-top: 1px solid var(--border2);
+    border-bottom: 1px solid var(--border2);
+    padding: 0.9rem 0;
+    background: var(--bg2);
+  }
+
+  .ticker {
+    display: flex;
+    gap: 4rem;
+    white-space: nowrap;
+    animation: ticker 30s linear infinite;
+  }
+
+  .ticker-item {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink3);
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    flex-shrink: 0;
+  }
+
+  .ticker-item::before { content: '◆'; color: var(--acid); font-size: 0.4rem; }
+
+  @keyframes ticker {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* ── SECTION BASE ── */
+  section { padding: 7rem 3rem; }
+
+  .section-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--acid);
+    margin-bottom: 1.5rem;
+  }
+
+  .section-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2rem, 4vw, 3.4rem);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    max-width: 700px;
+    margin-bottom: 1.5rem;
+  }
+
+  /* ── PROBLEM SECTION ── */
+  .problem {
+    background: var(--bg2);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .problem::before {
+    content: '';
+    position: absolute;
+    right: -100px; top: 50%;
+    transform: translateY(-50%);
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(200,241,53,0.04) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .problem-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    margin-top: 4rem;
+    border: 1px solid var(--border2);
+  }
+
+  .problem-cell {
+    padding: 2.5rem;
+    background: var(--bg2);
+    border: 1px solid var(--border2);
+    position: relative;
+    transition: background 0.3s;
+  }
+
+  .problem-cell:hover { background: var(--bg3); }
+
+  .problem-cell-num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 4rem;
+    color: rgba(200,241,53,0.12);
+    line-height: 1;
+    margin-bottom: 1rem;
+    display: block;
+  }
+
+  .problem-cell h3 {
+    font-family: 'Instrument Sans', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    color: var(--ink);
+  }
+
+  .problem-cell p {
+    font-size: 0.9rem;
+    color: var(--ink2);
+    line-height: 1.65;
+  }
+
+  /* ── WHAT'S INSIDE ── */
+  .inside { background: var(--bg); }
+
+  .inside-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-top: 4rem;
+  }
+
+  .inside-card {
+    border: 1px solid var(--border2);
+    padding: 2rem;
+    position: relative;
+    background: linear-gradient(135deg, var(--bg3) 0%, var(--bg2) 100%);
+    transition: border-color 0.3s, transform 0.3s;
+    overflow: hidden;
+  }
+
+  .inside-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--acid);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s;
+  }
+
+  .inside-card:hover::before { transform: scaleX(1); }
+  .inside-card:hover { border-color: var(--border); transform: translateY(-3px); }
+
+  .inside-card-icon {
+    font-size: 1.5rem;
+    margin-bottom: 1.2rem;
+    display: block;
+  }
+
+  .inside-card h3 {
+    font-family: 'Instrument Sans', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin-bottom: 0.6rem;
+    color: var(--ink);
+  }
+
+  .inside-card p {
+    font-size: 0.85rem;
+    color: var(--ink2);
+    line-height: 1.6;
+  }
+
+  .inside-card .card-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--acid);
+    margin-top: 1.2rem;
+    display: block;
+    border-top: 1px solid var(--border2);
+    padding-top: 0.8rem;
+  }
+
+  /* ── 3X RULE ── */
+  .rule {
+    background: var(--bg2);
+    overflow: hidden;
+    position: relative;
+  }
+
+  .rule-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+    align-items: center;
+  }
+
+  .rule-visual {
+    position: relative;
+  }
+
+  .rule-calc {
+    border: 1px solid var(--border);
+    background: var(--bg3);
+    padding: 2.5rem;
+    font-family: 'JetBrains Mono', monospace;
+    position: relative;
+  }
+
+  .rule-calc::before {
+    content: 'VIABILITY CALCULATOR';
+    font-size: 0.55rem;
+    letter-spacing: 0.2em;
+    color: var(--acid);
+    display: block;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border2);
+    padding-bottom: 0.8rem;
+  }
+
+  .calc-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.7rem 0;
+    border-bottom: 1px solid var(--border2);
+    font-size: 0.78rem;
+  }
+
+  .calc-row:last-child { border-bottom: none; }
+  .calc-label { color: var(--ink2); }
+  .calc-val { color: var(--ink); font-weight: 700; }
+  .calc-val.green { color: var(--acid); }
+  .calc-val.red { color: #ff6b6b; }
+
+  .calc-divider {
+    font-size: 1.5rem;
+    color: var(--acid);
+    text-align: center;
+    padding: 0.5rem 0;
+    letter-spacing: 0.1em;
+  }
+
+  .rule-content p {
+    font-size: 1.05rem;
+    color: var(--ink2);
+    line-height: 1.75;
+    margin-bottom: 1.5rem;
+  }
+
+  .rule-stat {
+    display: flex;
+    align-items: baseline;
+    gap: 0.8rem;
+    margin-top: 2rem;
+  }
+
+  .rule-stat-num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 4rem;
+    color: var(--acid);
+    line-height: 1;
+  }
+
+  .rule-stat-label {
+    font-size: 0.85rem;
+    color: var(--ink2);
+    max-width: 200px;
+    line-height: 1.4;
+  }
+
+  /* ── AGENTS ── */
+  .agents { background: var(--bg); }
+
+  .agents-list {
+    margin-top: 4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    border: 1px solid var(--border2);
+  }
+
+  .agent-row {
+    display: grid;
+    grid-template-columns: 80px 1fr auto;
+    align-items: center;
+    gap: 2rem;
+    padding: 1.8rem 2.5rem;
+    border-bottom: 1px solid var(--border2);
+    transition: background 0.2s;
+    cursor: default;
+  }
+
+  .agent-row:last-child { border-bottom: none; }
+  .agent-row:hover { background: var(--bg3); }
+
+  .agent-index {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2.5rem;
+    color: rgba(200,241,53,0.15);
+    line-height: 1;
+  }
+
+  .agent-name {
+    font-family: 'Instrument Sans', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 0.3rem;
+  }
+
+  .agent-desc {
+    font-size: 0.85rem;
+    color: var(--ink2);
+  }
+
+  .agent-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.3rem 0.7rem;
+    border: 1px solid var(--border);
+    color: var(--acid);
+    white-space: nowrap;
+  }
+
+  /* ── PRICING ── */
+  .pricing {
+    background: var(--bg2);
+    text-align: center;
+  }
+
+  .pricing-box {
+    max-width: 520px;
+    margin: 4rem auto 0;
+    border: 1px solid var(--border);
+    background: var(--bg3);
+    padding: 3.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .pricing-box::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 50% 0%, rgba(200,241,53,0.07) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .pricing-badge {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--bg);
+    background: var(--acid);
+    padding: 0.35rem 0.9rem;
+    margin-bottom: 2rem;
+  }
+
+  .pricing-price {
+    font-family: 'DM Serif Display', serif;
+    font-size: 5rem;
+    line-height: 1;
+    color: var(--ink);
+    margin-bottom: 0.5rem;
+  }
+
+  .pricing-price sup {
+    font-size: 2rem;
+    vertical-align: super;
+    color: var(--ink2);
+  }
+
+  .pricing-note {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--ink3);
+    letter-spacing: 0.1em;
+    margin-bottom: 2.5rem;
+  }
+
+  .pricing-features {
+    list-style: none;
+    text-align: left;
+    margin-bottom: 3rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+
+  .pricing-features li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    font-size: 0.9rem;
+    color: var(--ink2);
+  }
+
+  .pricing-features li::before {
+    content: '→';
+    color: var(--acid);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+    flex-shrink: 0;
+    margin-top: 0.1rem;
+  }
+
+  .btn-buy {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--bg);
+    background: var(--acid);
+    border: none;
+    padding: 1.1rem 3rem;
+    cursor: pointer;
+    width: 100%;
+    text-decoration: none;
+    display: block;
+    transition: all 0.2s;
+    position: relative;
+  }
+
+  .btn-buy:hover { background: var(--acid2); transform: translateY(-2px); box-shadow: 0 12px 40px rgba(200,241,53,0.25); }
+
+  .pricing-guarantee {
+    margin-top: 1.5rem;
+    font-size: 0.78rem;
+    color: var(--ink3);
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 0.05em;
+  }
+
+  /* ── ABOUT ── */
+  .about {
+    background: var(--bg);
+    padding: 7rem 3rem;
+  }
+
+  .about-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+    align-items: start;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .about-badge-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 2rem;
+  }
+
+  .about-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.35rem 0.8rem;
+    border: 1px solid var(--border2);
+    color: var(--ink2);
+  }
+
+  .about p {
+    font-size: 0.95rem;
+    color: var(--ink2);
+    line-height: 1.75;
+    margin-bottom: 1rem;
+  }
+
+  /* ── FAQ ── */
+  .faq { background: var(--bg2); }
+
+  .faq-list {
+    max-width: 700px;
+    margin: 4rem 0 0;
+  }
+
+  .faq-item {
+    border-bottom: 1px solid var(--border2);
+    padding: 1.8rem 0;
+  }
+
+  .faq-q {
+    font-family: 'Instrument Sans', sans-serif;
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 0.8rem;
+  }
+
+  .faq-a {
+    font-size: 0.88rem;
+    color: var(--ink2);
+    line-height: 1.7;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--bg);
+    border-top: 1px solid var(--border2);
+    padding: 2.5rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-logo {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    color: var(--acid);
+  }
+
+  .footer-copy {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.62rem;
+    color: var(--ink3);
+    letter-spacing: 0.08em;
+  }
+
+  /* ── ANIMATIONS ── */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .fade-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    nav { padding: 1rem 1.5rem; }
+    section { padding: 5rem 1.5rem; }
+    .hero { padding: 7rem 1.5rem 5rem; }
+    .problem-grid { grid-template-columns: 1fr; }
+    .inside-grid { grid-template-columns: 1fr 1fr; }
+    .rule-inner { grid-template-columns: 1fr; gap: 3rem; }
+    .about-inner { grid-template-columns: 1fr; gap: 3rem; }
+    .about { padding: 5rem 1.5rem; }
+    footer { flex-direction: column; gap: 1rem; text-align: center; }
+  }
+
+  @media (max-width: 600px) {
+    .inside-grid { grid-template-columns: 1fr; }
+    .agent-row { grid-template-columns: 50px 1fr; }
+    .agent-badge { display: none; }
+    .hero-headline { font-size: 2.6rem; }
+    .pricing-box { padding: 2rem 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">AGENTIC.WORKFORCE</div>
+  <a href="#pricing" class="nav-cta">Get the Blueprint →</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="grid-bg"></div>
+  <div class="hero-glow"></div>
+
+  <div class="hero-tag">2026 Digital Toolkit · For SMBs $1M–$10M Revenue</div>
+
+  <h1 class="hero-headline">
+    Your Business Runs on<br>
+    <em>Manual Labor.</em><br>
+    That Ends Now.
+  </h1>
+
+  <p class="hero-sub">
+    The complete implementation blueprint for deploying a multi-agent AI workforce across your back-office operations — without hiring engineers, without custom dev, without vendor lock-in.
+  </p>
+
+  <div class="hero-cta-group">
+    <a href="#pricing" class="btn-primary">Get Instant Access — $297</a>
+    <div class="hero-proof">
+      <span>PDF Toolkit</span> · 
+      <span>Agent SOPs</span> · 
+      <span>Prompt Libraries</span> · 
+      <span>Model-Agnostic</span>
+    </div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker-wrap">
+  <div class="ticker">
+    <div class="ticker-item">Inventory Intelligence Agent</div>
+    <div class="ticker-item">Client Onboarding Automator</div>
+    <div class="ticker-item">Invoice Processing Pipeline</div>
+    <div class="ticker-item">Lead Qualification Engine</div>
+    <div class="ticker-item">Support Triage System</div>
+    <div class="ticker-item">Reporting Orchestrator</div>
+    <div class="ticker-item">Contract Review Agent</div>
+    <div class="ticker-item">Inventory Intelligence Agent</div>
+    <div class="ticker-item">Client Onboarding Automator</div>
+    <div class="ticker-item">Invoice Processing Pipeline</div>
+    <div class="ticker-item">Lead Qualification Engine</div>
+    <div class="ticker-item">Support Triage System</div>
+    <div class="ticker-item">Reporting Orchestrator</div>
+    <div class="ticker-item">Contract Review Agent</div>
+  </div>
+</div>
+
+<!-- PROBLEM -->
+<section class="problem">
+  <div class="section-label">The Problem</div>
+  <h2 class="section-title">You're Drowning in Data. Your Competitors Aren't.</h2>
+  <p style="color:var(--ink2); max-width:600px; font-size:0.95rem; line-height:1.7; margin-bottom:1rem;">
+    Mid-market businesses have more operational data than ever — and less time to act on it. The gap isn't intelligence. It's infrastructure.
+  </p>
+
+  <div class="problem-grid">
+    <div class="problem-cell fade-up">
+      <span class="problem-cell-num">8–12</span>
+      <h3>Hours Lost Per Week Per Employee</h3>
+      <p>On manual data entry, status updates, report generation, and handoff tasks that an agent could complete in seconds.</p>
+    </div>
+    <div class="problem-cell fade-up" style="transition-delay:0.1s">
+      <span class="problem-cell-num">$0</span>
+      <h3>Budget for a Dev Team</h3>
+      <p>Building custom AI automation in-house requires $150k+ engineering salaries. You're running lean — that's not an option.</p>
+    </div>
+    <div class="problem-cell fade-up" style="transition-delay:0.2s">
+      <span class="problem-cell-num">4+</span>
+      <h3>Disconnected SaaS Tools</h3>
+      <p>Your CRM doesn't talk to your inventory system, which doesn't talk to your support desk. Agents can bridge all of it.</p>
+    </div>
+    <div class="problem-cell fade-up" style="transition-delay:0.3s">
+      <span class="problem-cell-num">1</span>
+      <h3>Blueprint Needed</h3>
+      <p>Not another YouTube course. Not another "AI strategy" deck. A working system with step-by-step deployment instructions.</p>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT'S INSIDE -->
+<section class="inside">
+  <div class="section-label">What's Inside</div>
+  <h2 class="section-title">Six Modules. Zero Fluff. Deployable in Days.</h2>
+
+  <div class="inside-grid">
+    <div class="inside-card fade-up">
+      <span class="inside-card-icon">⚙️</span>
+      <h3>Agent Architecture Primer</h3>
+      <p>The exact topology for a 3–7 agent workforce. Supervisor, specialist, and executor roles — who owns what, and how they coordinate.</p>
+      <span class="card-tag">Module 01 · Foundation</span>
+    </div>
+    <div class="inside-card fade-up" style="transition-delay:0.08s">
+      <span class="inside-card-icon">📋</span>
+      <h3>WORKER.yaml + SOUL.md System</h3>
+      <p>Battle-tested agent definition files. Drop your context in, define your constraints, ship a working agent with a single config file.</p>
+      <span class="card-tag">Module 02 · Templates</span>
+    </div>
+    <div class="inside-card fade-up" style="transition-delay:0.16s">
+      <span class="inside-card-icon">🔁</span>
+      <h3>Back-Office Automation Playbooks</h3>
+      <p>Pre-built SOPs for inventory tracking, client onboarding, invoice processing, and lead routing — plug your tools in and run.</p>
+      <span class="card-tag">Module 03 · Playbooks</span>
+    </div>
+    <div class="inside-card fade-up" style="transition-delay:0.24s">
+      <span class="inside-card-icon">💬</span>
+      <h3>200+ Prompt Library</h3>
+      <p>Categorized, tested prompt templates for every back-office scenario. Operational, analytical, and coordination prompts included.</p>
+      <span class="card-tag">Module 04 · Prompts</span>
+    </div>
+    <div class="inside-card fade-up" style="transition-delay:0.32s">
+      <span class="inside-card-icon">🔗</span>
+      <h3>Tool Integration Maps</h3>
+      <p>How to connect agents to Notion, Airtable, Slack, HubSpot, Shopify, and more — via MCP, Zapier, or direct API. Model-agnostic throughout.</p>
+      <span class="card-tag">Module 05 · Integration</span>
+    </div>
+    <div class="inside-card fade-up" style="transition-delay:0.4s">
+      <span class="inside-card-icon">📈</span>
+      <h3>3x Rule ROI Calculator</h3>
+      <p>The exact framework to evaluate every automation candidate. If it doesn't return 3x in labor savings, don't build it. Know before you ship.</p>
+      <span class="card-tag">Module 06 · Economics</span>
+    </div>
+  </div>
+</section>
+
+<!-- 3X RULE -->
+<section class="rule">
+  <div class="rule-inner">
+    <div class="rule-visual fade-up">
+      <div class="rule-calc">
+        <div class="calc-row">
+          <span class="calc-label">Workflow cost to run</span>
+          <span class="calc-val red">$0.15</span>
+        </div>
+        <div class="calc-divider">×3</div>
+        <div class="calc-row">
+          <span class="calc-label">Minimum labor savings required</span>
+          <span class="calc-val green">$0.45</span>
+        </div>
+        <div class="calc-row" style="padding-top:1.2rem; border-top: 2px solid var(--border);">
+          <span class="calc-label">Verdict</span>
+          <span class="calc-val green">✓ VIABLE</span>
+        </div>
+      </div>
+    </div>
+    <div class="rule-content fade-up" style="transition-delay:0.15s">
+      <div class="section-label">The 3x Rule</div>
+      <h2 class="section-title">The Economic Test That Stops Bad Automations</h2>
+      <p>Most "automation projects" fail because nobody ran the numbers first. The 3x Rule is simple: every automated workflow must save at least 3 times what it costs to run.</p>
+      <p>The blueprint includes a pre-built calculator and decision tree. You'll know in 10 minutes whether an automation is worth building — before writing a single line of config.</p>
+      <div class="rule-stat">
+        <span class="rule-stat-num">87%</span>
+        <span class="rule-stat-label">of manual back-office workflows pass the 3x test on first evaluation</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AGENTS LIST -->
+<section class="agents">
+  <div class="section-label">Pre-Built Agent Templates</div>
+  <h2 class="section-title">Seven Agents, Ready to Deploy.</h2>
+
+  <div class="agents-list fade-up">
+    <div class="agent-row">
+      <div class="agent-index">01</div>
+      <div>
+        <div class="agent-name">Inventory Intelligence Agent</div>
+        <div class="agent-desc">Monitors stock levels, triggers reorder alerts, and generates weekly inventory digests with zero manual input.</div>
+      </div>
+      <div class="agent-badge">Operations</div>
+    </div>
+    <div class="agent-row">
+      <div class="agent-index">02</div>
+      <div>
+        <div class="agent-name">Client Onboarding Orchestrator</div>
+        <div class="agent-desc">Sequences welcome emails, document requests, kickoff scheduling, and CRM updates automatically from a single trigger.</div>
+      </div>
+      <div class="agent-badge">Revenue</div>
+    </div>
+    <div class="agent-row">
+      <div class="agent-index">03</div>
+      <div>
+        <div class="agent-name">Invoice Processing Pipeline</div>
+        <div class="agent-desc">Extracts, validates, and routes invoice data from inbound email to your accounting system without human handling.</div>
+      </div>
+      <div class="agent-badge">Finance</div>
+    </div>
+    <div class="agent-row">
+      <div class="agent-index">04</div>
+      <div>
+        <div class="agent-name">Lead Qualification Engine</div>
+        <div class="agent-desc">Scores and routes inbound leads using configurable criteria. Fires CRM updates and assigns owner — sub-2 minute response time.</div>
+      </div>
+      <div class="agent-badge">Sales</div>
+    </div>
+    <div class="agent-row">
+      <div class="agent-index">05</div>
+      <div>
+        <div class="agent-name">Support Triage System</div>
+        <div class="agent-desc">Classifies, prioritizes, and responds to tier-1 support tickets. Escalates edge cases with full context pre-loaded for humans.</div>
+      </div>
+      <div class="agent-badge">Support</div>
+    </div>
+    <div class="agent-row">
+      <div class="agent-index">06</div>
+      <div>
+        <div class="agent-name">Weekly Reporting Orchestrator</div>
+        <div class="agent-desc">Pulls KPIs from your connected tools, compiles narrative summaries, and delivers formatted reports to stakeholders on schedule.</div>
+      </div>
+      <div class="agent-badge">Intelligence</div>
+    </div>
+    <div class="agent-row">
+      <div class="agent-index">07</div>
+      <div>
+        <div class="agent-name">Contract Review Agent</div>
+        <div class="agent-desc">Flags non-standard clauses, payment terms, and risk signals in vendor contracts. Outputs a plain-English summary for non-legal review.</div>
+      </div>
+      <div class="agent-badge">Legal Ops</div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing" id="pricing">
+  <div class="section-label" style="text-align:center">Pricing</div>
+  <h2 class="section-title" style="max-width:100%; text-align:center">One Price. No Subscription. Keep It Forever.</h2>
+
+  <div class="pricing-box fade-up">
+    <span class="pricing-badge">Complete Blueprint Package</span>
+    <div class="pricing-price"><sup>$</sup>297</div>
+    <div class="pricing-note">One-time · Instant digital delivery · Lifetime access</div>
+
+    <ul class="pricing-features">
+      <li>Full SMB Agentic Workforce Blueprint PDF (150+ pages)</li>
+      <li>7 ready-to-deploy agent WORKER.yaml + SOUL.md templates</li>
+      <li>200+ curated back-office prompt library</li>
+      <li>6 operation-specific automation playbooks</li>
+      <li>3x Rule ROI Calculator spreadsheet</li>
+      <li>Tool integration maps for 12 popular SMB platforms</li>
+      <li>Model-agnostic design — works with Claude, GPT, Gemini, local models</li>
+      <li>Free updates for 12 months</li>
+    </ul>
+
+    <a href="#" class="btn-buy">Get Instant Access →</a>
+    <p class="pricing-guarantee">30-day money-back guarantee · No questions asked</p>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about">
+  <div class="about-inner">
+    <div>
+      <div class="section-label">Built By</div>
+      <h2 class="section-title" style="font-size:2.2rem">Not a Consultant.<br>A Builder Who Runs These Systems.</h2>
+    </div>
+    <div>
+      <p>This blueprint wasn't assembled from blog posts and case studies. It's extracted from real production systems — multi-agent orchestration pipelines, autonomous SaaS generation frameworks, and agentic coding systems built and shipped from scratch.</p>
+      <p>Every template in this package has run in a real environment. The WORKER.yaml configs, the SOUL.md context patterns, the 3x Rule calculator — these come from systems that process actual workloads, not toy demos.</p>
+      <p>The goal is simple: take what took months to figure out and compress it into a format any non-technical business owner can execute in a week.</p>
+      <div class="about-badge-row">
+        <span class="about-badge">Multi-Agent Systems</span>
+        <span class="about-badge">TypeScript / Node</span>
+        <span class="about-badge">MCP Integration</span>
+        <span class="about-badge">Agentic Frameworks</span>
+        <span class="about-badge">ERP Architecture</span>
+        <span class="about-badge">Zero Subscription</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq">
+  <div class="section-label">FAQ</div>
+  <h2 class="section-title">Common Questions</h2>
+
+  <div class="faq-list">
+    <div class="faq-item fade-up">
+      <div class="faq-q">Do I need to know how to code?</div>
+      <div class="faq-a">No. The blueprint is built for operators and business owners. The templates use configuration files (YAML/Markdown) that are filled in like forms, not coded from scratch. If you can use Notion or Airtable, you can deploy these agents.</div>
+    </div>
+    <div class="faq-item fade-up">
+      <div class="faq-q">Which AI model does this work with?</div>
+      <div class="faq-a">All of them. The blueprint is deliberately model-agnostic — Claude, GPT-4o, Gemini, Mistral, or local models via Ollama. You swap the LLM provider in one config line. Your workflow doesn't break when a better model launches.</div>
+    </div>
+    <div class="faq-item fade-up">
+      <div class="faq-q">How long does deployment actually take?</div>
+      <div class="faq-a">The first agent can be running in 2–4 hours following the playbook. A full 3–5 agent back-office workforce typically takes 3–5 days of setup. There's no ongoing development — once configured, agents run autonomously.</div>
+    </div>
+    <div class="faq-item fade-up">
+      <div class="faq-q">What if the agent templates don't match my tools?</div>
+      <div class="faq-a">The integration maps cover 12 platforms and include a generic webhook/API pattern that works with any modern SaaS tool. The blueprint's Tool Integration module walks through adapting any template to any platform in under an hour.</div>
+    </div>
+    <div class="faq-item fade-up">
+      <div class="faq-q">Is there a subscription or recurring cost?</div>
+      <div class="faq-a">Zero. One payment, instant download, yours forever. The only recurring cost you'll have is your LLM API usage — which the 3x Rule Calculator will show you is a rounding error compared to the labor savings.</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">AGENTIC.WORKFORCE</div>
+  <div class="footer-copy">© 2026 · Digital Product · Instant Delivery via Gumroad</div>
+</footer>
+
+<script>
+  // Intersection observer for fade-up animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(el => {
+      if (el.isIntersecting) {
+        el.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>

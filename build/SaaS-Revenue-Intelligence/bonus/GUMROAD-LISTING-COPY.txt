@@ -1,0 +1,104 @@
+╔══════════════════════════════════════════════════════════════════╗
+║         GUMROAD LISTING COPY — READY TO PASTE                   ║
+║         Copy each section into the corresponding Gumroad field   ║
+╚══════════════════════════════════════════════════════════════════╝
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+PRODUCT NAME
+━━━━━━━━━━━━
+SaaS Revenue Intelligence — MRR Projection Engine
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+PRICE
+━━━━━
+$15  (one-time purchase)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SHORT DESCRIPTION (shown in search results — 160 chars max)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Project MRR, churn & LTV. See your SaaS future before you build it.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+FULL PRODUCT DESCRIPTION
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+## See exactly where your SaaS revenue is going.
+
+Most SaaS founders track MRR. Few know their real LTV, churn trajectory, or when they'll hit breakeven. You're flying blind.
+
+**This is a revenue intelligence engine for your SaaS.** Drop in your metrics. Get projections, cohort analysis, and growth levers ranked by impact.
+
+### What you get:
+
+**📈 MRR Projection Engine**
+- Current MRR + 3 growth scenarios (conservative, target, aggressive)
+- Churn rate analysis with trend detection
+- Expansion revenue tracking (upgrades, cross-sells)
+
+**📊 Cohort & Retention Analysis**
+- Monthly cohort retention curves
+- Average customer lifespan calculation
+- LTV:CAC ratio with payback period
+
+**🎯 What-If Simulator**
+- "What if I reduce churn by 2%?" → see revenue impact
+- "What if I raise prices 15%?" → see MRR change
+- "What if I double trial conversion?" → see annual impact
+
+**🎁 Bonus Materials Included**
+- SaaS Metrics Glossary — 50 KPIs defined
+- 5 MRR Growth Playbooks
+
+### Works for:
+✓ Indie SaaS founders
+✓ Bootstrapped startups
+✓ Pre-seed / Seed stage B2B SaaS
+✓ Solo builders validating revenue models
+
+### Technical details:
+- **Format:** Single HTML file
+- **Requirements:** Any modern browser. No installation needed.
+- **Works offline:** YES
+
+### What's inside the download:
+```
+SaaS-Revenue-Intelligence/
+├── SaaS-Revenue-Intelligence.html   ← Main product
+├── README.txt                       ← Overview & setup
+├── QUICK-START.txt                  ← 5-minute guide
+├── LICENSE.txt                      ← Your usage rights
+└── bonus/
+    ├── SaaS-Metrics-Glossary.txt
+    └── 5-MRR-Growth-Playbooks.txt
+```
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+TAGS
+━━━━━━━━
+
+saas metrics, mrr tracker, saas calculator, revenue projection, churn analysis, ltv calculator, startup tools, saas dashboard, indie hacker, founder tools
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+FEATURES (for Gumroad bullet points)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✓ MRR projection with 3 growth scenarios — never be surprised again
+✓ Cohort retention & LTV:CAC analysis in seconds
+✓ What-if simulator: see exact revenue impact of any change
+✓ SaaS metrics glossary + growth playbooks included
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+LAUNCH CHECKLIST
+━━━━━━━━━━━━━━━━
+
+  □ Upload SaaS-Revenue-Intelligence.zip as the product file
+  □ Paste product description above
+  □ Set price to $15
+  □ Upload a thumbnail (1280x720 recommended)
+  □ Record a 60-second demo video (Loom free tier works great)
+  □ Set refund policy: 30 days (increases purchase confidence)
+  □ Add product to relevant Gumroad collections
+  □ Share launch post on Twitter/X, LinkedIn, Reddit
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

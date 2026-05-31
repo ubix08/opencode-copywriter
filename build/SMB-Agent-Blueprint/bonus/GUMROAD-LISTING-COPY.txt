@@ -1,0 +1,109 @@
+╔══════════════════════════════════════════════════════════════════╗
+║         GUMROAD LISTING COPY — READY TO PASTE                   ║
+║         Copy each section into the corresponding Gumroad field   ║
+╚══════════════════════════════════════════════════════════════════╝
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+PRODUCT NAME
+━━━━━━━━━━━━
+SMB Agentic Workforce Blueprint
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+PRICE
+━━━━━
+$19  (one-time purchase)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SHORT DESCRIPTION (shown in search results — 160 chars max)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Design your first AI agent team for your small business. No coding required.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+FULL PRODUCT DESCRIPTION
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+## AI agents aren't just for big tech anymore.
+
+You've heard about AI agents. You know they can automate work. But every guide assumes you have a team of engineers, a $10K/month budget, and six months to deploy.
+
+**The SMB Agent Blueprint is a practical planning tool for small business owners who want to design, scope, and deploy their first AI agent team — without hiring developers.**
+
+### What you get:
+
+**🧩 Agent Role Designer**
+- Define agent roles (customer support, lead gen, research, content)
+- Set autonomy levels (supervised → fully autonomous)
+- Map handoffs between agents
+
+**📋 Scoping Canvas**
+- What to automate vs what to keep human
+- Cost-benefit analysis for each agent role
+- Integration requirements checklist
+
+**🗺️ Deployment Roadmap**
+- Phase 1: Quick wins (setup in 1 day)
+- Phase 2: Core agents (setup in 1 week)
+- Phase 3: Full workforce (setup in 1 month)
+
+**📊 ROI Calculator**
+- Hours saved per week per agent
+- Cost comparison: agent vs employee vs outsourced
+- Break-even timeline
+
+**🎁 Bonus Materials Included**
+- Agent Prompt Templates — 10 role prompts ready to customize
+- Agent Stack Decision Guide — which tools for which role
+
+### Works for:
+✓ SMB owners (1-50 employees)
+✓ Solo operators overwhelmed by admin
+✓ Freelancers scaling with AI
+✓ Micro-agencies wanting automated workflows
+
+### Technical details:
+- **Format:** Single HTML file
+- **Requirements:** Any modern browser. No installation needed.
+- **Works offline:** YES
+
+### What's inside the download:
+```
+SMB-Agent-Blueprint/
+├── SMB-Agent-Blueprint.html         ← Main product
+├── README.txt                       ← Overview & setup
+├── QUICK-START.txt                  ← 5-minute guide
+├── LICENSE.txt                      ← Your usage rights
+└── bonus/
+    ├── Agent-Prompt-Templates.txt
+    └── Agent-Stack-Guide.txt
+```
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+TAGS
+━━━━━━━━
+
+ai agents, smb automation, business automation, ai workflow, small business ai, agent blueprint, ai tools, productivity, no-code ai, agentic ai
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+FEATURES (for Gumroad bullet points)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✓ Design agent roles with autonomy levels and handoff maps
+✓ Scoping canvas: what to automate vs keep human
+✓ Phase deployment roadmap: 1-day quick wins to full workforce
+✓ Agent prompt templates + stack decision guide included
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+LAUNCH CHECKLIST
+━━━━━━━━━━━━━━━━
+
+  □ Upload SMB-Agent-Blueprint.zip as the product file
+  □ Paste product description above
+  □ Set price to $19
+  □ Upload a thumbnail (1280x720 recommended)
+  □ Record a 60-second demo video (Loom free tier works great)
+  □ Set refund policy: 30 days (increases purchase confidence)
+  □ Add product to relevant Gumroad collections
+  □ Share launch post on Twitter/X, LinkedIn, Reddit
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

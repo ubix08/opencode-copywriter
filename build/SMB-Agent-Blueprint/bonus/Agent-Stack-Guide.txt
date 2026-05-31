@@ -1,0 +1,5 @@
+╔══════════════════════════════════════════════════════════════════╗
+║         AGENT STACK GUIDE                           ║
+╚══════════════════════════════════════════════════════════════════╝
+
+Decision guide comparing AI agent tools: n8n, Claude Code, Make, ChatGPT, and custom builds — which fits your use case.

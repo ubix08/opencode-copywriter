@@ -1,0 +1,112 @@
+╔══════════════════════════════════════════════════════════════════╗
+║         GUMROAD LISTING COPY — READY TO PASTE                   ║
+║         Copy each section into the corresponding Gumroad field   ║
+╚══════════════════════════════════════════════════════════════════╝
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+PRODUCT NAME
+━━━━━━━━━━━━
+SEO Audit Pro — Professional SEO Audit Toolkit
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+PRICE
+━━━━━
+$19  (one-time purchase)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SHORT DESCRIPTION (shown in search results — 160 chars max)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Run a complete SEO audit in 15 minutes. No tools, no subscriptions, no fluff.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+FULL PRODUCT DESCRIPTION
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+## Most SEO audits are either too shallow or too expensive.
+
+You either run a free tool that gives you 3 generic suggestions — or hire an agency for $2,000. There's nothing in between for people who want a thorough audit they can do themselves.
+
+**SEO Audit Pro is a guided HTML toolkit that walks you through a professional-grade audit in 15 minutes.** No API keys, no subscriptions, no monthly fees.
+
+### What you get:
+
+**🔍 Technical SEO Scanner**
+- Crawlability & indexation checklist
+- Core Web Vitals assessment guide
+- Mobile-friendliness & page speed evaluation
+- Structured data / schema markup audit
+
+**📝 On-Page Analyzer**
+- Title tag & meta description optimizer
+- Header structure (H1-H6) review
+- Keyword targeting & content gap analysis
+- Internal linking audit with recommendations
+
+**🔗 Off-Page & Backlink Review**
+- Backlink quality assessment framework
+- Competitor backlink gap analysis
+- Disavow vs reclaim decision guide
+
+**📊 Audit Report Generator**
+- Auto-scored audit (0-100) with priority rankings
+- Action items sorted by effort vs impact
+- Printable checklist for client or personal use
+
+**🎁 Bonus Materials Included**
+- Technical SEO Checklist (50-point checklist)
+- Keyword Research Template (100 keywords)
+
+### Works for:
+✓ Solopreneurs doing their own SEO
+✓ Indie hackers ranking their SaaS
+✓ Freelancers offering SEO as a service
+✓ Bloggers & content creators
+✓ Small business owners
+
+### Technical details:
+- **Format:** Single HTML file
+- **Requirements:** Any modern browser. No installation needed.
+- **Works offline:** YES
+
+### What's inside the download:
+```
+SEO-Audit-Pro/
+├── SEO-Audit-Pro.html               ← Main product
+├── README.txt                       ← Overview & setup
+├── QUICK-START.txt                  ← 5-minute guide
+├── LICENSE.txt                      ← Your usage rights
+└── bonus/
+    ├── Technical-SEO-Checklist.txt
+    └── Keyword-Research-Template.txt
+```
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+TAGS
+━━━━━━━━
+
+seo audit, seo checklist, seo tools, technical seo, on-page seo, keyword research, website audit, seo analyzer, small business seo, content optimization
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+FEATURES (for Gumroad bullet points)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✓ Technical SEO, on-page, and backlink audit — all in one file
+✓ Auto-scored audit from 0-100 with priority action items
+✓ Printable checklist for client deliverables
+✓ Technical SEO checklist + keyword template included
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+LAUNCH CHECKLIST
+━━━━━━━━━━━━━━━━
+
+  □ Upload SEO-Audit-Pro.zip as the product file
+  □ Paste product description above
+  □ Set price to $19
+  □ Upload a thumbnail (1280x720 recommended)
+  □ Record a 60-second demo video (Loom free tier works great)
+  □ Set refund policy: 30 days (increases purchase confidence)
+  □ Add product to relevant Gumroad collections
+  □ Share launch post on Twitter/X, LinkedIn, Reddit
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

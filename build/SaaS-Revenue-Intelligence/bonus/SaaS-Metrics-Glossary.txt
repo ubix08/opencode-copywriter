@@ -1,0 +1,5 @@
+╔══════════════════════════════════════════════════════════════════╗
+║         SAAS METRICS GLOSSARY                           ║
+╚══════════════════════════════════════════════════════════════════╝
+
+50 essential SaaS KPIs defined with formulas, benchmarks, and what to watch for.

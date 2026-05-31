@@ -6,19 +6,35 @@ Target: $5-$49 per product.
 
 ## Built Products (8 available now)
 
-| Product | File | Lines | Est. Price | Created |
-|---------|------|-------|------------|---------|
-| Freelance Rate & Project Pricing Calculator | `freelance-rate-calculator.html` | 1,169 | $12 | ✅ |
-| SaaS Revenue Calculator | `saas-revenue-calculator.html` | 1,169 | $15 | ✅ |
-| Content Calendar & Publishing Planner | `content-calendar-planner.html` | 1,430 | $9 | ✅ |
-| SEO Audit Toolkit | `seo-audit-toolkit.html` | 2,005 | $19 | ✅ |
-| Business KPI Dashboard | `business-kpi-dashboard.html` | 1,366 | $15 | ✅ |
-| SMB Agent Blueprint | `smb-agent-blueprint.html` | 1,109 | $19 | ✅ |
-| Gumroad Factory — 10-Step Launch Engine | `gumroad-factory.html` | 1,354 | $25 | ✅ |
-| BizPulse KPI Dashboard (Excel ZIP) | `BizPulse-KPI-Dashboard-v2.1.zip` | — | $15 | ✅ |
-| **Gumroad Factory (Pre-built ZIP)** | `gumroad-factory.zip` | — | $25 | ✅ |
+| Product | Package | Size | Price | Ready for Gumroad |
+|---------|---------|------|-------|-------------------|
+| Freelance Rate & Project Pricing Calculator | `build/Freelance-Rate-Calculator-v1.0.zip` | 15K | $12 | ✅ 9 files |
+| SaaS Revenue Intelligence — MRR Projection Engine | `build/SaaS-Revenue-Intelligence-v1.0.zip` | 15K | $15 | ✅ 9 files |
+| Content Calendar & Publishing Planner | `build/Content-Calendar-Planner-v1.0.zip` | 16K | $9 | ✅ 9 files |
+| SEO Audit Pro — Professional SEO Audit Toolkit | `build/SEO-Audit-Pro-v1.0.zip` | 24K | $19 | ✅ 9 files |
+| SMB Agentic Workforce Blueprint | `build/SMB-Agent-Blueprint-v1.0.zip` | 14K | $19 | ✅ 9 files |
+| Gumroad Factory — 10-Step Product Launch Engine | `build/Gumroad-Factory-v1.0.zip` | 19K | $25 | ✅ 9 files |
+| BizPulse — Business KPI Dashboard with AI Diagnosis | `content/info-products/BizPulse-KPI-Dashboard-v2.1.zip` | 27K | $49 | ✅ 9 files |
 
 ## Categories & Pipeline
+
+## Gumready Packaging Standard
+
+Every product follows the BizPulse zip template:
+
+```
+Product-Name-v1.0.zip
+└── Product-Name/
+    ├── Product-Name.html        ← Main product (double-click to use)
+    ├── README.txt               ← Overview & what's inside
+    ├── QUICK-START.txt          ← 5-minute setup guide
+    ├── LICENSE.txt              ← Single-user license
+    └── bonus/
+        ├── GUMROAD-LISTING-COPY.txt   ← Ready-to-paste listing copy
+        └── [2 bonus files per product]
+```
+
+Each zip contains exactly 9 files. Description, tags, price, and launch checklist are pre-written in `bonus/GUMROAD-LISTING-COPY.txt`.
 
 ### Interactive HTML Tools (built)
 - **Freelance Rate & Project Pricing Calculator** — $12 — freelancers pricing projects → `freelance-rate-calculator.html`

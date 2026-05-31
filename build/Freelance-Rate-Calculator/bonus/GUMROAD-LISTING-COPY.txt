@@ -1,0 +1,106 @@
+╔══════════════════════════════════════════════════════════════════╗
+║         GUMROAD LISTING COPY — READY TO PASTE                   ║
+║         Copy each section into the corresponding Gumroad field   ║
+╚══════════════════════════════════════════════════════════════════╝
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+PRODUCT NAME
+━━━━━━━━━━━━
+Freelance Rate & Project Pricing Calculator
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+PRICE
+━━━━━
+$12  (one-time purchase)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SHORT DESCRIPTION (shown in search results — 160 chars max)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Stop underpricing. Get your optimal hourly, project & retainer rate in 60 seconds.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+FULL PRODUCT DESCRIPTION
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+## Never guess your rates again.
+
+You've lost projects because you quoted too high — or left money on the table because you quoted too low. Either way, you're guessing.
+
+**The Freelance Rate Calculator turns pricing from a guessing game into a formula.** Enter your target income, expenses, and work style. Get your hourly, project, and retainer rates instantly.
+
+### What you get:
+
+**📊 3 Rate Views**
+- Hourly rate (billable hours vs target income)
+- Project rate (scope + risk-adjusted pricing)
+- Retainer rate (monthly recurring revenue model)
+
+**⚡ Smart Adjustments**
+- Experience level multiplier (Junior → Expert)
+- Industry markup (tech, creative, consulting)
+- Geographic cost-of-living adjustment
+
+**📈 What-If Scenarios**
+- See how changing hours or income targets affects your rates
+- Compare full-time vs freelance equivalent earnings
+- Find your break-even rate
+
+**🎁 Bonus Materials Included**
+- Rate Negotiation Script — 5 email templates
+- 10 Pricing Strategies for Freelancers
+
+### Works for:
+✓ Freelance developers & designers
+✓ Consultants & coaches
+✓ Writers & content creators
+✓ Creative professionals
+✓ Agency owners setting team rates
+
+### Technical details:
+- **Format:** Single HTML file
+- **Requirements:** Any modern browser. No installation needed.
+- **Works offline:** YES
+- **Compatible with:** Windows, Mac, Linux, Chromebook, iPad
+
+### What's inside the download:
+```
+Freelance-Rate-Calculator/
+├── Freelance-Rate-Calculator.html   ← Main product
+├── README.txt                       ← Overview & setup
+├── QUICK-START.txt                  ← 5-minute guide
+├── LICENSE.txt                      ← Your usage rights
+└── bonus/
+    ├── Rate-Negotiation-Scripts.txt
+    └── 10-Pricing-Strategies.txt
+```
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+TAGS
+━━━━━━━━
+
+freelance calculator, freelance pricing, project rate calculator, hourly rate calculator, freelance tools, pricing calculator, consultant tools, freelancer templates, indie maker tools, proposal pricing
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+FEATURES (for Gumroad bullet points)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✓ 3 rate views: hourly, project, retainer — no more guesswork
+✓ Experience, industry & location adjustments for realistic pricing
+✓ What-if scenarios to compare pricing strategies instantly
+✓ Rate negotiation scripts included — handle objections with confidence
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+LAUNCH CHECKLIST
+━━━━━━━━━━━━━━━━
+
+  □ Upload Freelance-Rate-Calculator.zip as the product file
+  □ Paste product description above
+  □ Set price to $12
+  □ Upload a thumbnail (1280x720 recommended)
+  □ Record a 60-second demo video (Loom free tier works great)
+  □ Set refund policy: 30 days (increases purchase confidence)
+  □ Add product to relevant Gumroad collections
+  □ Share launch post on Twitter/X, LinkedIn, Reddit
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

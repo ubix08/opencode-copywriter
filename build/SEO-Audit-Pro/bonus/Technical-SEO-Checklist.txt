@@ -1,0 +1,5 @@
+╔══════════════════════════════════════════════════════════════════╗
+║         TECHNICAL SEO CHECKLIST                           ║
+╚══════════════════════════════════════════════════════════════════╝
+
+50-point technical SEO checklist covering crawlability, indexing, speed, mobile, schema, and security.

@@ -1,0 +1,5 @@
+╔══════════════════════════════════════════════════════════════════╗
+║         AGENT PROMPT TEMPLATES                           ║
+╚══════════════════════════════════════════════════════════════════╝
+
+10 ready-to-customize agent prompt templates for customer support, lead qualification, research, and content roles.

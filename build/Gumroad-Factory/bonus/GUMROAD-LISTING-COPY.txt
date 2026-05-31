@@ -1,0 +1,112 @@
+╔══════════════════════════════════════════════════════════════════╗
+║         GUMROAD LISTING COPY — READY TO PASTE                   ║
+║         Copy each section into the corresponding Gumroad field   ║
+╚══════════════════════════════════════════════════════════════════╝
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+PRODUCT NAME
+━━━━━━━━━━━━
+Gumroad Factory — 10-Step Product Launch Engine
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+PRICE
+━━━━━
+$25  (one-time purchase)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SHORT DESCRIPTION (shown in search results — 160 chars max)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Plan, build & launch your Gumroad product in one afternoon. 10 steps, done.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+FULL PRODUCT DESCRIPTION
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+## Most Gumroad products never make a sale.
+
+Not because they're bad. Because they launch without a plan, a list, or a pitch. The product is great. The launch is invisible.
+
+**The Gumroad Factory is a 10-step launch engine that takes you from idea to first sale in a single afternoon.** It's the system I use to build and launch every product.
+
+### What you get:
+
+**📋 10-Step Launch Pipeline**
+- Step 1: Idea validation (5-question fit check)
+- Step 2: Audience need mapping
+- Step 3: Minimum viable product scoping
+- Step 4: Pricing strategy (anchor, tier, bundle)
+- Step 5: Listing copy (headline, description, bullet)
+- Step 6: Thumbnail & visual brief
+- Step 7: Pre-launch email sequence
+- Step 8: Launch day playbook
+- Step 9: Post-launch promotion plan
+- Step 10: Review & iterate
+
+**📊 Progress Tracking**
+- Each step has a checklist with status
+- Overall completion percentage
+- Time tracking per step (1-4 hour total build)
+
+**📝 Built-in Templates**
+- Gumroad product description template
+- Launch email sequence (5 emails)
+- Social media announcement posts (X, LinkedIn, Reddit)
+- Pricing tier calculator
+
+**🎁 Bonus Materials Included**
+- Product Launch Checklist (30 items)
+- 10 Proven Pricing Strategies for Digital Products
+
+### Works for:
+✓ First-time Gumroad sellers
+✓ Creators launching their digital product
+✓ Indie hackers selling tools & templates
+✓ Anyone with a product idea sitting in a draft
+
+### Technical details:
+- **Format:** Single HTML file
+- **Requirements:** Any modern browser. No installation needed.
+- **Works offline:** YES
+
+### What's inside the download:
+```
+Gumroad-Factory/
+├── Gumroad-Factory.html             ← Main product
+├── README.txt                       ← Overview & setup
+├── QUICK-START.txt                  <- 5-minute guide
+├── LICENSE.txt                      ← Your usage rights
+└── bonus/
+    ├── Product-Launch-Checklist.txt
+    └── 10-Pricing-Strategies.txt
+```
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+TAGS
+━━━━━━━━
+
+gumroad, digital products, product launch, gumroad seller, launch checklist, info products, selling digital downloads, creator economy, passive income, product creation
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+FEATURES (for Gumroad bullet points)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✓ 10-step pipeline from idea validation to first sale
+✓ Built-in templates: listing copy, emails, social posts
+✓ Progress tracking with time estimates per step
+✓ Launch checklist + pricing strategies included
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+LAUNCH CHECKLIST
+━━━━━━━━━━━━━━━━
+
+  □ Upload Gumroad-Factory.zip as the product file
+  □ Paste product description above
+  □ Set price to $25
+  □ Upload a thumbnail (1280x720 recommended)
+  □ Record a 60-second demo video (Loom free tier works great)
+  □ Set refund policy: 30 days (increases purchase confidence)
+  □ Add product to relevant Gumroad collections
+  □ Share launch post on Twitter/X, LinkedIn, Reddit
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

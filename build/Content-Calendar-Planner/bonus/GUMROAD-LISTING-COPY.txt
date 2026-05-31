@@ -1,0 +1,105 @@
+╔══════════════════════════════════════════════════════════════════╗
+║         GUMROAD LISTING COPY — READY TO PASTE                   ║
+║         Copy each section into the corresponding Gumroad field   ║
+╚══════════════════════════════════════════════════════════════════╝
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+PRODUCT NAME
+━━━━━━━━━━━━
+Content Calendar & Publishing Planner
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+PRICE
+━━━━━
+$9  (one-time purchase)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SHORT DESCRIPTION (shown in search results — 160 chars max)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Plan, batch & track content across all platforms. One file, zero complexity.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+FULL PRODUCT DESCRIPTION
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+## Stop juggling 5 tools to plan your content.
+
+You're drafting in Notion, scheduling in Buffer, tracking in a spreadsheet, and still missing deadlines. There's a simpler way.
+
+**The Content Calendar Planner replaces 3 tools with one HTML file.** Plan your month, batch your topics, and track every piece of content across every platform — without a subscription.
+
+### What you get:
+
+**📅 Monthly Calendar View**
+- Drag-and-drop topic scheduling
+- Multi-platform column view (blog, X/Twitter, LinkedIn, newsletter)
+- Theme & campaign tagging
+
+**📝 Batch Planning Mode**
+- Cluster related content into production batches
+- Track draft → review → publish → promote stages
+- Repurpose tracker (one article → 5+ social posts)
+
+**📊 Performance Dashboard**
+- Publishing frequency by platform
+- Content type breakdown (how-to, listicle, case study, opinion)
+- Monthly publishing streak tracker
+
+**🎁 Bonus Materials Included**
+- 50 Content Topic Ideas for Tech Creators
+- Content Repurposing Matrix — 1 article into 12 assets
+
+### Works for:
+✓ Indie builders & solo creators
+✓ Newsletter writers
+✓ Technical bloggers
+✓ SaaS founders doing their own marketing
+✓ Freelancers building a personal brand
+
+### Technical details:
+- **Format:** Single HTML file
+- **Requirements:** Any modern browser. No installation needed.
+- **Works offline:** YES
+
+### What's inside the download:
+```
+Content-Calendar-Planner/
+├── Content-Calendar-Planner.html    ← Main product
+├── README.txt                       ← Overview & setup
+├── QUICK-START.txt                  ← 5-minute guide
+├── LICENSE.txt                      ← Your usage rights
+└── bonus/
+    ├── 50-Content-Topic-Ideas.txt
+    └── Content-Repurposing-Matrix.txt
+```
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+TAGS
+━━━━━━━━
+
+content calendar, content planner, editorial calendar, social media planner, content scheduling, content marketing, creator tools, newsletter planning, blogging tools, content strategy
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+FEATURES (for Gumroad bullet points)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✓ Monthly calendar + batch planning — plan a month in 30 minutes
+✓ Multi-platform columns: blog, X, LinkedIn, newsletter
+✓ Track draft → review → publish → promote pipeline
+✓ 50 content ideas + repurposing matrix included
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+LAUNCH CHECKLIST
+━━━━━━━━━━━━━━━━
+
+  □ Upload Content-Calendar-Planner.zip as the product file
+  □ Paste product description above
+  □ Set price to $9
+  □ Upload a thumbnail (1280x720 recommended)
+  □ Record a 60-second demo video (Loom free tier works great)
+  □ Set refund policy: 30 days (increases purchase confidence)
+  □ Add product to relevant Gumroad collections
+  □ Share launch post on Twitter/X, LinkedIn, Reddit
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

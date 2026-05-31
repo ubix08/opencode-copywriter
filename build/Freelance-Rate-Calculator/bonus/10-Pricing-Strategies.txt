@@ -1,0 +1,5 @@
+╔══════════════════════════════════════════════════════════════════╗
+║         10 PRICING STRATEGIES                           ║
+╚══════════════════════════════════════════════════════════════════╝
+
+Value-based pricing, anchor pricing, package pricing, and 7 more strategies with examples.

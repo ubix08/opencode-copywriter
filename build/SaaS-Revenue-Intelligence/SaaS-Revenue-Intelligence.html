@@ -1,0 +1,1169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>SaaS Revenue Intelligence — MRR Projection Engine</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #11111a;
+    --panel: #16161f;
+    --border: #252535;
+    --accent: #00e5a0;
+    --accent2: #7b5cf0;
+    --accent3: #ff6b35;
+    --warn: #ffd166;
+    --text: #e8e8f0;
+    --muted: #5a5a75;
+    --dim: #2a2a3a;
+    --font-head: 'Syne', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-mono);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Background grid */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,229,160,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,229,160,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    position: relative;
+    z-index: 1;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px 80px;
+  }
+
+  /* Header */
+  header {
+    padding: 48px 0 40px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 40px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .logo-area h1 {
+    font-family: var(--font-head);
+    font-size: clamp(24px, 4vw, 40px);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1;
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .logo-area p {
+    color: var(--muted);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-top: 8px;
+  }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(0,229,160,0.08);
+    border: 1px solid rgba(0,229,160,0.2);
+    color: var(--accent);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 6px 12px;
+    border-radius: 4px;
+  }
+  .badge::before { content: '◉'; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+  /* Layout */
+  .grid-main {
+    display: grid;
+    grid-template-columns: 380px 1fr;
+    gap: 24px;
+    align-items: start;
+  }
+
+  @media (max-width: 900px) {
+    .grid-main { grid-template-columns: 1fr; }
+  }
+
+  /* Panels */
+  .panel {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .panel-header {
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255,255,255,0.015);
+  }
+
+  .panel-header .icon {
+    width: 24px;
+    height: 24px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+  }
+
+  .panel-header h2 {
+    font-family: var(--font-head);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--text);
+  }
+
+  /* Inputs */
+  .input-section {
+    padding: 20px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .input-section:last-child { border-bottom: none; }
+
+  .section-label {
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .field {
+    margin-bottom: 14px;
+  }
+
+  .field:last-child { margin-bottom: 0; }
+
+  .field label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 11px;
+    color: var(--muted);
+    margin-bottom: 6px;
+    letter-spacing: 0.03em;
+  }
+
+  .field label .val {
+    color: var(--accent);
+    font-weight: 500;
+    font-size: 12px;
+    min-width: 60px;
+    text-align: right;
+  }
+
+  input[type="range"] {
+    width: 100%;
+    height: 4px;
+    -webkit-appearance: none;
+    background: var(--dim);
+    border-radius: 2px;
+    outline: none;
+    cursor: pointer;
+  }
+
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 8px rgba(0,229,160,0.5);
+    cursor: pointer;
+    transition: transform 0.15s;
+  }
+
+  input[type="range"]::-webkit-slider-thumb:hover {
+    transform: scale(1.3);
+  }
+
+  input[type="number"] {
+    width: 100%;
+    background: var(--dim);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    color: var(--text);
+    font-family: var(--font-mono);
+    font-size: 13px;
+    padding: 8px 10px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  input[type="number"]:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 2px rgba(0,229,160,0.1);
+  }
+
+  /* Right panel */
+  .right-col {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  /* KPI cards */
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+
+  @media (max-width: 600px) { .kpi-grid { grid-template-columns: repeat(2, 1fr); } }
+
+  .kpi-card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.3s, transform 0.2s;
+  }
+
+  .kpi-card:hover {
+    border-color: rgba(0,229,160,0.3);
+    transform: translateY(-1px);
+  }
+
+  .kpi-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+  }
+
+  .kpi-card.green::before { background: var(--accent); }
+  .kpi-card.purple::before { background: var(--accent2); }
+  .kpi-card.orange::before { background: var(--accent3); }
+  .kpi-card.yellow::before { background: var(--warn); }
+  .kpi-card.red::before { background: #ff4757; }
+  .kpi-card.teal::before { background: #00bcd4; }
+
+  .kpi-label {
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+
+  .kpi-value {
+    font-family: var(--font-head);
+    font-size: clamp(18px, 3vw, 26px);
+    font-weight: 700;
+    line-height: 1;
+    color: var(--text);
+  }
+
+  .kpi-sub {
+    font-size: 10px;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+
+  .kpi-delta {
+    font-size: 11px;
+    margin-top: 6px;
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+  }
+
+  .kpi-delta.pos { color: var(--accent); }
+  .kpi-delta.neg { color: #ff4757; }
+  .kpi-delta.warn { color: var(--warn); }
+
+  /* Chart */
+  .chart-panel { padding: 20px; }
+
+  .chart-tabs {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 20px;
+    background: var(--dim);
+    padding: 4px;
+    border-radius: 6px;
+    width: fit-content;
+  }
+
+  .chart-tab {
+    padding: 6px 14px;
+    font-size: 11px;
+    font-family: var(--font-mono);
+    background: none;
+    border: none;
+    color: var(--muted);
+    cursor: pointer;
+    border-radius: 4px;
+    transition: all 0.2s;
+    letter-spacing: 0.03em;
+  }
+
+  .chart-tab.active {
+    background: var(--surface);
+    color: var(--accent);
+    border: 1px solid rgba(0,229,160,0.2);
+  }
+
+  .chart-wrap {
+    position: relative;
+    height: 200px;
+  }
+
+  svg.chart {
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+  }
+
+  /* Breakdown table */
+  .breakdown { padding: 20px; }
+
+  .breakdown table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+  }
+
+  .breakdown th {
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-align: left;
+    padding: 6px 8px;
+    border-bottom: 1px solid var(--border);
+    font-weight: 400;
+  }
+
+  .breakdown td {
+    padding: 10px 8px;
+    border-bottom: 1px solid rgba(37,37,53,0.5);
+    vertical-align: middle;
+  }
+
+  .breakdown tr:last-child td { border-bottom: none; }
+
+  .breakdown .num { text-align: right; font-weight: 500; }
+
+  .trend-bar {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .trend-bar-inner {
+    height: 3px;
+    border-radius: 2px;
+    min-width: 4px;
+    transition: width 0.5s ease;
+  }
+
+  /* Health score */
+  .health-section {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .health-bar-row {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .health-bar-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    color: var(--muted);
+  }
+
+  .health-bar-label span:last-child { color: var(--text); font-weight: 500; }
+
+  .health-bar-track {
+    height: 4px;
+    background: var(--dim);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .health-bar-fill {
+    height: 100%;
+    border-radius: 2px;
+    transition: width 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+
+  /* Score ring */
+  .score-ring-wrap {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .score-ring {
+    position: relative;
+    width: 80px;
+    height: 80px;
+    flex-shrink: 0;
+  }
+
+  .score-ring svg { transform: rotate(-90deg); }
+
+  .score-ring .score-text {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-head);
+    font-weight: 800;
+    font-size: 22px;
+    line-height: 1;
+  }
+
+  .score-ring .score-label {
+    font-size: 8px;
+    letter-spacing: 0.1em;
+    font-family: var(--font-mono);
+    color: var(--muted);
+    text-transform: uppercase;
+    font-weight: 400;
+    margin-top: 2px;
+  }
+
+  .score-desc { flex: 1; }
+  .score-desc h3 {
+    font-family: var(--font-head);
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .score-desc p { font-size: 11px; color: var(--muted); line-height: 1.5; }
+
+  /* Insight pills */
+  .insights {
+    padding: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .insight-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 11px;
+    border: 1px solid;
+    line-height: 1.3;
+  }
+
+  .insight-pill.good { background: rgba(0,229,160,0.05); border-color: rgba(0,229,160,0.2); color: var(--accent); }
+  .insight-pill.warn { background: rgba(255,209,102,0.05); border-color: rgba(255,209,102,0.2); color: var(--warn); }
+  .insight-pill.bad  { background: rgba(255,71,87,0.05); border-color: rgba(255,71,87,0.2); color: #ff4757; }
+
+  /* Preset buttons */
+  .presets {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 0 20px 20px;
+  }
+
+  .preset-btn {
+    padding: 5px 12px;
+    font-size: 10px;
+    font-family: var(--font-mono);
+    background: var(--dim);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+    letter-spacing: 0.05em;
+  }
+
+  .preset-btn:hover {
+    border-color: var(--accent2);
+    color: var(--accent2);
+    background: rgba(123,92,240,0.08);
+  }
+
+  /* Footer */
+  footer {
+    margin-top: 48px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  footer p { font-size: 10px; color: var(--muted); letter-spacing: 0.05em; }
+
+  .export-btn {
+    padding: 8px 20px;
+    background: rgba(0,229,160,0.1);
+    border: 1px solid rgba(0,229,160,0.3);
+    color: var(--accent);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    border-radius: 4px;
+    cursor: pointer;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: all 0.2s;
+  }
+
+  .export-btn:hover {
+    background: rgba(0,229,160,0.2);
+    box-shadow: 0 0 16px rgba(0,229,160,0.15);
+  }
+
+  .animate-in {
+    animation: fadeSlide 0.4s ease forwards;
+  }
+  @keyframes fadeSlide {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <div class="logo-area">
+      <h1>SaaS Revenue Intelligence</h1>
+      <p>MRR Projection &amp; Unit Economics Engine · v2.1</p>
+    </div>
+    <div class="badge">Live Model</div>
+  </header>
+
+  <div class="grid-main">
+
+    <!-- LEFT: Inputs -->
+    <div class="left-col">
+      <div class="panel">
+        <div class="panel-header">
+          <div class="icon" style="background:rgba(0,229,160,0.1);color:var(--accent)">⚙</div>
+          <h2>Model Parameters</h2>
+        </div>
+
+        <div class="presets">
+          <button class="preset-btn" onclick="loadPreset('bootstrapped')">Bootstrapped</button>
+          <button class="preset-btn" onclick="loadPreset('vc_seed')">VC Seed</button>
+          <button class="preset-btn" onclick="loadPreset('agency')">Agency</button>
+          <button class="preset-btn" onclick="loadPreset('b2b_enterprise')">B2B Ent.</button>
+        </div>
+
+        <!-- Acquisition -->
+        <div class="input-section">
+          <div class="section-label">Acquisition</div>
+
+          <div class="field">
+            <label>Monthly New Signups <span class="val" id="lbl_signups">100</span></label>
+            <input type="range" id="signups" min="1" max="5000" step="1" value="100" oninput="update()"/>
+          </div>
+
+          <div class="field">
+            <label>CAC (Customer Acquisition Cost) <span class="val" id="lbl_cac">$80</span></label>
+            <input type="range" id="cac" min="0" max="2000" step="5" value="80" oninput="update()"/>
+          </div>
+
+          <div class="field">
+            <label>Trial → Paid Conversion <span class="val" id="lbl_conv">25%</span></label>
+            <input type="range" id="conv" min="1" max="100" step="1" value="25" oninput="update()"/>
+          </div>
+
+          <div class="field">
+            <label>Viral / Referral Coefficient <span class="val" id="lbl_viral">0.10</span></label>
+            <input type="range" id="viral" min="0" max="0.99" step="0.01" value="0.10" oninput="update()"/>
+          </div>
+        </div>
+
+        <!-- Revenue -->
+        <div class="input-section">
+          <div class="section-label">Revenue</div>
+
+          <div class="field">
+            <label>ARPU / month <span class="val" id="lbl_arpu">$49</span></label>
+            <input type="range" id="arpu" min="1" max="2000" step="1" value="49" oninput="update()"/>
+          </div>
+
+          <div class="field">
+            <label>Plan Mix — % on Annual <span class="val" id="lbl_annual_pct">20%</span></label>
+            <input type="range" id="annual_pct" min="0" max="100" step="1" value="20" oninput="update()"/>
+          </div>
+
+          <div class="field">
+            <label>Annual Discount <span class="val" id="lbl_disc">17%</span></label>
+            <input type="range" id="disc" min="0" max="50" step="1" value="17" oninput="update()"/>
+          </div>
+        </div>
+
+        <!-- Retention -->
+        <div class="input-section">
+          <div class="section-label">Retention &amp; Churn</div>
+
+          <div class="field">
+            <label>Monthly Churn Rate <span class="val" id="lbl_churn">5%</span></label>
+            <input type="range" id="churn" min="0.1" max="40" step="0.1" value="5" oninput="update()"/>
+          </div>
+
+          <div class="field">
+            <label>Expansion MRR (upgrades) <span class="val" id="lbl_expand">3%</span></label>
+            <input type="range" id="expand" min="0" max="30" step="0.5" value="3" oninput="update()"/>
+          </div>
+
+          <div class="field">
+            <label>Reactivation Rate <span class="val" id="lbl_reactiv">8%</span></label>
+            <input type="range" id="reactiv" min="0" max="50" step="1" value="8" oninput="update()"/>
+          </div>
+        </div>
+
+        <!-- Costs -->
+        <div class="input-section">
+          <div class="section-label">Costs &amp; Operations</div>
+
+          <div class="field">
+            <label>Fixed Monthly Costs <span class="val" id="lbl_fixed">$2,000</span></label>
+            <input type="range" id="fixed" min="0" max="50000" step="100" value="2000" oninput="update()"/>
+          </div>
+
+          <div class="field">
+            <label>COGS (% of revenue) <span class="val" id="lbl_cogs">15%</span></label>
+            <input type="range" id="cogs" min="0" max="80" step="1" value="15" oninput="update()"/>
+          </div>
+
+          <div class="field">
+            <label>Projection Months <span class="val" id="lbl_months">18</span></label>
+            <input type="range" id="months" min="3" max="36" step="1" value="18" oninput="update()"/>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: Outputs -->
+    <div class="right-col">
+
+      <!-- KPI Cards -->
+      <div class="kpi-grid animate-in">
+        <div class="kpi-card green">
+          <div class="kpi-label">Current MRR</div>
+          <div class="kpi-value" id="kpi_mrr">—</div>
+          <div class="kpi-sub" id="kpi_mrr_sub"></div>
+        </div>
+        <div class="kpi-card purple">
+          <div class="kpi-label">Projected MRR</div>
+          <div class="kpi-value" id="kpi_proj_mrr">—</div>
+          <div class="kpi-sub" id="kpi_proj_sub"></div>
+        </div>
+        <div class="kpi-card orange">
+          <div class="kpi-label">ARR (Annual)</div>
+          <div class="kpi-value" id="kpi_arr">—</div>
+          <div class="kpi-sub">annualized</div>
+        </div>
+        <div class="kpi-card yellow">
+          <div class="kpi-label">LTV</div>
+          <div class="kpi-value" id="kpi_ltv">—</div>
+          <div class="kpi-sub" id="kpi_ltv_sub"></div>
+        </div>
+        <div class="kpi-card teal">
+          <div class="kpi-label">LTV : CAC</div>
+          <div class="kpi-value" id="kpi_ratio">—</div>
+          <div class="kpi-delta" id="kpi_ratio_delta"></div>
+        </div>
+        <div class="kpi-card red">
+          <div class="kpi-label">Payback Period</div>
+          <div class="kpi-value" id="kpi_payback">—</div>
+          <div class="kpi-sub">months</div>
+        </div>
+      </div>
+
+      <!-- Chart -->
+      <div class="panel">
+        <div class="panel-header">
+          <div class="icon" style="background:rgba(123,92,240,0.1);color:var(--accent2)">◈</div>
+          <h2>Revenue Trajectory</h2>
+        </div>
+        <div class="chart-panel">
+          <div class="chart-tabs">
+            <button class="chart-tab active" onclick="setChartMode('mrr',this)">MRR</button>
+            <button class="chart-tab" onclick="setChartMode('customers',this)">Customers</button>
+            <button class="chart-tab" onclick="setChartMode('profit',this)">Profit</button>
+            <button class="chart-tab" onclick="setChartMode('ltvcac',this)">LTV:CAC</button>
+          </div>
+          <div class="chart-wrap">
+            <svg class="chart" id="chart_svg" viewBox="0 0 700 180" preserveAspectRatio="none"></svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Health -->
+      <div class="panel">
+        <div class="score-ring-wrap">
+          <div class="score-ring">
+            <svg viewBox="0 0 80 80" width="80" height="80">
+              <circle cx="40" cy="40" r="34" fill="none" stroke="var(--dim)" stroke-width="6"/>
+              <circle cx="40" cy="40" r="34" fill="none" stroke="var(--accent)" stroke-width="6"
+                stroke-linecap="round"
+                stroke-dasharray="213.6"
+                stroke-dashoffset="213.6"
+                id="ring_circle"
+                style="transition: stroke-dashoffset 0.8s cubic-bezier(0.23,1,0.32,1), stroke 0.4s"/>
+            </svg>
+            <div class="score-text">
+              <span id="score_num" style="color:var(--accent)">—</span>
+              <span class="score-label">score</span>
+            </div>
+          </div>
+          <div class="score-desc">
+            <h3 id="score_title">Calculating…</h3>
+            <p id="score_desc">Adjust parameters to see business health analysis.</p>
+          </div>
+        </div>
+
+        <div class="health-section">
+          <div class="health-bar-row">
+            <div class="health-bar-label"><span>Unit Economics</span><span id="h_unit">—</span></div>
+            <div class="health-bar-track"><div class="health-bar-fill" id="hb_unit" style="background:var(--accent);width:0%"></div></div>
+          </div>
+          <div class="health-bar-row">
+            <div class="health-bar-label"><span>Retention Quality</span><span id="h_retain">—</span></div>
+            <div class="health-bar-track"><div class="health-bar-fill" id="hb_retain" style="background:var(--accent2);width:0%"></div></div>
+          </div>
+          <div class="health-bar-row">
+            <div class="health-bar-label"><span>Growth Velocity</span><span id="h_growth">—</span></div>
+            <div class="health-bar-track"><div class="health-bar-fill" id="hb_growth" style="background:var(--accent3);width:0%"></div></div>
+          </div>
+          <div class="health-bar-row">
+            <div class="health-bar-label"><span>Margin Health</span><span id="h_margin">—</span></div>
+            <div class="health-bar-track"><div class="health-bar-fill" id="hb_margin" style="background:var(--warn);width:0%"></div></div>
+          </div>
+        </div>
+
+        <!-- Insights -->
+        <div class="insights" id="insights_wrap"></div>
+      </div>
+
+      <!-- Monthly Breakdown Table -->
+      <div class="panel">
+        <div class="panel-header">
+          <div class="icon" style="background:rgba(255,107,53,0.1);color:var(--accent3)">≡</div>
+          <h2>Month-by-Month Breakdown</h2>
+        </div>
+        <div class="breakdown">
+          <table>
+            <thead>
+              <tr>
+                <th>Month</th>
+                <th>Customers</th>
+                <th>New</th>
+                <th>Churned</th>
+                <th class="num">MRR</th>
+                <th class="num">Net Profit</th>
+                <th>Trend</th>
+              </tr>
+            </thead>
+            <tbody id="table_body"></tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <footer>
+    <p>SaaS Revenue Intelligence · Built for Indie Hackers &amp; Solopreneurs · All computations client-side</p>
+    <button class="export-btn" onclick="exportCSV()">↓ Export CSV</button>
+  </footer>
+</div>
+
+<script>
+  let chartMode = 'mrr';
+  let modelData = [];
+
+  const $ = id => document.getElementById(id);
+  const fmt = n => n >= 1e6 ? '$' + (n/1e6).toFixed(2) + 'M'
+                 : n >= 1e3 ? '$' + (n/1e3).toFixed(1) + 'k'
+                 : '$' + Math.round(n).toLocaleString();
+  const fmtN = n => n >= 1e3 ? (n/1e3).toFixed(1) + 'k' : Math.round(n).toLocaleString();
+  const pct = n => n.toFixed(1) + '%';
+  const clamp = (v,a,b) => Math.max(a, Math.min(b, v));
+
+  function get(id) { return parseFloat($(id).value); }
+
+  function setLabel(id, val, prefix='', suffix='') {
+    const el = $('lbl_' + id);
+    if (el) el.textContent = prefix + val + suffix;
+  }
+
+  function update() {
+    const signups     = get('signups');
+    const cac         = get('cac');
+    const convRate    = get('conv') / 100;
+    const viral       = get('viral');
+    const arpu        = get('arpu');
+    const annualPct   = get('annual_pct') / 100;
+    const disc        = get('disc') / 100;
+    const churn       = get('churn') / 100;
+    const expand      = get('expand') / 100;
+    const reactiv     = get('reactiv') / 100;
+    const fixed       = get('fixed');
+    const cogs        = get('cogs') / 100;
+    const numMonths   = Math.round(get('months'));
+
+    // Update labels
+    setLabel('signups', Math.round(signups));
+    setLabel('cac', '$' + cac.toLocaleString());
+    setLabel('conv', Math.round(get('conv')) + '%');
+    setLabel('viral', get('viral').toFixed(2));
+    setLabel('arpu', '$' + arpu);
+    setLabel('annual_pct', Math.round(get('annual_pct')) + '%');
+    setLabel('disc', Math.round(get('disc')) + '%');
+    setLabel('churn', get('churn').toFixed(1) + '%');
+    setLabel('expand', get('expand').toFixed(1) + '%');
+    setLabel('reactiv', Math.round(get('reactiv')) + '%');
+    setLabel('fixed', '$' + fixed.toLocaleString());
+    setLabel('cogs', Math.round(get('cogs')) + '%');
+    setLabel('months', numMonths);
+
+    // Blended ARPU accounting for annual discount
+    const blendedARPU = arpu * (1 - annualPct * disc);
+
+    // LTV & Payback
+    const ltv = blendedARPU / Math.max(0.001, churn);
+    const payback = cac > 0 ? cac / (blendedARPU * (1 - cogs)) : 0;
+    const ltvCac = cac > 0 ? ltv / cac : Infinity;
+
+    // Simulation
+    let customers = 0;
+    let churned_pool = 0;
+    const rows = [];
+
+    for (let m = 1; m <= numMonths; m++) {
+      const viral_new    = Math.floor(customers * viral);
+      const paid_new     = Math.floor(signups * convRate) + viral_new;
+      const churned      = Math.round(customers * churn);
+      const reactiv_new  = Math.round(churned_pool * reactiv);
+      churned_pool       = Math.max(0, churned_pool + churned - reactiv_new);
+
+      customers = Math.max(0, customers - churned + paid_new + reactiv_new);
+
+      const mrr         = customers * blendedARPU * (1 + expand);
+      const gross       = mrr * (1 - cogs);
+      const acq_cost    = paid_new * cac;
+      const net_profit  = gross - fixed - acq_cost;
+      const ltvc_ratio  = cac > 0 ? ltv / cac : 999;
+
+      rows.push({ m, customers, paid_new, churned, mrr, net_profit, ltvc_ratio, acq_cost });
+    }
+
+    modelData = rows;
+
+    // KPIs
+    const currentMRR = rows[0]?.mrr || 0;
+    const finalMRR   = rows[rows.length - 1]?.mrr || 0;
+    const arr        = finalMRR * 12;
+    const growth_pct = currentMRR > 0 ? ((finalMRR - currentMRR) / currentMRR) * 100 : 0;
+
+    $('kpi_mrr').textContent = fmt(currentMRR);
+    $('kpi_mrr_sub').textContent = 'month 1';
+    $('kpi_proj_mrr').textContent = fmt(finalMRR);
+    $('kpi_proj_sub').textContent = `month ${numMonths}`;
+    $('kpi_arr').textContent = fmt(arr);
+    $('kpi_ltv').textContent = fmt(ltv);
+    $('kpi_ltv_sub').textContent = `avg ${(1/churn).toFixed(1)} mo life`;
+
+    const ratioEl = $('kpi_ratio');
+    const ratioStr = ltvCac === Infinity ? '∞' : ltvCac.toFixed(1) + 'x';
+    ratioEl.textContent = ratioStr;
+
+    const ratioD = $('kpi_ratio_delta');
+    if (ltvCac >= 3) {
+      ratioD.textContent = '✓ Healthy';
+      ratioD.className = 'kpi-delta pos';
+    } else if (ltvCac >= 1) {
+      ratioD.textContent = '⚠ Marginal';
+      ratioD.className = 'kpi-delta warn';
+    } else {
+      ratioD.textContent = '✗ Danger';
+      ratioD.className = 'kpi-delta neg';
+    }
+
+    $('kpi_payback').textContent = payback > 0 ? payback.toFixed(1) : '0.0';
+
+    // Health scores
+    const unitScore   = clamp((ltvCac === Infinity ? 100 : ltvCac / 10 * 100), 0, 100);
+    const retainScore = clamp((1 - churn / 0.20) * 100, 0, 100);
+    const growScore   = clamp(growth_pct / 500 * 100, 0, 100);
+    const marginScore = clamp(((rows[rows.length-1]?.net_profit || 0) / Math.max(1, finalMRR) + 1) / 2 * 100, 0, 100);
+    const totalScore  = Math.round((unitScore + retainScore + growScore + marginScore) / 4);
+
+    const circ = 213.6;
+    const ring = $('ring_circle');
+    ring.style.strokeDashoffset = circ - (totalScore / 100 * circ);
+    ring.style.stroke = totalScore >= 75 ? 'var(--accent)'
+                      : totalScore >= 45 ? 'var(--warn)'
+                      : '#ff4757';
+
+    $('score_num').textContent = totalScore;
+    $('score_num').style.color = totalScore >= 75 ? 'var(--accent)'
+                               : totalScore >= 45 ? 'var(--warn)'
+                               : '#ff4757';
+
+    const titles = totalScore >= 80 ? ['Venture-Ready', 'Strong unit economics and sustainable growth trajectory.']
+                 : totalScore >= 65 ? ['Promising', 'Good foundation — tighten churn to unlock next level.']
+                 : totalScore >= 45 ? ['Needs Work', 'Some metrics are off. Focus on LTV:CAC and reduce churn.']
+                 :                   ['Critical Issues', 'Business model needs significant restructuring.'];
+
+    $('score_title').textContent = titles[0];
+    $('score_desc').textContent  = titles[1];
+
+    $('hb_unit').style.width   = unitScore + '%';
+    $('hb_retain').style.width = retainScore + '%';
+    $('hb_growth').style.width = growScore + '%';
+    $('hb_margin').style.width = marginScore + '%';
+    $('h_unit').textContent    = ltvCac === Infinity ? '∞x' : ltvCac.toFixed(1) + 'x LTV:CAC';
+    $('h_retain').textContent  = (100 - get('churn')).toFixed(1) + '% retained/mo';
+    $('h_growth').textContent  = '+' + Math.round(growth_pct) + '% over period';
+    $('h_margin').textContent  = rows.length ? pct(((rows[rows.length-1].net_profit) / Math.max(1,finalMRR)) * 100) + ' net margin' : '—';
+
+    // Insights
+    const pills = [];
+    if (ltvCac >= 3)    pills.push(['good', '✓ LTV:CAC above 3x — investor grade']);
+    if (ltvCac < 1)     pills.push(['bad',  '✗ CAC exceeds LTV — losing money per user']);
+    if (churn <= 0.03)  pills.push(['good', '✓ Churn <3% — excellent retention']);
+    if (churn >= 0.15)  pills.push(['bad',  '✗ Churn >15% — leaky bucket']);
+    if (payback <= 6)   pills.push(['good', '✓ Payback <6 months']);
+    if (payback >= 18)  pills.push(['warn', '⚠ Payback >18 months — high risk']);
+    if (viral >= 0.3)   pills.push(['good', '✓ Viral >0.3 — growth engine active']);
+    if (expand >= 0.05) pills.push(['good', '✓ Expansion MRR — NRR likely >100%']);
+    if (finalMRR >= 100000) pills.push(['good', '✓ $100k MRR milestone in horizon']);
+    if (rows.filter(r=>r.net_profit<0).length > numMonths * 0.7)
+                        pills.push(['bad', '✗ Mostly unprofitable — raise or cut costs']);
+
+    $('insights_wrap').innerHTML = pills.map(([cls, txt]) =>
+      `<div class="insight-pill ${cls}">${txt}</div>`).join('');
+
+    // Table
+    const tbody = $('table_body');
+    const maxMRR = Math.max(...rows.map(r=>r.mrr), 1);
+    tbody.innerHTML = rows.map((r, i) => {
+      const barW = Math.round(r.mrr / maxMRR * 80);
+      const barColor = r.net_profit >= 0 ? 'var(--accent)' : '#ff4757';
+      const profitColor = r.net_profit >= 0 ? 'var(--accent)' : '#ff4757';
+      return `<tr>
+        <td style="color:var(--muted)">${r.m}</td>
+        <td>${fmtN(r.customers)}</td>
+        <td style="color:var(--accent)">+${fmtN(r.paid_new)}</td>
+        <td style="color:#ff4757">-${fmtN(r.churned)}</td>
+        <td class="num">${fmt(r.mrr)}</td>
+        <td class="num" style="color:${profitColor}">${r.net_profit>=0?'+':''}${fmt(r.net_profit)}</td>
+        <td>
+          <div class="trend-bar">
+            <div class="trend-bar-inner" style="background:${barColor};width:${barW}px;max-width:80px"></div>
+          </div>
+        </td>
+      </tr>`;
+    }).join('');
+
+    drawChart();
+  }
+
+  function setChartMode(mode, btn) {
+    chartMode = mode;
+    document.querySelectorAll('.chart-tab').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    drawChart();
+  }
+
+  function drawChart() {
+    if (!modelData.length) return;
+    const svg = $('chart_svg');
+    const W = 700, H = 180, pad = { t:10, r:10, b:30, l:55 };
+    const cW = W - pad.l - pad.r;
+    const cH = H - pad.t - pad.b;
+
+    let vals, label, color;
+    if (chartMode === 'mrr') {
+      vals = modelData.map(r => r.mrr);
+      label = 'MRR'; color = 'var(--accent)';
+    } else if (chartMode === 'customers') {
+      vals = modelData.map(r => r.customers);
+      label = 'Customers'; color = 'var(--accent2)';
+    } else if (chartMode === 'profit') {
+      vals = modelData.map(r => r.net_profit);
+      label = 'Net Profit'; color = 'var(--accent3)';
+    } else {
+      vals = modelData.map(r => Math.min(r.ltvc_ratio, 20));
+      label = 'LTV:CAC'; color = 'var(--warn)';
+    }
+
+    const minV = Math.min(...vals);
+    const maxV = Math.max(...vals, 1);
+    const range = maxV - minV || 1;
+
+    const xStep = cW / Math.max(vals.length - 1, 1);
+    const toX = i => pad.l + i * xStep;
+    const toY = v => pad.t + cH - ((v - minV) / range) * cH;
+
+    // Path
+    let path = `M ${toX(0)} ${toY(vals[0])}`;
+    for (let i = 1; i < vals.length; i++) {
+      const x0 = toX(i-1), y0 = toY(vals[i-1]);
+      const x1 = toX(i),   y1 = toY(vals[i]);
+      const cx = (x0 + x1) / 2;
+      path += ` C ${cx} ${y0} ${cx} ${y1} ${x1} ${y1}`;
+    }
+
+    // Area fill path
+    const lastX = toX(vals.length - 1);
+    const baseY = pad.t + cH;
+    const areaPath = path + ` L ${lastX} ${baseY} L ${pad.l} ${baseY} Z`;
+
+    // Axis labels
+    const yTicks = 4;
+    let axisLabels = '';
+    for (let i = 0; i <= yTicks; i++) {
+      const v = minV + (range / yTicks) * i;
+      const y = toY(v);
+      const lbl = chartMode === 'customers' ? fmtN(v).replace('$','')
+                : chartMode === 'ltvcac'    ? v.toFixed(1)+'x'
+                : fmt(v);
+      axisLabels += `<text x="${pad.l - 6}" y="${y + 4}" text-anchor="end" fill="#5a5a75" font-size="9" font-family="JetBrains Mono">${lbl}</text>`;
+      axisLabels += `<line x1="${pad.l}" y1="${y}" x2="${W - pad.r}" y2="${y}" stroke="#252535" stroke-width="1"/>`;
+    }
+
+    // X-axis month labels (every 3 or 6)
+    const step = modelData.length <= 12 ? 2 : 4;
+    let xLabels = '';
+    modelData.forEach((r, i) => {
+      if (i % step === 0 || i === modelData.length - 1) {
+        xLabels += `<text x="${toX(i)}" y="${H - 6}" text-anchor="middle" fill="#5a5a75" font-size="9" font-family="JetBrains Mono">M${r.m}</text>`;
+      }
+    });
+
+    // Zero line if mixed positive/negative
+    let zeroLine = '';
+    if (minV < 0 && maxV > 0) {
+      const zy = toY(0);
+      zeroLine = `<line x1="${pad.l}" y1="${zy}" x2="${W-pad.r}" y2="${zy}" stroke="rgba(255,255,255,0.15)" stroke-width="1" stroke-dasharray="4,3"/>`;
+    }
+
+    const uid = 'grad' + Math.random().toString(36).slice(2,7);
+    const isNegStart = minV < 0;
+
+    svg.innerHTML = `
+      <defs>
+        <linearGradient id="${uid}" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="${color}" stop-opacity="0.25"/>
+          <stop offset="100%" stop-color="${color}" stop-opacity="0.01"/>
+        </linearGradient>
+        <clipPath id="clip${uid}">
+          <rect x="${pad.l}" y="${pad.t}" width="${cW}" height="${cH}"/>
+        </clipPath>
+      </defs>
+      ${axisLabels}
+      ${xLabels}
+      ${zeroLine}
+      <g clip-path="url(#clip${uid})">
+        <path d="${areaPath}" fill="url(#${uid})"/>
+        <path d="${path}" fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </g>
+    `;
+  }
+
+  const PRESETS = {
+    bootstrapped: { signups:50,  cac:20,   conv:30, viral:0.05, arpu:29,   annual_pct:10, disc:17, churn:6,  expand:1,  reactiv:5,  fixed:500,   cogs:10, months:18 },
+    vc_seed:      { signups:500, cac:200,  conv:20, viral:0.20, arpu:79,   annual_pct:30, disc:20, churn:4,  expand:5,  reactiv:10, fixed:15000, cogs:20, months:24 },
+    agency:       { signups:10,  cac:500,  conv:60, viral:0.02, arpu:499,  annual_pct:40, disc:15, churn:3,  expand:8,  reactiv:15, fixed:5000,  cogs:30, months:18 },
+    b2b_enterprise:{ signups:5, cac:2000, conv:50, viral:0.01, arpu:1999, annual_pct:70, disc:25, churn:1,  expand:12, reactiv:20, fixed:20000, cogs:25, months:24 },
+  };
+
+  function loadPreset(name) {
+    const p = PRESETS[name];
+    if (!p) return;
+    Object.entries(p).forEach(([k, v]) => {
+      const el = $(k);
+      if (el) el.value = v;
+    });
+    update();
+  }
+
+  function exportCSV() {
+    const headers = ['Month','Customers','New_Paid','Churned','MRR','Net_Profit','LTV_CAC'];
+    const lines = modelData.map(r =>
+      [r.m, Math.round(r.customers), Math.round(r.paid_new), Math.round(r.churned),
+       Math.round(r.mrr), Math.round(r.net_profit), r.ltvc_ratio.toFixed(2)].join(',')
+    );
+    const csv = [headers.join(','), ...lines].join('\n');
+    const blob = new Blob([csv], {type:'text/csv'});
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'saas_projection.csv';
+    a.click();
+  }
+
+  // Init
+  update();
+</script>
+</body>
+</html>

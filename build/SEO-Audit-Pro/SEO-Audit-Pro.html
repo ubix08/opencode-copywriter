@@ -1,0 +1,2005 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SEO Audit Pro — Professional SEO Audit Toolkit</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-0: #0a0b0d;
+    --bg-1: #0f1114;
+    --bg-2: #151820;
+    --bg-3: #1c2130;
+    --bg-4: #222840;
+    --border: #2a3248;
+    --border-bright: #3d4f72;
+    --phosphor: #39ff8c;
+    --phosphor-dim: #1a7a42;
+    --phosphor-glow: rgba(57,255,140,0.12);
+    --amber: #ffb347;
+    --amber-dim: #7a5520;
+    --red: #ff4757;
+    --red-dim: #7a1f28;
+    --blue: #4ecdc4;
+    --blue-dim: #1a4a46;
+    --text-0: #e8ecf5;
+    --text-1: #a0adc4;
+    --text-2: #5a6882;
+    --text-3: #3a4560;
+    --font-display: 'Bebas Neue', sans-serif;
+    --font-mono: 'DM Mono', monospace;
+    --font-body: 'DM Sans', sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg-0);
+    color: var(--text-0);
+    font-family: var(--font-body);
+    font-size: 14px;
+    line-height: 1.6;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* GRAIN OVERLAY */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.6;
+  }
+
+  /* SCROLLBAR */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg-1); }
+  ::-webkit-scrollbar-thumb { background: var(--border-bright); border-radius: 3px; }
+
+  /* LAYOUT */
+  .app { display: flex; min-height: 100vh; }
+
+  /* SIDEBAR */
+  .sidebar {
+    width: 260px;
+    min-width: 260px;
+    background: var(--bg-1);
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0; left: 0; bottom: 0;
+    z-index: 100;
+    overflow-y: auto;
+  }
+
+  .sidebar-logo {
+    padding: 24px 20px 20px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .logo-mark {
+    font-family: var(--font-display);
+    font-size: 28px;
+    letter-spacing: 2px;
+    color: var(--phosphor);
+    text-shadow: 0 0 20px var(--phosphor-glow);
+    line-height: 1;
+  }
+
+  .logo-sub {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--text-2);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-top: 4px;
+  }
+
+  .sidebar-section {
+    padding: 16px 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .sidebar-label {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--text-3);
+    padding: 0 20px 8px;
+  }
+
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 20px;
+    cursor: pointer;
+    color: var(--text-1);
+    font-size: 13px;
+    font-weight: 400;
+    transition: all 0.15s;
+    border-left: 2px solid transparent;
+  }
+
+  .nav-item:hover { color: var(--text-0); background: var(--bg-2); }
+  .nav-item.active { color: var(--phosphor); background: var(--phosphor-glow); border-left-color: var(--phosphor); }
+
+  .nav-item .nav-icon { font-size: 15px; opacity: 0.7; width: 18px; text-align: center; }
+  .nav-item .nav-score {
+    margin-left: auto;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    padding: 1px 6px;
+    border-radius: 3px;
+  }
+
+  .score-high { background: rgba(57,255,140,0.15); color: var(--phosphor); }
+  .score-mid { background: rgba(255,179,71,0.15); color: var(--amber); }
+  .score-low { background: rgba(255,71,87,0.15); color: var(--red); }
+  .score-na { background: var(--bg-3); color: var(--text-3); }
+
+  .sidebar-projects {
+    padding: 16px 0;
+    flex: 1;
+    overflow-y: auto;
+  }
+
+  .project-item {
+    padding: 10px 20px;
+    cursor: pointer;
+    border-left: 2px solid transparent;
+    transition: all 0.15s;
+  }
+
+  .project-item:hover { background: var(--bg-2); }
+  .project-item.active { border-left-color: var(--phosphor); background: var(--phosphor-glow); }
+
+  .project-domain {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-0);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .project-meta {
+    font-size: 11px;
+    color: var(--text-2);
+    margin-top: 2px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .btn-new-project {
+    margin: 12px 16px;
+    padding: 10px;
+    background: var(--phosphor-glow);
+    border: 1px solid var(--phosphor-dim);
+    color: var(--phosphor);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 1px;
+    cursor: pointer;
+    border-radius: 4px;
+    text-align: center;
+    transition: all 0.2s;
+  }
+
+  .btn-new-project:hover { background: rgba(57,255,140,0.2); border-color: var(--phosphor); }
+
+  /* MAIN CONTENT */
+  .main {
+    margin-left: 260px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* TOPBAR */
+  .topbar {
+    height: 58px;
+    background: var(--bg-1);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    padding: 0 28px;
+    gap: 16px;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+  }
+
+  .topbar-domain {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    color: var(--text-0);
+    flex: 1;
+  }
+
+  .topbar-domain span { color: var(--text-2); margin-right: 8px; }
+
+  .topbar-date {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-2);
+  }
+
+  .btn {
+    padding: 7px 16px;
+    border: 1px solid;
+    cursor: pointer;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.5px;
+    border-radius: 3px;
+    transition: all 0.15s;
+    white-space: nowrap;
+  }
+
+  .btn-ghost { background: transparent; border-color: var(--border-bright); color: var(--text-1); }
+  .btn-ghost:hover { border-color: var(--text-1); color: var(--text-0); }
+  .btn-primary { background: var(--phosphor-glow); border-color: var(--phosphor); color: var(--phosphor); }
+  .btn-primary:hover { background: rgba(57,255,140,0.22); }
+  .btn-danger { background: rgba(255,71,87,0.1); border-color: var(--red-dim); color: var(--red); }
+  .btn-danger:hover { background: rgba(255,71,87,0.2); }
+
+  /* PAGE CONTENT */
+  .content { padding: 28px; max-width: 1200px; }
+
+  /* DASHBOARD */
+  .dashboard-header {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 24px;
+    margin-bottom: 28px;
+    align-items: start;
+  }
+
+  .overall-score-ring {
+    width: 140px;
+    height: 140px;
+    position: relative;
+  }
+
+  .score-ring-svg { transform: rotate(-90deg); }
+  .score-ring-bg { fill: none; stroke: var(--bg-3); stroke-width: 8; }
+  .score-ring-fill { fill: none; stroke-width: 8; stroke-linecap: round; transition: stroke-dashoffset 1s cubic-bezier(0.4,0,0.2,1); }
+
+  .score-center {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .score-number {
+    font-family: var(--font-display);
+    font-size: 42px;
+    line-height: 1;
+  }
+
+  .score-label {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-2);
+    margin-top: 2px;
+  }
+
+  .score-grade {
+    font-family: var(--font-display);
+    font-size: 18px;
+    letter-spacing: 1px;
+  }
+
+  /* STAT CARDS */
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+
+  .stat-card {
+    background: var(--bg-2);
+    border: 1px solid var(--border);
+    padding: 16px;
+    border-radius: 4px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+  }
+
+  .stat-card.green::before { background: var(--phosphor); }
+  .stat-card.amber::before { background: var(--amber); }
+  .stat-card.red::before { background: var(--red); }
+  .stat-card.blue::before { background: var(--blue); }
+
+  .stat-value {
+    font-family: var(--font-display);
+    font-size: 36px;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .stat-card.green .stat-value { color: var(--phosphor); }
+  .stat-card.amber .stat-value { color: var(--amber); }
+  .stat-card.red .stat-value { color: var(--red); }
+  .stat-card.blue .stat-value { color: var(--blue); }
+
+  .stat-desc { font-size: 12px; color: var(--text-2); }
+
+  /* CHART */
+  .chart-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 24px;
+  }
+
+  .card {
+    background: var(--bg-2);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .card-header {
+    padding: 14px 18px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .card-title {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-1);
+  }
+
+  .card-body { padding: 18px; }
+
+  /* MODULE LIST */
+  .module-list { display: flex; flex-direction: column; gap: 4px; }
+
+  .module-row {
+    display: grid;
+    grid-template-columns: 22px 1fr 80px 60px;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background 0.12s;
+    border: 1px solid transparent;
+  }
+
+  .module-row:hover { background: var(--bg-3); border-color: var(--border); }
+
+  .module-num {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--text-3);
+  }
+
+  .module-name { font-size: 13px; font-weight: 500; }
+
+  .module-bar-wrap {
+    height: 4px;
+    background: var(--bg-4);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .module-bar { height: 100%; border-radius: 2px; transition: width 0.8s ease; }
+
+  .module-score-badge {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    text-align: right;
+  }
+
+  /* ISSUES LIST */
+  .issue-item {
+    padding: 12px 14px;
+    border-left: 3px solid;
+    margin-bottom: 8px;
+    background: var(--bg-3);
+    border-radius: 0 4px 4px 0;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 12px;
+    align-items: center;
+  }
+
+  .issue-item.critical { border-color: var(--red); }
+  .issue-item.warning { border-color: var(--amber); }
+  .issue-item.info { border-color: var(--blue); }
+
+  .issue-title { font-size: 13px; font-weight: 500; margin-bottom: 3px; }
+  .issue-desc { font-size: 12px; color: var(--text-2); }
+
+  .issue-badge {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 1px;
+    padding: 3px 8px;
+    border-radius: 2px;
+    white-space: nowrap;
+  }
+
+  .issue-item.critical .issue-badge { background: rgba(255,71,87,0.15); color: var(--red); }
+  .issue-item.warning .issue-badge { background: rgba(255,179,71,0.15); color: var(--amber); }
+  .issue-item.info .issue-badge { background: rgba(78,205,196,0.15); color: var(--blue); }
+
+  /* AUDIT MODULE VIEW */
+  .module-header {
+    background: var(--bg-2);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 24px;
+    margin-bottom: 20px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .module-title-lg {
+    font-family: var(--font-display);
+    font-size: 32px;
+    letter-spacing: 2px;
+    color: var(--text-0);
+  }
+
+  .module-desc { font-size: 13px; color: var(--text-2); margin-top: 6px; max-width: 600px; }
+
+  .big-score {
+    text-align: center;
+  }
+
+  .big-score-num {
+    font-family: var(--font-display);
+    font-size: 64px;
+    line-height: 1;
+  }
+
+  .big-score-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--text-2);
+  }
+
+  /* CHECKLIST */
+  .checklist-group {
+    background: var(--bg-2);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    margin-bottom: 16px;
+    overflow: hidden;
+  }
+
+  .checklist-group-header {
+    padding: 12px 18px;
+    background: var(--bg-3);
+    border-bottom: 1px solid var(--border);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-2);
+  }
+
+  .check-item {
+    display: grid;
+    grid-template-columns: auto 1fr auto auto;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 18px;
+    border-bottom: 1px solid var(--border);
+    transition: background 0.1s;
+  }
+
+  .check-item:last-child { border-bottom: none; }
+  .check-item:hover { background: var(--bg-3); }
+
+  .check-toggle {
+    display: flex;
+    gap: 4px;
+  }
+
+  .toggle-btn {
+    width: 28px;
+    height: 28px;
+    border: 1px solid var(--border);
+    background: transparent;
+    cursor: pointer;
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    transition: all 0.12s;
+    color: var(--text-2);
+  }
+
+  .toggle-btn:hover { border-color: var(--border-bright); }
+  .toggle-btn.pass { background: var(--phosphor-glow); border-color: var(--phosphor-dim); color: var(--phosphor); }
+  .toggle-btn.partial { background: rgba(255,179,71,0.12); border-color: var(--amber-dim); color: var(--amber); }
+  .toggle-btn.fail { background: rgba(255,71,87,0.12); border-color: var(--red-dim); color: var(--red); }
+
+  .check-text { }
+  .check-name { font-size: 13px; font-weight: 500; margin-bottom: 3px; }
+  .check-detail { font-size: 12px; color: var(--text-2); }
+
+  .check-weight {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--text-3);
+    text-align: right;
+    white-space: nowrap;
+  }
+
+  .check-impact {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    padding: 2px 7px;
+    border-radius: 2px;
+    white-space: nowrap;
+  }
+
+  .impact-high { background: rgba(255,71,87,0.12); color: var(--red); }
+  .impact-med { background: rgba(255,179,71,0.12); color: var(--amber); }
+  .impact-low { background: rgba(78,205,196,0.12); color: var(--blue); }
+
+  /* NOTES TEXTAREA */
+  .notes-area {
+    width: 100%;
+    background: var(--bg-3);
+    border: 1px solid var(--border);
+    color: var(--text-0);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    padding: 12px;
+    resize: vertical;
+    min-height: 80px;
+    border-radius: 3px;
+    transition: border-color 0.15s;
+    outline: none;
+  }
+
+  .notes-area:focus { border-color: var(--border-bright); }
+
+  /* PROJECT SETUP MODAL */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.8);
+    z-index: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(4px);
+  }
+
+  .modal {
+    background: var(--bg-1);
+    border: 1px solid var(--border-bright);
+    border-radius: 6px;
+    width: 540px;
+    max-width: 95vw;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+
+  .modal-header {
+    padding: 22px 24px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .modal-title {
+    font-family: var(--font-display);
+    font-size: 24px;
+    letter-spacing: 2px;
+  }
+
+  .modal-body { padding: 24px; }
+
+  .form-group { margin-bottom: 18px; }
+
+  .form-label {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-2);
+    margin-bottom: 8px;
+  }
+
+  .form-input {
+    width: 100%;
+    background: var(--bg-3);
+    border: 1px solid var(--border);
+    color: var(--text-0);
+    font-family: var(--font-mono);
+    font-size: 13px;
+    padding: 10px 12px;
+    border-radius: 3px;
+    outline: none;
+    transition: border-color 0.15s;
+  }
+
+  .form-input:focus { border-color: var(--phosphor-dim); }
+
+  .form-select {
+    width: 100%;
+    background: var(--bg-3);
+    border: 1px solid var(--border);
+    color: var(--text-0);
+    font-family: var(--font-mono);
+    font-size: 13px;
+    padding: 10px 12px;
+    border-radius: 3px;
+    outline: none;
+    appearance: none;
+  }
+
+  .modal-footer {
+    padding: 16px 24px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+  }
+
+  /* EMPTY STATE */
+  .empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 60vh;
+    text-align: center;
+    color: var(--text-2);
+  }
+
+  .empty-icon { font-size: 48px; margin-bottom: 16px; opacity: 0.5; }
+  .empty-title { font-family: var(--font-display); font-size: 28px; letter-spacing: 2px; color: var(--text-1); margin-bottom: 8px; }
+  .empty-desc { font-size: 13px; margin-bottom: 24px; max-width: 340px; }
+
+  /* REPORT SUMMARY */
+  .summary-editor {
+    width: 100%;
+    background: var(--bg-3);
+    border: 1px solid var(--border);
+    color: var(--text-0);
+    font-family: var(--font-body);
+    font-size: 13px;
+    padding: 16px;
+    resize: vertical;
+    min-height: 200px;
+    border-radius: 3px;
+    outline: none;
+    line-height: 1.7;
+  }
+
+  .summary-editor:focus { border-color: var(--border-bright); }
+
+  /* PROGRESS BAR */
+  .progress-track {
+    height: 3px;
+    background: var(--bg-4);
+    border-radius: 2px;
+    overflow: hidden;
+    margin-top: 8px;
+  }
+
+  .progress-fill {
+    height: 100%;
+    border-radius: 2px;
+    transition: width 0.6s ease;
+  }
+
+  /* TAGS */
+  .tag {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 1px;
+    padding: 2px 8px;
+    border-radius: 2px;
+    border: 1px solid;
+  }
+
+  .tag-green { color: var(--phosphor); border-color: var(--phosphor-dim); background: var(--phosphor-glow); }
+  .tag-amber { color: var(--amber); border-color: var(--amber-dim); background: rgba(255,179,71,0.1); }
+  .tag-red { color: var(--red); border-color: var(--red-dim); background: rgba(255,71,87,0.1); }
+
+  /* SECTION TITLE */
+  .section-title {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--text-2);
+    margin-bottom: 14px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  /* PRINT STYLES */
+  @media print {
+    .sidebar, .topbar, .btn, .toggle-btn, .notes-area { display: none !important; }
+    .main { margin-left: 0 !important; }
+    body { background: white !important; color: black !important; }
+    .card, .module-header, .checklist-group, .stat-card {
+      border: 1px solid #ccc !important;
+      background: white !important;
+      break-inside: avoid;
+    }
+    .content { padding: 20px !important; }
+    .print-report { display: block !important; }
+    * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .animate-in { animation: fadeIn 0.3s ease forwards; }
+
+  @keyframes pulse-green {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(57,255,140,0); }
+    50% { box-shadow: 0 0 12px 3px rgba(57,255,140,0.2); }
+  }
+
+  .pulse { animation: pulse-green 2s ease infinite; }
+
+  /* TOOLTIP */
+  [data-tip] { position: relative; }
+  [data-tip]::after {
+    content: attr(data-tip);
+    position: absolute;
+    bottom: calc(100% + 6px);
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--bg-4);
+    border: 1px solid var(--border-bright);
+    color: var(--text-0);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    padding: 5px 10px;
+    border-radius: 3px;
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.15s;
+    z-index: 999;
+  }
+
+  [data-tip]:hover::after { opacity: 1; }
+
+  .flex { display: flex; }
+  .items-center { align-items: center; }
+  .gap-8 { gap: 8px; }
+  .gap-12 { gap: 12px; }
+  .ml-auto { margin-left: auto; }
+  .mt-16 { margin-top: 16px; }
+  .mb-16 { margin-bottom: 16px; }
+  .text-muted { color: var(--text-2); }
+  .text-mono { font-family: var(--font-mono); }
+  .text-sm { font-size: 12px; }
+</style>
+</head>
+<body>
+
+<div class="app">
+  <!-- SIDEBAR -->
+  <nav class="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-mark">SEO AUDIT</div>
+      <div class="logo-sub">Pro Toolkit v2.0</div>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-label">Navigation</div>
+      <div class="nav-item active" onclick="showView('dashboard')" id="nav-dashboard">
+        <span class="nav-icon">◈</span> Dashboard
+      </div>
+      <div class="nav-item" onclick="showView('report')" id="nav-report">
+        <span class="nav-icon">◎</span> Full Report
+      </div>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-label">Audit Modules</div>
+      <div id="module-nav"></div>
+    </div>
+
+    <div class="sidebar-projects">
+      <div class="sidebar-label" style="padding-top:8px;">Projects</div>
+      <div id="projects-list"></div>
+      <div class="btn-new-project" onclick="openNewProject()">+ New Audit</div>
+    </div>
+  </nav>
+
+  <!-- MAIN -->
+  <div class="main">
+    <div class="topbar">
+      <div class="topbar-domain" id="topbar-domain">
+        <span>DOMAIN</span> —
+      </div>
+      <div class="topbar-date" id="topbar-date">—</div>
+      <button class="btn btn-ghost" onclick="exportReport()">⬇ Export PDF</button>
+      <button class="btn btn-primary" onclick="openNewProject()">+ New Audit</button>
+    </div>
+
+    <div class="content" id="main-content">
+      <div class="empty-state animate-in">
+        <div class="empty-icon">◈</div>
+        <div class="empty-title">No Audit Selected</div>
+        <div class="empty-desc">Create a new audit project to start analyzing a website's SEO performance across 10 modules.</div>
+        <button class="btn btn-primary pulse" onclick="openNewProject()">+ Create First Audit</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- NEW PROJECT MODAL -->
+<div class="modal-overlay" id="modal-overlay" style="display:none;">
+  <div class="modal animate-in">
+    <div class="modal-header">
+      <div class="modal-title">New Audit Project</div>
+      <button class="btn btn-ghost" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label class="form-label">Client / Project Name</label>
+        <input class="form-input" id="f-client" type="text" placeholder="e.g. Acme Corp">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Website Domain</label>
+        <input class="form-input" id="f-domain" type="text" placeholder="e.g. acmecorp.com">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Industry / Niche</label>
+        <input class="form-input" id="f-industry" type="text" placeholder="e.g. E-commerce, SaaS, Local Business">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Audit Scope</label>
+        <select class="form-select" id="f-scope">
+          <option value="full">Full Audit (All 10 Modules)</option>
+          <option value="technical">Technical SEO Focus</option>
+          <option value="content">Content & On-Page Focus</option>
+          <option value="local">Local SEO Focus</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Auditor Name</label>
+        <input class="form-input" id="f-auditor" type="text" placeholder="e.g. Jane Smith">
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="createProject()">Create Audit →</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ─── DATA DEFINITIONS ─────────────────────────────────────────────────────────
+
+const MODULES = [
+  {
+    id: 'technical',
+    name: 'Technical SEO',
+    icon: '⚙',
+    desc: 'Crawlability, indexation, site architecture, robots.txt, sitemaps, and technical infrastructure.',
+    groups: [
+      {
+        name: 'Crawlability & Indexation',
+        checks: [
+          { id: 'robots', name: 'robots.txt properly configured', detail: 'Verify robots.txt exists, is accessible, and does not block critical pages', weight: 8, impact: 'high' },
+          { id: 'sitemap', name: 'XML sitemap present and submitted', detail: 'Sitemap.xml exists, is valid, submitted to Search Console, and updated regularly', weight: 8, impact: 'high' },
+          { id: 'canonical', name: 'Canonical tags implemented correctly', detail: 'Self-referencing canonicals on all pages, no conflicting canonical chains', weight: 7, impact: 'high' },
+          { id: 'noindex', name: 'Noindex tags used appropriately', detail: 'Thin/duplicate pages noindexed, no accidental noindex on important pages', weight: 9, impact: 'high' },
+          { id: 'crawl_depth', name: 'Important pages within 3 clicks', detail: 'All key pages reachable within 3 clicks from homepage', weight: 6, impact: 'med' },
+        ]
+      },
+      {
+        name: 'URL Structure & Redirects',
+        checks: [
+          { id: 'url_structure', name: 'Clean, descriptive URL structure', detail: 'URLs are short, keyword-rich, and avoid unnecessary parameters', weight: 6, impact: 'med' },
+          { id: 'www_redirect', name: 'www/non-www redirect consistent', detail: 'One canonical version with 301 redirect from the other', weight: 7, impact: 'high' },
+          { id: 'http_https', name: 'HTTP redirects to HTTPS (301)', detail: 'All HTTP URLs permanently redirect to HTTPS', weight: 9, impact: 'high' },
+          { id: 'redirect_chains', name: 'No redirect chains (3+ hops)', detail: 'Redirect chains compress to single 301 redirects', weight: 6, impact: 'med' },
+          { id: 'broken_links', name: 'No broken internal links (404s)', detail: 'Regular link audit performed, 404 pages handled with custom page', weight: 7, impact: 'med' },
+        ]
+      },
+      {
+        name: 'Technical Infrastructure',
+        checks: [
+          { id: 'ssl', name: 'SSL certificate valid and secure', detail: 'HTTPS implemented, certificate not expired, no mixed content warnings', weight: 9, impact: 'high' },
+          { id: 'pagination', name: 'Pagination handled correctly', detail: 'Paginated content uses rel=next/prev or canonical to first page', weight: 5, impact: 'low' },
+          { id: 'hreflang', name: 'Hreflang tags (if multilingual)', detail: 'Hreflang tags correctly implemented for international targeting', weight: 6, impact: 'med' },
+        ]
+      }
+    ]
+  },
+  {
+    id: 'onpage',
+    name: 'On-Page SEO',
+    icon: '◉',
+    desc: 'Title tags, meta descriptions, heading hierarchy, keyword usage, and page-level optimization signals.',
+    groups: [
+      {
+        name: 'Title Tags',
+        checks: [
+          { id: 'title_unique', name: 'Unique title tags on all pages', detail: 'No duplicate title tags across the site', weight: 9, impact: 'high' },
+          { id: 'title_length', name: 'Title tags 50–60 characters', detail: 'Titles within optimal character count, primary keyword near start', weight: 7, impact: 'high' },
+          { id: 'title_keyword', name: 'Primary keyword in title tag', detail: 'Target keyword appears naturally in title, not stuffed', weight: 8, impact: 'high' },
+        ]
+      },
+      {
+        name: 'Meta Descriptions',
+        checks: [
+          { id: 'meta_unique', name: 'Unique meta descriptions', detail: 'No duplicate or missing meta descriptions', weight: 6, impact: 'med' },
+          { id: 'meta_length', name: 'Meta descriptions 150–160 chars', detail: 'Optimal length with compelling CTA and keyword inclusion', weight: 5, impact: 'med' },
+          { id: 'meta_compelling', name: 'Descriptions are compelling/CTAs', detail: 'Meta descriptions function as ad copy with clear value propositions', weight: 7, impact: 'med' },
+        ]
+      },
+      {
+        name: 'Heading Structure',
+        checks: [
+          { id: 'h1_single', name: 'Single H1 per page', detail: 'Each page has exactly one H1 tag containing the primary keyword', weight: 8, impact: 'high' },
+          { id: 'heading_hierarchy', name: 'Logical heading hierarchy (H1–H6)', detail: 'Headings follow logical nested structure without skipping levels', weight: 6, impact: 'med' },
+          { id: 'keywords_headings', name: 'Keywords in subheadings (H2/H3)', detail: 'Semantic keywords and LSI terms appear in subheadings naturally', weight: 5, impact: 'med' },
+        ]
+      },
+      {
+        name: 'Keyword Optimization',
+        checks: [
+          { id: 'keyword_density', name: 'Natural keyword density (1–2%)', detail: 'No keyword stuffing; semantic variations used throughout content', weight: 7, impact: 'med' },
+          { id: 'lsi_keywords', name: 'LSI / semantic keywords included', detail: 'Related terms and synonyms strengthen topical relevance', weight: 6, impact: 'med' },
+          { id: 'keyword_url', name: 'Primary keyword in URL slug', detail: 'URL contains target keyword, short and hyphenated', weight: 7, impact: 'high' },
+        ]
+      }
+    ]
+  },
+  {
+    id: 'content',
+    name: 'Content Quality',
+    icon: '◧',
+    desc: 'Content depth, originality, topical authority, readability, and E-E-A-T compliance.',
+    groups: [
+      {
+        name: 'Content Depth & Relevance',
+        checks: [
+          { id: 'content_length', name: 'Sufficient content length for topic', detail: 'Word count appropriate to topic complexity; covers subject comprehensively', weight: 7, impact: 'high' },
+          { id: 'topic_coverage', name: 'Full topical coverage (no gaps)', detail: 'Content covers all user intent angles; no major subtopics missing', weight: 8, impact: 'high' },
+          { id: 'unique_value', name: 'Unique insights / original research', detail: 'Content offers value beyond top-ranking competitors; not thin/rehashed', weight: 9, impact: 'high' },
+          { id: 'content_freshness', name: 'Content updated regularly', detail: 'Key pages reviewed and updated at least annually; dates reflect freshness', weight: 6, impact: 'med' },
+        ]
+      },
+      {
+        name: 'E-E-A-T Signals',
+        checks: [
+          { id: 'author_bio', name: 'Author bios with credentials', detail: 'Content authors identified with relevant expertise shown', weight: 7, impact: 'high' },
+          { id: 'citations', name: 'Credible external citations', detail: 'Claims backed by links to authoritative sources', weight: 6, impact: 'med' },
+          { id: 'trust_signals', name: 'Trust signals present (awards, press)', detail: 'About page, testimonials, media mentions, certifications visible', weight: 7, impact: 'med' },
+          { id: 'contact_info', name: 'Clear contact / location info', detail: 'Phone, address, email easily findable; boosts local trust', weight: 6, impact: 'med' },
+        ]
+      },
+      {
+        name: 'Readability & UX',
+        checks: [
+          { id: 'readability', name: 'Reading level appropriate (Grade 8–10)', detail: 'Content digestible by target audience without being condescending', weight: 5, impact: 'low' },
+          { id: 'formatting', name: 'Good formatting (bullets, subheads)', detail: 'Content broken into scannable sections; whitespace used effectively', weight: 6, impact: 'med' },
+          { id: 'duplicate_content', name: 'No significant duplicate content', detail: 'No pages compete for same keywords; no scraped or spun content', weight: 9, impact: 'high' },
+        ]
+      }
+    ]
+  },
+  {
+    id: 'mobile',
+    name: 'Mobile & Core Web Vitals',
+    icon: '◫',
+    desc: 'Mobile-first indexing, responsive design, Core Web Vitals (LCP, FID/INP, CLS), and user experience.',
+    groups: [
+      {
+        name: 'Mobile Experience',
+        checks: [
+          { id: 'responsive', name: 'Fully responsive / mobile-first design', detail: 'Layout adapts to all screen sizes; no horizontal scrolling', weight: 9, impact: 'high' },
+          { id: 'tap_targets', name: 'Tap targets minimum 48×48px', detail: 'Buttons and links large enough to tap accurately on mobile', weight: 7, impact: 'med' },
+          { id: 'font_size', name: 'Font size minimum 16px on mobile', detail: 'Body text readable without zooming on smartphones', weight: 7, impact: 'med' },
+          { id: 'no_flash', name: 'No Flash / unsupported plugins', detail: 'Site does not rely on Flash or plugins not supported on mobile', weight: 8, impact: 'high' },
+        ]
+      },
+      {
+        name: 'Core Web Vitals',
+        checks: [
+          { id: 'lcp', name: 'LCP under 2.5 seconds', detail: 'Largest Contentful Paint: measures loading performance', weight: 9, impact: 'high' },
+          { id: 'inp', name: 'INP under 200ms', detail: 'Interaction to Next Paint: measures responsiveness (replaced FID)', weight: 8, impact: 'high' },
+          { id: 'cls', name: 'CLS score under 0.1', detail: 'Cumulative Layout Shift: measures visual stability', weight: 8, impact: 'high' },
+          { id: 'fcp', name: 'FCP under 1.8 seconds', detail: 'First Contentful Paint: first visual element appears quickly', weight: 7, impact: 'med' },
+        ]
+      }
+    ]
+  },
+  {
+    id: 'speed',
+    name: 'Page Speed',
+    icon: '▷',
+    desc: 'Server response time, image optimization, caching, code minification, and CDN usage.',
+    groups: [
+      {
+        name: 'Server & Hosting',
+        checks: [
+          { id: 'ttfb', name: 'TTFB under 800ms', detail: 'Time to First Byte: server responds quickly to initial request', weight: 8, impact: 'high' },
+          { id: 'server_location', name: 'Server near target audience', detail: 'Hosting region geographically close to primary user base', weight: 6, impact: 'med' },
+          { id: 'cdn', name: 'CDN implemented', detail: 'Content Delivery Network serves static assets globally', weight: 7, impact: 'high' },
+        ]
+      },
+      {
+        name: 'Asset Optimization',
+        checks: [
+          { id: 'image_compression', name: 'Images compressed (WebP/AVIF)', detail: 'Modern image formats used; images compressed without quality loss', weight: 8, impact: 'high' },
+          { id: 'lazy_loading', name: 'Lazy loading on images/iframes', detail: 'Off-screen images load on demand to reduce initial page weight', weight: 7, impact: 'med' },
+          { id: 'css_minified', name: 'CSS/JS minified and bundled', detail: 'Unnecessary whitespace/comments removed; files bundled where appropriate', weight: 7, impact: 'med' },
+          { id: 'render_blocking', name: 'No render-blocking resources', detail: 'CSS in <head>, JS deferred/async, critical CSS inlined', weight: 8, impact: 'high' },
+          { id: 'browser_cache', name: 'Browser caching headers set', detail: 'Static assets served with appropriate Cache-Control headers', weight: 7, impact: 'med' },
+        ]
+      }
+    ]
+  },
+  {
+    id: 'schema',
+    name: 'Structured Data',
+    icon: '◈',
+    desc: 'Schema.org markup, rich snippets eligibility, JSON-LD implementation, and Google rich results.',
+    groups: [
+      {
+        name: 'Schema Implementation',
+        checks: [
+          { id: 'org_schema', name: 'Organization schema on homepage', detail: 'Organization or LocalBusiness schema with NAP, logo, social links', weight: 7, impact: 'med' },
+          { id: 'breadcrumb_schema', name: 'Breadcrumb schema implemented', detail: 'BreadcrumbList markup enables breadcrumb rich results in SERPs', weight: 6, impact: 'med' },
+          { id: 'article_schema', name: 'Article/BlogPosting schema on posts', detail: 'Article schema with author, datePublished, image for news/blog', weight: 7, impact: 'med' },
+          { id: 'product_schema', name: 'Product schema (if e-commerce)', detail: 'Product markup with price, availability, reviews for shopping results', weight: 9, impact: 'high' },
+          { id: 'faq_schema', name: 'FAQ schema where applicable', detail: 'FAQPage markup for question/answer content to earn expanded results', weight: 7, impact: 'high' },
+        ]
+      },
+      {
+        name: 'Validation & Quality',
+        checks: [
+          { id: 'schema_valid', name: 'Schema validated (no errors)', detail: 'Google Rich Results Test shows no errors on key page types', weight: 9, impact: 'high' },
+          { id: 'schema_jsonld', name: 'JSON-LD format used (not Microdata)', detail: 'JSON-LD preferred by Google; easier to maintain than inline Microdata', weight: 6, impact: 'low' },
+          { id: 'review_schema', name: 'Review/Rating schema (if applicable)', detail: 'AggregateRating markup to display star ratings in search results', weight: 7, impact: 'high' },
+        ]
+      }
+    ]
+  },
+  {
+    id: 'linking',
+    name: 'Internal Linking',
+    icon: '⊕',
+    desc: 'Internal link architecture, anchor text strategy, PageRank flow, and orphaned page detection.',
+    groups: [
+      {
+        name: 'Link Architecture',
+        checks: [
+          { id: 'pillar_links', name: 'Pillar pages have strong internal links', detail: 'Key money pages receive internal links from supporting cluster content', weight: 8, impact: 'high' },
+          { id: 'orphan_pages', name: 'No orphaned pages', detail: 'Every page receives at least one internal link from another page', weight: 7, impact: 'high' },
+          { id: 'link_depth', name: 'Link depth appropriate to site size', detail: 'Pages requiring priority ranking accessible within 3 clicks', weight: 6, impact: 'med' },
+          { id: 'footer_links', name: 'Footer links strategic (not spammy)', detail: 'Footer links add value; no keyword-stuffed footer link farms', weight: 5, impact: 'low' },
+        ]
+      },
+      {
+        name: 'Anchor Text & Quality',
+        checks: [
+          { id: 'anchor_descriptive', name: 'Descriptive anchor text used', detail: 'Anchors describe destination content; minimal "click here" generic text', weight: 7, impact: 'med' },
+          { id: 'anchor_variety', name: 'Anchor text varied (not exact match spam)', detail: 'Mix of branded, partial match, and natural anchors for internal links', weight: 6, impact: 'med' },
+          { id: 'nav_links', name: 'Navigation links to key conversion pages', detail: 'Primary navigation surfaces high-value pages that need authority', weight: 7, impact: 'high' },
+        ]
+      }
+    ]
+  },
+  {
+    id: 'backlinks',
+    name: 'Backlink Profile',
+    icon: '◌',
+    desc: 'Link quality, domain authority, toxic link identification, and link building opportunities.',
+    groups: [
+      {
+        name: 'Link Quality',
+        checks: [
+          { id: 'da_score', name: 'Domain Authority 30+ (or growing)', detail: 'Overall site authority metrics trending upward over time', weight: 7, impact: 'high' },
+          { id: 'quality_referring', name: 'Quality referring domains (topically relevant)', detail: 'Majority of links from authoritative, niche-relevant domains', weight: 9, impact: 'high' },
+          { id: 'toxic_links', name: 'No significant toxic/spammy links', detail: 'Disavow file used if spam links detected; no paid link schemes', weight: 8, impact: 'high' },
+          { id: 'link_velocity', name: 'Natural link acquisition velocity', detail: 'Link growth is consistent and not artificially spiked', weight: 7, impact: 'med' },
+        ]
+      },
+      {
+        name: 'Link Diversity',
+        checks: [
+          { id: 'referring_diversity', name: 'Diverse referring domain profile', detail: 'Links from multiple domain types (news, blogs, directories, .edu/.gov)', weight: 7, impact: 'med' },
+          { id: 'anchor_profile', name: 'Healthy external anchor text distribution', detail: 'Branded anchors dominant; limited exact-match keyword anchors (<10%)', weight: 7, impact: 'high' },
+          { id: 'competitor_gap', name: 'Competitor link gap analyzed', detail: 'Competitors analyzed for link opportunities; gaps documented', weight: 6, impact: 'med' },
+        ]
+      }
+    ]
+  },
+  {
+    id: 'local',
+    name: 'Local SEO',
+    icon: '◎',
+    desc: 'Google Business Profile, NAP consistency, local citations, reviews, and local content signals.',
+    groups: [
+      {
+        name: 'Google Business Profile',
+        checks: [
+          { id: 'gbp_claimed', name: 'GBP claimed and verified', detail: 'Google Business Profile fully claimed with owner verification', weight: 10, impact: 'high' },
+          { id: 'gbp_complete', name: 'GBP 100% complete (all fields)', detail: 'All available fields filled: hours, services, photos, description', weight: 8, impact: 'high' },
+          { id: 'gbp_photos', name: 'Professional photos uploaded (10+)', detail: 'High-quality interior, exterior, team, and product photos', weight: 6, impact: 'med' },
+          { id: 'gbp_posts', name: 'Regular GBP posts (weekly)', detail: 'Consistent posting to keep profile active and fresh', weight: 6, impact: 'med' },
+          { id: 'gbp_reviews', name: 'Active review management (4.0+ rating)', detail: 'Responding to all reviews; strategy for acquiring new positive reviews', weight: 8, impact: 'high' },
+        ]
+      },
+      {
+        name: 'Citations & NAP',
+        checks: [
+          { id: 'nap_consistent', name: 'NAP consistent across all citations', detail: 'Name, Address, Phone exactly consistent on all directories', weight: 9, impact: 'high' },
+          { id: 'top_directories', name: 'Listed in top 20 local directories', detail: 'Yelp, BBB, Bing Places, Apple Maps, and niche directories covered', weight: 7, impact: 'med' },
+          { id: 'local_content', name: 'Location-specific content on site', detail: 'City/area pages or content naturally incorporating local terms', weight: 7, impact: 'med' },
+        ]
+      }
+    ]
+  },
+  {
+    id: 'analytics',
+    name: 'Analytics & Tracking',
+    icon: '▣',
+    desc: 'GA4 setup, Search Console verification, conversion tracking, and data quality validation.',
+    groups: [
+      {
+        name: 'Core Tracking Setup',
+        checks: [
+          { id: 'ga4', name: 'GA4 installed and configured', detail: 'Google Analytics 4 property active with correct data stream', weight: 9, impact: 'high' },
+          { id: 'gsc', name: 'Google Search Console verified', detail: 'Domain or prefix property verified; all site versions added', weight: 10, impact: 'high' },
+          { id: 'bing_webmaster', name: 'Bing Webmaster Tools setup', detail: 'Bing Webmaster Tools configured for Bing/Yahoo search visibility', weight: 5, impact: 'low' },
+          { id: 'gtm', name: 'Google Tag Manager implemented', detail: 'GTM container installed; all tracking managed through GTM', weight: 7, impact: 'med' },
+        ]
+      },
+      {
+        name: 'Data Quality',
+        checks: [
+          { id: 'conversions', name: 'Conversion goals / events configured', detail: 'Key actions tracked: form submits, calls, purchases, sign-ups', weight: 9, impact: 'high' },
+          { id: 'internal_filter', name: 'Internal traffic filtered', detail: 'Company IP addresses excluded from analytics reports', weight: 7, impact: 'med' },
+          { id: 'gsc_sitemap', name: 'Sitemap submitted to GSC', detail: 'Current sitemap URL submitted in Search Console Sitemaps section', weight: 8, impact: 'high' },
+          { id: 'gsc_errors', name: 'GSC coverage errors resolved', detail: 'Index coverage report checked; errors and warnings actioned', weight: 8, impact: 'high' },
+        ]
+      }
+    ]
+  }
+];
+
+// ─── STATE ─────────────────────────────────────────────────────────────────────
+let projects = {};
+let currentProjectId = null;
+let currentView = 'dashboard';
+let currentModuleId = null;
+let radarChart = null;
+
+// ─── STORAGE ──────────────────────────────────────────────────────────────────
+function saveState() {
+  localStorage.setItem('seo_audit_projects', JSON.stringify(projects));
+}
+
+function loadState() {
+  const raw = localStorage.getItem('seo_audit_projects');
+  if (raw) { try { projects = JSON.parse(raw); } catch(e) {} }
+  const lastId = localStorage.getItem('seo_audit_current');
+  if (lastId && projects[lastId]) { currentProjectId = lastId; }
+}
+
+// ─── PROJECT MANAGEMENT ───────────────────────────────────────────────────────
+function openNewProject() {
+  document.getElementById('f-client').value = '';
+  document.getElementById('f-domain').value = '';
+  document.getElementById('f-industry').value = '';
+  document.getElementById('f-auditor').value = '';
+  document.getElementById('modal-overlay').style.display = 'flex';
+  setTimeout(() => document.getElementById('f-client').focus(), 100);
+}
+
+function closeModal() {
+  document.getElementById('modal-overlay').style.display = 'none';
+}
+
+function createProject() {
+  const client = document.getElementById('f-client').value.trim();
+  const domain = document.getElementById('f-domain').value.trim();
+  const industry = document.getElementById('f-industry').value.trim();
+  const scope = document.getElementById('f-scope').value;
+  const auditor = document.getElementById('f-auditor').value.trim();
+
+  if (!client || !domain) { alert('Client name and domain are required.'); return; }
+
+  const id = 'proj_' + Date.now();
+  const checks = {};
+  MODULES.forEach(m => {
+    m.groups.forEach(g => {
+      g.checks.forEach(c => {
+        checks[m.id + '_' + c.id] = 'na'; // na | pass | partial | fail
+      });
+    });
+  });
+
+  projects[id] = {
+    id, client, domain, industry, scope, auditor,
+    created: new Date().toISOString(),
+    checks,
+    notes: {},
+    summary: ''
+  };
+
+  currentProjectId = id;
+  localStorage.setItem('seo_audit_current', id);
+  saveState();
+  closeModal();
+  renderAll();
+  showView('dashboard');
+}
+
+function selectProject(id) {
+  currentProjectId = id;
+  localStorage.setItem('seo_audit_current', id);
+  renderAll();
+  showView('dashboard');
+}
+
+function deleteProject(id) {
+  if (!confirm('Delete this audit project? This cannot be undone.')) return;
+  delete projects[id];
+  if (currentProjectId === id) {
+    const ids = Object.keys(projects);
+    currentProjectId = ids.length ? ids[ids.length - 1] : null;
+    if (currentProjectId) localStorage.setItem('seo_audit_current', currentProjectId);
+    else localStorage.removeItem('seo_audit_current');
+  }
+  saveState();
+  renderAll();
+  showView('dashboard');
+}
+
+// ─── SCORING ──────────────────────────────────────────────────────────────────
+function getModuleScore(projectId, moduleId) {
+  const p = projects[projectId];
+  if (!p) return null;
+  const mod = MODULES.find(m => m.id === moduleId);
+  if (!mod) return null;
+
+  let totalWeight = 0, earnedWeight = 0;
+  mod.groups.forEach(g => {
+    g.checks.forEach(c => {
+      const key = moduleId + '_' + c.id;
+      const state = p.checks[key] || 'na';
+      if (state !== 'na') {
+        totalWeight += c.weight;
+        if (state === 'pass') earnedWeight += c.weight;
+        else if (state === 'partial') earnedWeight += c.weight * 0.5;
+      }
+    });
+  });
+
+  if (totalWeight === 0) return null;
+  return Math.round((earnedWeight / totalWeight) * 100);
+}
+
+function getOverallScore(projectId) {
+  const scores = MODULES.map(m => getModuleScore(projectId, m.id)).filter(s => s !== null);
+  if (!scores.length) return null;
+  return Math.round(scores.reduce((a, b) => a + b, 0) / scores.length);
+}
+
+function getScoreColor(score) {
+  if (score === null) return '#5a6882';
+  if (score >= 80) return '#39ff8c';
+  if (score >= 60) return '#ffb347';
+  return '#ff4757';
+}
+
+function getScoreGrade(score) {
+  if (score === null) return '—';
+  if (score >= 90) return 'A';
+  if (score >= 80) return 'B';
+  if (score >= 70) return 'C';
+  if (score >= 60) return 'D';
+  return 'F';
+}
+
+function getScoreClass(score) {
+  if (score === null) return 'score-na';
+  if (score >= 75) return 'score-high';
+  if (score >= 50) return 'score-mid';
+  return 'score-low';
+}
+
+function getCheckStats(projectId) {
+  const p = projects[projectId];
+  if (!p) return { pass: 0, partial: 0, fail: 0, na: 0 };
+  const vals = Object.values(p.checks);
+  return {
+    pass: vals.filter(v => v === 'pass').length,
+    partial: vals.filter(v => v === 'partial').length,
+    fail: vals.filter(v => v === 'fail').length,
+    na: vals.filter(v => v === 'na').length,
+  };
+}
+
+function getPriorityIssues(projectId) {
+  const p = projects[projectId];
+  if (!p) return [];
+  const issues = [];
+  MODULES.forEach(m => {
+    m.groups.forEach(g => {
+      g.checks.forEach(c => {
+        const key = m.id + '_' + c.id;
+        const state = p.checks[key];
+        if (state === 'fail' || state === 'partial') {
+          issues.push({ ...c, module: m.name, moduleId: m.id, state, key });
+        }
+      });
+    });
+  });
+  const order = { high: 0, med: 1, low: 2 };
+  return issues.sort((a, b) => {
+    if (order[a.impact] !== order[b.impact]) return order[a.impact] - order[b.impact];
+    return b.weight - a.weight;
+  });
+}
+
+// ─── VIEWS ────────────────────────────────────────────────────────────────────
+function showView(view, moduleId) {
+  currentView = view;
+  currentModuleId = moduleId || null;
+
+  // Update nav active states
+  document.querySelectorAll('.nav-item[id^="nav-"]').forEach(el => el.classList.remove('active'));
+  const navEl = document.getElementById('nav-' + view);
+  if (navEl) navEl.classList.add('active');
+
+  if (!currentProjectId) {
+    renderEmptyState();
+    return;
+  }
+
+  if (view === 'dashboard') renderDashboard();
+  else if (view === 'module') renderModule(moduleId);
+  else if (view === 'report') renderReport();
+}
+
+function renderEmptyState() {
+  document.getElementById('main-content').innerHTML = `
+    <div class="empty-state animate-in">
+      <div class="empty-icon">◈</div>
+      <div class="empty-title">No Audit Selected</div>
+      <div class="empty-desc">Create a new audit project to start analyzing a website's SEO performance across 10 modules.</div>
+      <button class="btn btn-primary pulse" onclick="openNewProject()">+ Create First Audit</button>
+    </div>`;
+}
+
+// ─── DASHBOARD ────────────────────────────────────────────────────────────────
+function renderDashboard() {
+  const p = projects[currentProjectId];
+  if (!p) return renderEmptyState();
+
+  const overall = getOverallScore(currentProjectId);
+  const stats = getCheckStats(currentProjectId);
+  const issues = getPriorityIssues(currentProjectId).slice(0, 8);
+  const scoreColor = getScoreColor(overall);
+  const grade = getScoreGrade(overall);
+
+  const circumference = 2 * Math.PI * 54;
+  const offset = overall !== null ? circumference * (1 - overall / 100) : circumference;
+
+  const moduleRows = MODULES.map((m, i) => {
+    const score = getModuleScore(currentProjectId, m.id);
+    const color = getScoreColor(score);
+    const barW = score !== null ? score : 0;
+    return `
+      <div class="module-row" onclick="showView('module','${m.id}')">
+        <span class="module-num">${String(i+1).padStart(2,'0')}</span>
+        <span class="module-name">${m.icon} ${m.name}</span>
+        <div class="module-bar-wrap">
+          <div class="module-bar" style="width:${barW}%;background:${color}"></div>
+        </div>
+        <span class="module-score-badge ${getScoreClass(score)}" style="color:${color}">
+          ${score !== null ? score + '%' : '—'}
+        </span>
+      </div>`;
+  }).join('');
+
+  const issueRows = issues.length ? issues.map(issue => `
+    <div class="issue-item ${issue.state === 'fail' ? 'critical' : 'warning'}" onclick="showView('module','${issue.moduleId}')">
+      <div>
+        <div class="issue-title">${issue.name}</div>
+        <div class="issue-desc">${issue.module} · ${issue.detail}</div>
+      </div>
+      <div>
+        <span class="issue-badge">${issue.state === 'fail' ? 'FAIL' : 'PARTIAL'}</span>
+      </div>
+    </div>`) .join('') :
+    `<div style="text-align:center;padding:24px;color:var(--text-2);font-family:var(--font-mono);font-size:12px;">No issues found — mark checks to see issues appear here.</div>`;
+
+  const totalChecks = Object.keys(p.checks).length;
+  const completed = totalChecks - stats.na;
+  const completionPct = Math.round((completed / totalChecks) * 100);
+
+  document.getElementById('main-content').innerHTML = `
+    <div class="animate-in">
+      <div class="dashboard-header">
+        <div>
+          <div style="font-family:var(--font-display);font-size:36px;letter-spacing:2px;margin-bottom:4px;">${p.client}</div>
+          <div style="font-family:var(--font-mono);font-size:13px;color:var(--text-2);">${p.domain} · ${p.industry || 'General'} · Audited by ${p.auditor || 'Unknown'}</div>
+          <div style="margin-top:12px;display:flex;gap:8px;align-items:center;">
+            <span class="tag ${overall >= 80 ? 'tag-green' : overall >= 60 ? 'tag-amber' : overall !== null ? 'tag-red' : ''}">${overall !== null ? 'Grade: ' + grade : 'In Progress'}</span>
+            <span class="tag tag-amber">${completionPct}% Complete</span>
+            <span style="font-family:var(--font-mono);font-size:11px;color:var(--text-2);">${completed}/${totalChecks} checks evaluated</span>
+          </div>
+          <div class="progress-track" style="width:300px;margin-top:10px;">
+            <div class="progress-fill" style="width:${completionPct}%;background:var(--phosphor)"></div>
+          </div>
+        </div>
+        <div class="overall-score-ring">
+          <svg class="score-ring-svg" width="140" height="140" viewBox="0 0 140 140">
+            <circle class="score-ring-bg" cx="70" cy="70" r="54"/>
+            <circle class="score-ring-fill" cx="70" cy="70" r="54"
+              stroke="${scoreColor}"
+              stroke-dasharray="${circumference}"
+              stroke-dashoffset="${offset}"/>
+          </svg>
+          <div class="score-center">
+            <div class="score-number" style="color:${scoreColor}">${overall !== null ? overall : '—'}</div>
+            <div class="score-label">OVERALL</div>
+            <div class="score-grade" style="color:${scoreColor}">${grade}</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="stat-grid">
+        <div class="stat-card green">
+          <div class="stat-value">${stats.pass}</div>
+          <div class="stat-desc">Checks Passing</div>
+        </div>
+        <div class="stat-card amber">
+          <div class="stat-value">${stats.partial}</div>
+          <div class="stat-desc">Partial / Needs Work</div>
+        </div>
+        <div class="stat-card red">
+          <div class="stat-value">${stats.fail}</div>
+          <div class="stat-desc">Critical Failures</div>
+        </div>
+        <div class="stat-card blue">
+          <div class="stat-value">${stats.na}</div>
+          <div class="stat-desc">Not Yet Evaluated</div>
+        </div>
+      </div>
+
+      <div class="chart-grid">
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">Module Scores</span>
+            <span style="font-family:var(--font-mono);font-size:10px;color:var(--text-2);">Click to open module</span>
+          </div>
+          <div class="card-body">
+            <div class="module-list">${moduleRows}</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">Performance Radar</span>
+          </div>
+          <div class="card-body" style="position:relative;height:300px;">
+            <canvas id="radar-chart"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Priority Issues</span>
+          <span style="font-family:var(--font-mono);font-size:10px;color:var(--text-2);">${issues.length} shown · sorted by impact</span>
+        </div>
+        <div class="card-body">${issueRows}</div>
+      </div>
+
+      <div style="display:flex;gap:12px;justify-content:flex-end;margin-top:20px;">
+        <button class="btn btn-danger" onclick="deleteProject('${currentProjectId}')">Delete Audit</button>
+        <button class="btn btn-ghost" onclick="showView('report')">View Full Report →</button>
+        <button class="btn btn-primary" onclick="exportReport()">Export PDF ↓</button>
+      </div>
+    </div>`;
+
+  renderRadarChart();
+  updateSidebarNav();
+}
+
+function renderRadarChart() {
+  const canvas = document.getElementById('radar-chart');
+  if (!canvas) return;
+  if (radarChart) { radarChart.destroy(); radarChart = null; }
+
+  const labels = MODULES.map(m => m.name.replace(' & ', ' &\n').replace('Core Web', 'Core Web\n'));
+  const scores = MODULES.map(m => {
+    const s = getModuleScore(currentProjectId, m.id);
+    return s !== null ? s : 0;
+  });
+
+  radarChart = new Chart(canvas, {
+    type: 'radar',
+    data: {
+      labels: MODULES.map(m => m.name),
+      datasets: [{
+        data: scores,
+        backgroundColor: 'rgba(57,255,140,0.08)',
+        borderColor: '#39ff8c',
+        borderWidth: 2,
+        pointBackgroundColor: '#39ff8c',
+        pointBorderColor: '#0a0b0d',
+        pointBorderWidth: 2,
+        pointRadius: 4,
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
+        r: {
+          min: 0, max: 100,
+          grid: { color: '#2a3248' },
+          angleLines: { color: '#2a3248' },
+          pointLabels: {
+            color: '#a0adc4',
+            font: { family: 'DM Mono', size: 10 }
+          },
+          ticks: {
+            color: '#3a4560',
+            backdropColor: 'transparent',
+            font: { family: 'DM Mono', size: 9 },
+            stepSize: 25,
+          }
+        }
+      },
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          backgroundColor: '#1c2130',
+          borderColor: '#3d4f72',
+          borderWidth: 1,
+          titleFont: { family: 'DM Mono', size: 11 },
+          bodyFont: { family: 'DM Mono', size: 11 },
+          callbacks: {
+            label: ctx => ` Score: ${ctx.raw}%`
+          }
+        }
+      }
+    }
+  });
+}
+
+// ─── MODULE VIEW ──────────────────────────────────────────────────────────────
+function renderModule(moduleId) {
+  const mod = MODULES.find(m => m.id === moduleId);
+  if (!mod) return;
+  const p = projects[currentProjectId];
+  if (!p) return;
+
+  const score = getModuleScore(currentProjectId, moduleId);
+  const scoreColor = getScoreColor(score);
+
+  const groupsHTML = mod.groups.map(g => {
+    const checksHTML = g.checks.map(c => {
+      const key = moduleId + '_' + c.id;
+      const state = p.checks[key] || 'na';
+      return `
+        <div class="check-item" id="check-row-${key}">
+          <div class="check-toggle">
+            <button class="toggle-btn ${state === 'pass' ? 'pass' : ''}"
+              onclick="setCheck('${key}','pass')" data-tip="Pass">✓</button>
+            <button class="toggle-btn ${state === 'partial' ? 'partial' : ''}"
+              onclick="setCheck('${key}','partial')" data-tip="Partial">~</button>
+            <button class="toggle-btn ${state === 'fail' ? 'fail' : ''}"
+              onclick="setCheck('${key}','fail')" data-tip="Fail">✕</button>
+          </div>
+          <div class="check-text">
+            <div class="check-name">${c.name}</div>
+            <div class="check-detail">${c.detail}</div>
+          </div>
+          <span class="check-impact impact-${c.impact}">${c.impact.toUpperCase()}</span>
+          <span class="check-weight">W: ${c.weight}</span>
+        </div>`;
+    }).join('');
+
+    return `
+      <div class="checklist-group">
+        <div class="checklist-group-header">${g.name}</div>
+        ${checksHTML}
+      </div>`;
+  }).join('');
+
+  const noteKey = 'module_' + moduleId;
+  const noteVal = p.notes[noteKey] || '';
+
+  document.getElementById('main-content').innerHTML = `
+    <div class="animate-in">
+      <div class="module-header">
+        <div>
+          <div class="module-title-lg">${mod.icon} ${mod.name}</div>
+          <div class="module-desc">${mod.desc}</div>
+          <div style="margin-top:12px;">
+            <button class="btn btn-ghost" onclick="showView('dashboard')" style="font-size:11px;">← Back to Dashboard</button>
+          </div>
+        </div>
+        <div class="big-score">
+          <div class="big-score-num" style="color:${scoreColor}">${score !== null ? score : '—'}</div>
+          <div class="big-score-label">Module Score</div>
+          <div style="font-family:var(--font-display);font-size:24px;color:${scoreColor};margin-top:4px;">${getScoreGrade(score)}</div>
+        </div>
+      </div>
+
+      ${groupsHTML}
+
+      <div class="card mt-16">
+        <div class="card-header"><span class="card-title">Module Notes</span></div>
+        <div class="card-body">
+          <textarea class="notes-area" id="module-notes" placeholder="Add notes, observations, client findings, recommendations..."
+            onchange="saveNote('${noteKey}',this.value)">${noteVal}</textarea>
+        </div>
+      </div>
+    </div>`;
+
+  updateSidebarNav();
+}
+
+function setCheck(key, state) {
+  const p = projects[currentProjectId];
+  if (!p) return;
+  // Toggle off if already set
+  if (p.checks[key] === state) p.checks[key] = 'na';
+  else p.checks[key] = state;
+  saveState();
+
+  // Update just the buttons without full re-render
+  const row = document.getElementById('check-row-' + key);
+  if (row) {
+    row.querySelectorAll('.toggle-btn').forEach(btn => {
+      btn.className = 'toggle-btn';
+    });
+    const currentState = p.checks[key];
+    if (currentState !== 'na') {
+      const stateMap = { pass: 0, partial: 1, fail: 2 };
+      const btns = row.querySelectorAll('.toggle-btn');
+      if (btns[stateMap[currentState]]) {
+        btns[stateMap[currentState]].classList.add(currentState);
+      }
+    }
+  }
+  updateSidebarNav();
+}
+
+function saveNote(key, value) {
+  const p = projects[currentProjectId];
+  if (!p) return;
+  p.notes[key] = value;
+  saveState();
+}
+
+// ─── REPORT VIEW ──────────────────────────────────────────────────────────────
+function renderReport() {
+  const p = projects[currentProjectId];
+  if (!p) return;
+
+  const overall = getOverallScore(currentProjectId);
+  const stats = getCheckStats(currentProjectId);
+  const date = new Date(p.created).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+
+  const moduleScores = MODULES.map(m => {
+    const score = getModuleScore(currentProjectId, m.id);
+    const color = getScoreColor(score);
+    return `
+      <tr>
+        <td style="padding:10px 14px;font-weight:500;">${m.icon} ${m.name}</td>
+        <td style="padding:10px 14px;">
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div style="width:120px;height:4px;background:var(--bg-4);border-radius:2px;overflow:hidden;">
+              <div style="width:${score||0}%;height:100%;background:${color};border-radius:2px;"></div>
+            </div>
+            <span style="font-family:var(--font-mono);font-size:12px;color:${color}">${score !== null ? score + '%' : '—'}</span>
+          </div>
+        </td>
+        <td style="padding:10px 14px;font-family:var(--font-mono);font-size:14px;color:${color}">${getScoreGrade(score)}</td>
+        <td style="padding:10px 14px;font-size:12px;color:var(--text-2);">${m.desc.substring(0,60)}…</td>
+      </tr>`;
+  }).join('');
+
+  const issues = getPriorityIssues(currentProjectId);
+  const criticalIssues = issues.filter(i => i.state === 'fail').slice(0, 15);
+
+  const issueRows = criticalIssues.length ? criticalIssues.map(i => `
+    <div class="issue-item critical" style="margin-bottom:8px;">
+      <div>
+        <div class="issue-title">${i.name}</div>
+        <div class="issue-desc">${i.module} · ${i.detail}</div>
+      </div>
+      <div><span class="issue-badge">CRITICAL</span></div>
+    </div>`).join('') :
+    `<div style="color:var(--text-2);font-size:13px;padding:12px 0;">No critical failures detected.</div>`;
+
+  const autoSummary = generateSummary(p, overall, stats, issues);
+  const summaryVal = p.summary || autoSummary;
+
+  document.getElementById('main-content').innerHTML = `
+    <div class="animate-in" id="report-content">
+      <!-- REPORT HEADER -->
+      <div class="card mb-16">
+        <div style="padding:28px 28px 20px;border-bottom:1px solid var(--border);display:grid;grid-template-columns:1fr auto;gap:20px;align-items:start;">
+          <div>
+            <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:3px;color:var(--text-2);margin-bottom:8px;">SEO AUDIT REPORT</div>
+            <div style="font-family:var(--font-display);font-size:40px;letter-spacing:2px;">${p.client}</div>
+            <div style="font-family:var(--font-mono);font-size:13px;color:var(--text-2);margin-top:6px;">${p.domain}</div>
+          </div>
+          <div style="text-align:right;">
+            <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:2px;color:var(--text-2);">OVERALL SCORE</div>
+            <div style="font-family:var(--font-display);font-size:64px;line-height:1;color:${getScoreColor(overall)}">${overall !== null ? overall : '—'}</div>
+            <div style="font-family:var(--font-display);font-size:24px;color:${getScoreColor(overall)}">${getScoreGrade(overall)}</div>
+          </div>
+        </div>
+        <div style="padding:16px 28px;display:grid;grid-template-columns:repeat(4,1fr);gap:12px;">
+          ${[
+            ['Industry', p.industry || '—'],
+            ['Auditor', p.auditor || '—'],
+            ['Audit Date', date],
+            ['Scope', p.scope === 'full' ? 'Full Audit' : p.scope]
+          ].map(([l,v]) => `
+            <div>
+              <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:2px;color:var(--text-3);text-transform:uppercase;margin-bottom:4px;">${l}</div>
+              <div style="font-size:13px;font-weight:500;">${v}</div>
+            </div>`).join('')}
+        </div>
+      </div>
+
+      <!-- EXECUTIVE SUMMARY -->
+      <div class="card mb-16">
+        <div class="card-header">
+          <span class="card-title">Executive Summary</span>
+          <button class="btn btn-ghost" onclick="regenerateSummary()" style="font-size:11px;">↺ Regenerate</button>
+        </div>
+        <div class="card-body">
+          <textarea class="summary-editor" id="summary-text" onchange="saveSummary(this.value)">${summaryVal}</textarea>
+        </div>
+      </div>
+
+      <!-- MODULE SCORES TABLE -->
+      <div class="card mb-16">
+        <div class="card-header"><span class="card-title">Module Score Breakdown</span></div>
+        <div style="overflow-x:auto;">
+          <table style="width:100%;border-collapse:collapse;">
+            <thead>
+              <tr style="border-bottom:1px solid var(--border);">
+                ${['Module','Score','Grade','Focus Area'].map(h =>
+                  `<th style="padding:10px 14px;text-align:left;font-family:var(--font-mono);font-size:9px;letter-spacing:2px;color:var(--text-2);font-weight:400;">${h}</th>`
+                ).join('')}
+              </tr>
+            </thead>
+            <tbody>${moduleScores}</tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- STAT SUMMARY -->
+      <div class="stat-grid mb-16">
+        <div class="stat-card green"><div class="stat-value">${stats.pass}</div><div class="stat-desc">Passing</div></div>
+        <div class="stat-card amber"><div class="stat-value">${stats.partial}</div><div class="stat-desc">Partial</div></div>
+        <div class="stat-card red"><div class="stat-value">${stats.fail}</div><div class="stat-desc">Critical</div></div>
+        <div class="stat-card blue"><div class="stat-value">${issues.length}</div><div class="stat-desc">Total Issues</div></div>
+      </div>
+
+      <!-- CRITICAL ISSUES -->
+      <div class="card mb-16">
+        <div class="card-header">
+          <span class="card-title">Critical Issues to Address</span>
+          <span style="font-family:var(--font-mono);font-size:10px;color:var(--text-2);">${criticalIssues.length} critical failures</span>
+        </div>
+        <div class="card-body">${issueRows}</div>
+      </div>
+
+      <!-- MODULE NOTES -->
+      ${MODULES.filter(m => p.notes['module_' + m.id]).map(m => `
+        <div class="card mb-16">
+          <div class="card-header"><span class="card-title">${m.name} — Notes</span></div>
+          <div class="card-body" style="font-size:13px;color:var(--text-1);line-height:1.7;white-space:pre-wrap;">${p.notes['module_' + m.id]}</div>
+        </div>`).join('')}
+
+      <div style="display:flex;justify-content:flex-end;gap:12px;margin-top:20px;">
+        <button class="btn btn-ghost" onclick="showView('dashboard')">← Dashboard</button>
+        <button class="btn btn-primary" onclick="exportReport()">⬇ Export PDF</button>
+      </div>
+    </div>`;
+
+  updateSidebarNav();
+}
+
+function generateSummary(p, overall, stats, issues) {
+  const grade = getScoreGrade(overall);
+  const totalChecks = Object.keys(p.checks).length;
+  const completed = totalChecks - stats.na;
+  const topIssues = issues.slice(0, 3).map(i => i.name).join(', ');
+  const bestModules = MODULES
+    .map(m => ({ name: m.name, score: getModuleScore(currentProjectId, m.id) }))
+    .filter(m => m.score !== null && m.score >= 75)
+    .sort((a, b) => b.score - a.score)
+    .slice(0, 3)
+    .map(m => m.name);
+
+  return `SEO Audit Report — ${p.client} (${p.domain})
+Prepared by: ${p.auditor || 'SEO Analyst'} | Date: ${new Date(p.created).toLocaleDateString()}
+
+OVERALL ASSESSMENT
+${p.client}'s website received an overall SEO score of ${overall !== null ? overall + '/100 (Grade: ' + grade + ')' : 'N/A (audit incomplete)'}. This audit evaluated ${completed} of ${totalChecks} available checks across 10 SEO modules.
+
+STRENGTHS
+${bestModules.length ? 'The site demonstrates strong performance in: ' + bestModules.join(', ') + '.' : 'Complete all module checks to identify strengths.'}
+
+KEY ISSUES
+${topIssues ? 'The highest-priority items requiring immediate attention are: ' + topIssues + '.' : 'No critical issues detected yet — continue completing the audit.'}
+${stats.fail > 0 ? `A total of ${stats.fail} checks are failing and require immediate remediation.` : ''}
+${stats.partial > 0 ? `${stats.partial} items are partially implemented and should be completed.` : ''}
+
+RECOMMENDATIONS
+1. Address all critical failures (red) before tactical improvements.
+2. Prioritize high-impact issues for maximum ranking benefit.
+3. Schedule a follow-up audit in 90 days to measure progress.
+4. Focus link building efforts on modules scoring below 60%.
+
+This report was generated using SEO Audit Pro. All findings are based on a manual expert evaluation.`;
+}
+
+function saveSummary(val) {
+  const p = projects[currentProjectId];
+  if (p) { p.summary = val; saveState(); }
+}
+
+function regenerateSummary() {
+  const p = projects[currentProjectId];
+  if (!p) return;
+  const overall = getOverallScore(currentProjectId);
+  const stats = getCheckStats(currentProjectId);
+  const issues = getPriorityIssues(currentProjectId);
+  const newSummary = generateSummary(p, overall, stats, issues);
+  p.summary = newSummary;
+  saveState();
+  const el = document.getElementById('summary-text');
+  if (el) el.value = newSummary;
+}
+
+// ─── EXPORT / PRINT ───────────────────────────────────────────────────────────
+function exportReport() {
+  showView('report');
+  setTimeout(() => {
+    window.print();
+  }, 400);
+}
+
+// ─── SIDEBAR RENDERING ────────────────────────────────────────────────────────
+function updateSidebarNav() {
+  // Module nav
+  const moduleNav = document.getElementById('module-nav');
+  if (moduleNav) {
+    moduleNav.innerHTML = MODULES.map(m => {
+      const score = currentProjectId ? getModuleScore(currentProjectId, m.id) : null;
+      const isActive = currentView === 'module' && currentModuleId === m.id;
+      return `
+        <div class="nav-item ${isActive ? 'active' : ''}" onclick="showView('module','${m.id}')">
+          <span class="nav-icon">${m.icon}</span>
+          <span>${m.name}</span>
+          <span class="nav-score ${getScoreClass(score)}">${score !== null ? score : '—'}</span>
+        </div>`;
+    }).join('');
+  }
+
+  // Report nav active state
+  if (currentView === 'report') {
+    document.getElementById('nav-report')?.classList.add('active');
+    document.getElementById('nav-dashboard')?.classList.remove('active');
+  } else if (currentView === 'dashboard') {
+    document.getElementById('nav-dashboard')?.classList.add('active');
+    document.getElementById('nav-report')?.classList.remove('active');
+  }
+
+  // Projects list
+  const projectsList = document.getElementById('projects-list');
+  if (projectsList) {
+    const ids = Object.keys(projects);
+    if (!ids.length) {
+      projectsList.innerHTML = `<div style="padding:8px 20px;font-size:11px;color:var(--text-3);">No projects yet</div>`;
+    } else {
+      projectsList.innerHTML = ids.map(id => {
+        const proj = projects[id];
+        const score = getOverallScore(id);
+        return `
+          <div class="project-item ${id === currentProjectId ? 'active' : ''}" onclick="selectProject('${id}')">
+            <div class="project-domain">${proj.domain || proj.client}</div>
+            <div class="project-meta">
+              <span>${proj.client}</span>
+              <span style="color:${getScoreColor(score)};font-family:var(--font-mono);">${score !== null ? score + '%' : '—'}</span>
+            </div>
+          </div>`;
+      }).join('');
+    }
+  }
+
+  // Topbar
+  if (currentProjectId) {
+    const p = projects[currentProjectId];
+    document.getElementById('topbar-domain').innerHTML = `<span>DOMAIN</span> ${p.domain}`;
+    document.getElementById('topbar-date').textContent = new Date(p.created).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+  }
+}
+
+function renderAll() {
+  updateSidebarNav();
+  if (currentView === 'dashboard') renderDashboard();
+  else if (currentView === 'module' && currentModuleId) renderModule(currentModuleId);
+  else if (currentView === 'report') renderReport();
+  else renderDashboard();
+}
+
+// ─── KEYBOARD SHORTCUTS ───────────────────────────────────────────────────────
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeModal();
+  if (e.key === 'n' && (e.metaKey || e.ctrlKey)) { e.preventDefault(); openNewProject(); }
+});
+
+// ─── INIT ─────────────────────────────────────────────────────────────────────
+loadState();
+updateSidebarNav();
+if (currentProjectId) {
+  renderDashboard();
+} else {
+  renderEmptyState();
+}
+</script>
+</body>
+</html>
