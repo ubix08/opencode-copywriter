@@ -1,125 +1,45 @@
-# Session Context
+## Session State (May 2026)
 
-This file is used to share context between agents during multi-step workflows.
-Agents should read this file at the start of their work and update it with their findings.
+### Products Built & Ready for Gumroad (10 total)
 
-## How It Works
+| Product | Package | Price | Notes |
+|---------|---------|-------|-------|
+| Freelance Rate Calculator | `build/Freelance-Rate-Calculator-v1.0.zip` | $12 | html, 9 files |
+| SaaS Revenue Calculator | `build/SaaS-Revenue-Intelligence-v1.0.zip` | $15 | html, 9 files |
+| Content Calendar Planner | `build/Content-Calendar-Planner-v1.0.zip` | $9 | html, 9 files |
+| SEO Audit Pro (fixed v2.0) | `build/SEO-Audit-Pro-v1.0.zip` | $19 | html, 9 files — 6 bug fixes applied |
+| SEO Audit Pro AI (v3.0) | `build/SEO-Audit-Pro-AI-v1.0.zip` | $29 | html, Anthropic API streaming, AI features |
+| SMB Agent Blueprint | `build/SMB-Agent-Blueprint-v1.0.zip` | $19 | html, 9 files |
+| Gumroad Factory | `build/Gumroad-Factory-v1.0.zip` | $25 | html, 9 files |
+| BizPulse KPI Dashboard | `build/BizPulse-KPI-Dashboard-v2.1.zip` | $49 | html, also at `content/info-products/BizPulse-KPI-Dashboard-v2.1.zip` |
+| Sales Pipeline Tracker Pro | `build/Sales-Pipeline-Tracker-Pro-Bundle.zip` | $49-$79 | Excel + docs + AI prompts — custom bundle format, not BizPulse template |
+| business-kpi-dashboard.html | `build/business-kpi-dashboard.html` | — | Standalone HTML (duplicate of content/info-products/) |
 
-1. The orchestrator creates or clears this file at the start of a workflow
-2. Each subagent reads the current state, adds its findings, and saves back
-3. The next agent reads the accumulated context and builds on it
-4. The orchestrator cleans up or archives the file when the workflow completes
+### Active Code Files
+- `build/SEO-Audit-Pro/SEO-Audit-Pro.html` — bug-fixed v2.0 (2031 lines, 6 fixes applied)
+- `build/SEO-Audit-Pro-AI/SEO-Audit-Pro-AI.html` — AI v3.0 (2455 lines, Anthropic API integration)
+- `content/info-products/` — 7 built HTML products + BizPulse zip
+- `build/` — 7 Gumroad zips + unpacked dirs + 2 new user-added files
 
-## Session Template
+### User-Added Products (via GitHub)
+- `build/Sales-Pipeline-Tracker-Pro-Bundle.zip` — custom structure: `sales-pipeline-bundle/{ product/, docs/, bonus/ }` with GUMROAD-LISTING.md inside
+- `build/Sales-Pipeline-Tracker-Pro.xlsx` — standalone copy of the same file in the zip
+- `build/BizPulse-KPI-Dashboard-v2.1.zip` — copy from `content/info-products/`
+- `build/business-kpi-dashboard.html` — copy from `content/info-products/`
 
-```markdown
-# Session: [Workflow Type] — [Topic]
-Started: YYYY-MM-DD HH:MM
-Status: [in-progress / complete / failed]
+### 27 More Product Ideas in Pipeline
+See `content/info-products/README.md` — categories: HTML tools (1 more), how-to guides (7), site templates (5), spreadsheet tools (5), research reports (5), bundles (4).
 
-## Request
-- **Command**: [/article /medium /optimize /audit /brief /rewrite /cluster /product-content /repurpose /check]
-- **Topic**: [topic description]
-- **Target platform**: [Medium / LinkedIn / X / Substack / Threads]
-- **Target product**: [product name if applicable]
-- **Target file**: [path if applicable]
+### Creating New Products
+Each HTML ZIP follows BizPulse template: `Product-Name-v1.0.zip → Product-Name/{ main.html, README.txt, QUICK-START.txt, LICENSE.txt, bonus/{ GUMROAD-LISTING-COPY.txt, 2 bonus files } }`.
 
-## Phase 0: Pre-Flight Check
-Status: [pending / in-progress / complete / skipped]
-- Structural issues found: [count]
-- Critical failures: [list if any]
+Excel/doc products may use custom bundle format as seen in Sales Pipeline Tracker Pro.
 
-## Phase 1: Competitive Positioning (competitive-analyst)
-Status: [pending / in-progress / complete / skipped]
-- Primary angle: [keyword/angle]
-- Competitors analyzed: [count]
-- Top differentiation opportunities:
-  1. [opportunity]
-  2. [opportunity]
-  3. [opportunity]
-- Positioning report: content/research/YYYY-MM-DD-topic-positioning.md
-
-## Phase 2: Topic Research (tech-researcher)
-Status: [pending / in-progress / complete / skipped]
-- Key findings:
-  1. [finding with source]
-  2. [finding with source]
-- Sourced statistics:
-  1. [stat] — [source URL, date]
-  2. [stat] — [source URL, date]
-- Product angle: [how product X relates]
-
-## Phase 3: Writing (tech-writer)
-Status: [pending / in-progress / complete / skipped]
-- Platform: [Medium / LinkedIn / X / Substack]
-- Article: content/articles/YYYY-MM-DD-slug.md
-- Word count: [count]
-- Product references: [which products, how integrated]
-- CTA type: [lead magnet / product / newsletter signup]
-
-## Phase 4: Fact-Check
-Status: [pending / in-progress / complete / skipped]
-- Statistics verified: [count]
-- Code examples verified: [count]
-- Technical claims verified: [count]
-- Product claims verified: [count]
-
-## Phase 5: Review (reviewer)
-Status: [pending / in-progress / complete / skipped]
-- Overall score: [X/100]
-- Verdict: [PASS / FAIL]
-- Critical fixes: [list if any]
-- Fix iterations: [0/1/2]
-
-## Phase 6: Iterative Fix Loop
-Status: [pending / in-progress / complete / skipped]
-- Iteration: [1/2]
-- Pre-fix score: [X/100]
-- Post-fix score: [X/100]
-- Remaining issues: [list]
-
-## Phase 7: Author Validation
-Status: [pending / in-progress / complete / skipped]
-- Author name: Rachid Hakim
-- Bio included: [yes / no]
-- Product links: [present / missing]
-
-## Phase 8: Platform Formatting
-Status: [pending / in-progress / complete / skipped]
-- Medium tags: [5 tags listed]
-- LinkedIn formatting: [done / n/a]
-- X thread count: [N tweets / n/a]
-
-## Phase 9: Repurposing (if applicable)
-Status: [pending / in-progress / complete / skipped]
-- LinkedIn post: [done / n/a]
-- X thread: [done / n/a]
-- Substack issue: [done / n/a]
-
-## Phase 10: Delivery (orchestrator)
-Status: [pending / in-progress / complete]
-- Final deliverables: [list files]
-- Final reviewer score: [X/100]
-- Final verdict: [PASS / FAIL]
-- Product CTA included: [yes / no]
-- Notes: [any issues, limitations, or follow-up recommendations]
-
-## Phase 11: Promotion (orchestrator / social)
-Status: [pending / in-progress / complete / skipped]
-- Social repurposing: [done / n/a] — files saved to content/social/YYYY-MM-DD-slug/
-- Directory submissions: [planned / submitted / n/a]
-- Community sharing: [planned / posted / n/a]
-- Email notification: [sent / n/a]
-- Medium cross-post: [republished / n/a]
-- Promotion plan: content/promotion/YYYY-MM-DD-slug-promotion.md
-```
-
-## Rules
-
-- Each agent should only update its own phase section
-- Do not delete previous phases — append or update status only
-- If a phase fails, set status to "failed" and add a note explaining why
-- The orchestrator is responsible for creating and cleaning up this file
-- Archive completed sessions to content/research/sessions/ if needed for reference
-- **Self-assessed scores are invalid** — only reviewer scores count. Do not record self-assessments in the session.
-- **Author is always Rachid Hakim** — if any agent strips or changes this, it's an automatic fail
+### Active Bug-fix Patterns (apply to any new HTML products)
+1. `localStorage` wrapped in `try/catch` for sandboxed iframe fallback
+2. Modal backdrop `onclick="if(event.target===this)..."` — target check, not just on overlay ID
+3. Chart.js `chartVar.destroy()` before re-creating chart on same canvas
+4. Score ring `stroke-dasharray` starts at full circumference in HTML, then rAF to correct offset
+5. `oninput` instead of `onchange` on textareas for immediate state save
+6. Double `requestAnimationFrame` instead of `setTimeout` for print/export timing
+7. `updateModuleScoreDisplay()` called after each check toggle to keep big score in sync

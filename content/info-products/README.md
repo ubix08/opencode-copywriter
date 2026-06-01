@@ -2,9 +2,9 @@
 
 Products sold on Gumroad: https://gumroad.com/rachidhakim
 HTML tools serve directly from GitHub Pages. Guides sold as PDF.
-Target: $5-$49 per product.
+Target: $5-$79 per product.
 
-## Built Products (8 available now)
+## Built Products (10 available now)
 
 | Product | Package | Size | Price | Ready for Gumroad |
 |---------|---------|------|-------|-------------------|
@@ -12,9 +12,11 @@ Target: $5-$49 per product.
 | SaaS Revenue Intelligence — MRR Projection Engine | `build/SaaS-Revenue-Intelligence-v1.0.zip` | 15K | $15 | ✅ 9 files |
 | Content Calendar & Publishing Planner | `build/Content-Calendar-Planner-v1.0.zip` | 16K | $9 | ✅ 9 files |
 | SEO Audit Pro — Professional SEO Audit Toolkit | `build/SEO-Audit-Pro-v1.0.zip` | 24K | $19 | ✅ 9 files |
+| SEO Audit Pro AI — Professional SEO Audit with AI | `build/SEO-Audit-Pro-AI-v1.0.zip` | 30K | $29 | ✅ 9 files |
 | SMB Agentic Workforce Blueprint | `build/SMB-Agent-Blueprint-v1.0.zip` | 14K | $19 | ✅ 9 files |
 | Gumroad Factory — 10-Step Product Launch Engine | `build/Gumroad-Factory-v1.0.zip` | 19K | $25 | ✅ 9 files |
-| BizPulse — Business KPI Dashboard with AI Diagnosis | `content/info-products/BizPulse-KPI-Dashboard-v2.1.zip` | 27K | $49 | ✅ 9 files |
+| BizPulse — Business KPI Dashboard with AI Diagnosis | `build/BizPulse-KPI-Dashboard-v2.1.zip` | 27K | $49 | ✅ 9 files |
+| Sales Pipeline Tracker Pro — Excel CRM Alternative | `build/Sales-Pipeline-Tracker-Pro-Bundle.zip` | 53K | $49-$79 | ✅ custom bundle |
 
 ## Categories & Pipeline
 
@@ -41,7 +43,9 @@ Each zip contains exactly 9 files. Description, tags, price, and launch checklis
 - **SaaS Revenue Calculator** — $15 — indie founders needing quick math → `saas-revenue-calculator.html`
 - **Content Calendar & Publishing Planner** — $9 — creators planning multi-platform content → `content-calendar-planner.html`
 - **SEO Audit Toolkit** — $19 — marketers auditing site SEO → `seo-audit-toolkit.html`
+- **SEO Audit Pro AI** — $29 — SEO pros wanting AI-powered analysis via Anthropic API → `seo-audit-pro-ai.html`
 - **Business KPI Dashboard** — $15 — founders tracking biz metrics → `business-kpi-dashboard.html`
+- **Sales Pipeline Tracker Pro** — $49-$79 — freelancers/agencies needing CRM alternative → `Sales-Pipeline-Tracker-Pro.xlsx`
 - **SMB Agent Blueprint** — $19 — SMB owners exploring AI agents → `smb-agent-blueprint.html`
 - **Gumroad Factory — 10-Step Launch Engine** — $25 — product creators launching on Gumroad → `gumroad-factory.html`
 
@@ -110,9 +114,11 @@ Each zip contains exactly 9 files. Description, tags, price, and launch checklis
 | SaaS/Business Metrics | SaaS Revenue Calculator ($15) | `saas-revenue-calculator.html` |
 | Content Marketing | Content Calendar Planner ($9) | `content-calendar-planner.html` |
 | SEO/Auditing | SEO Audit Toolkit ($19) | `seo-audit-toolkit.html` |
+| SEO/AI Audit | SEO Audit Pro AI ($29) | `seo-audit-pro-ai.html` |
 | Business Ops/KPIs | Business KPI Dashboard ($15) | `business-kpi-dashboard.html` |
 | AI Agents/SMB | SMB Agent Blueprint ($19) | `smb-agent-blueprint.html` |
 | Product Launch/Gumroad | Gumroad Factory — 10-Step Launch Engine ($25) | `gumroad-factory.html` |
+| Sales/CRM | Sales Pipeline Tracker Pro ($49-$79) | `Sales-Pipeline-Tracker-Pro.xlsx` |
 | Deployment/VPS | VPS Guide (idea #7) | — |
 | Claude Code/Agents | Build & Sell Claude Code Agent (idea #8) | — |
 | n8n/Automation | n8n Masterclass (idea #11) | — |
